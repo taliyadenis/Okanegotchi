@@ -1,0 +1,266 @@
+[
+  {
+    "id": "loop-0",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "loop",
+    "elapsed_ms": 0,
+    "expected_frame": 0
+  },
+  {
+    "id": "loop-124",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "loop",
+    "elapsed_ms": 124,
+    "expected_frame": 0
+  },
+  {
+    "id": "loop-125",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "loop",
+    "elapsed_ms": 125,
+    "expected_frame": 1
+  },
+  {
+    "id": "loop-249",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "loop",
+    "elapsed_ms": 249,
+    "expected_frame": 1
+  },
+  {
+    "id": "loop-250",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "loop",
+    "elapsed_ms": 250,
+    "expected_frame": 2
+  },
+  {
+    "id": "loop-374",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "loop",
+    "elapsed_ms": 374,
+    "expected_frame": 2
+  },
+  {
+    "id": "loop-375",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "loop",
+    "elapsed_ms": 375,
+    "expected_frame": 3
+  },
+  {
+    "id": "loop-499",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "loop",
+    "elapsed_ms": 499,
+    "expected_frame": 3
+  },
+  {
+    "id": "loop-500",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "loop",
+    "elapsed_ms": 500,
+    "expected_frame": 0
+  },
+  {
+    "id": "loop-7999",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "loop",
+    "elapsed_ms": 7999,
+    "expected_frame": 3
+  },
+  {
+    "id": "loop-8000",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "loop",
+    "elapsed_ms": 8000,
+    "expected_frame": 0
+  },
+  {
+    "id": "once-0",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "once",
+    "elapsed_ms": 0,
+    "expected_frame": 0
+  },
+  {
+    "id": "once-124",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "once",
+    "elapsed_ms": 124,
+    "expected_frame": 0
+  },
+  {
+    "id": "once-125",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "once",
+    "elapsed_ms": 125,
+    "expected_frame": 1
+  },
+  {
+    "id": "once-249",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "once",
+    "elapsed_ms": 249,
+    "expected_frame": 1
+  },
+  {
+    "id": "once-250",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "once",
+    "elapsed_ms": 250,
+    "expected_frame": 2
+  },
+  {
+    "id": "once-374",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "once",
+    "elapsed_ms": 374,
+    "expected_frame": 2
+  },
+  {
+    "id": "once-375",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "once",
+    "elapsed_ms": 375,
+    "expected_frame": 3
+  },
+  {
+    "id": "once-499",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "once",
+    "elapsed_ms": 499,
+    "expected_frame": 3
+  },
+  {
+    "id": "once-500",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "once",
+    "elapsed_ms": 500,
+    "expected_frame": 3
+  },
+  {
+    "id": "once-7999",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "once",
+    "elapsed_ms": 7999,
+    "expected_frame": 3
+  },
+  {
+    "id": "once-8000",
+    "durations_ms": [
+      125,
+      125,
+      125,
+      125
+    ],
+    "mode": "once",
+    "elapsed_ms": 8000,
+    "expected_frame": 3
+  }
+]

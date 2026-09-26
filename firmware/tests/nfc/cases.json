@@ -1,0 +1,122 @@
+[
+  {
+    "id": "valid-food",
+    "hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe",
+    "expected": "food"
+  },
+  {
+    "id": "valid-ride",
+    "hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a72696465fe",
+    "expected": "ride"
+  },
+  {
+    "id": "valid-savings",
+    "hex": "0321d1011d5402656e6f6b616e6567616368693a64656d6f3a76313a736176696e6773fe",
+    "expected": "savings"
+  },
+  {
+    "id": "valid-review",
+    "hex": "0320d1011c5402656e6f6b616e6567616368693a64656d6f3a76313a726576696577fe",
+    "expected": "review"
+  },
+  {
+    "id": "valid-padding",
+    "hex": "00031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe0000000000000000000000000000000000000000",
+    "expected": "food"
+  },
+  {
+    "id": "valid-control",
+    "hex": "0103a01044031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe",
+    "expected": "food"
+  },
+  {
+    "id": "unrelated-text",
+    "hex": "030cd101085402656e48656c6c6ffe",
+    "expected": "unrelated"
+  },
+  {
+    "id": "valid-old-data-after-terminator",
+    "hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe016f6c642d64617461",
+    "expected": "food"
+  },
+  {
+    "id": "reject-empty",
+    "hex": "",
+    "expected": "invalid"
+  },
+  {
+    "id": "reject-over-cap",
+    "hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "expected": "invalid"
+  },
+  {
+    "id": "reject-truncated",
+    "hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f",
+    "expected": "invalid"
+  },
+  {
+    "id": "reject-no-terminator",
+    "hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64",
+    "expected": "invalid"
+  },
+  {
+    "id": "reject-double-ndef",
+    "hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe",
+    "expected": "invalid"
+  },
+  {
+    "id": "reject-unknown-version",
+    "hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76323a666f6f64fe",
+    "expected": "invalid"
+  },
+  {
+    "id": "reject-unknown-action",
+    "hex": "031fd1011b5402656e6f6b616e6567616368693a64656d6f3a76313a7265736574fe",
+    "expected": "invalid"
+  },
+  {
+    "id": "reject-trailing-newline",
+    "hex": "031fd1011b5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f640afe",
+    "expected": "invalid"
+  },
+  {
+    "id": "reject-nul",
+    "hex": "031fd1011b5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f6400fe",
+    "expected": "invalid"
+  },
+  {
+    "id": "reject-bad-control",
+    "hex": "01020000031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe",
+    "expected": "invalid"
+  },
+  {
+    "id": "reject-utf16",
+    "hex": "031ed1011a5482656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe",
+    "expected": "invalid"
+  },
+  {
+    "id": "reject-huge-language",
+    "hex": "031ed1011a543f656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe",
+    "expected": "invalid"
+  },
+  {
+    "id": "reject-uri-record",
+    "hex": "031ed1011a5502656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe",
+    "expected": "invalid"
+  },
+  {
+    "id": "reject-chained-record",
+    "hex": "031e91011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe",
+    "expected": "invalid"
+  },
+  {
+    "id": "reject-wrong-record-length",
+    "hex": "031ed1017f5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe",
+    "expected": "invalid"
+  },
+  {
+    "id": "reject-long-tlv",
+    "hex": "03ffd1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe",
+    "expected": "invalid"
+  }
+]

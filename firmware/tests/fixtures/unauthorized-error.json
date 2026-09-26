@@ -1,0 +1,10 @@
+{
+  "api_version": 1,
+  "request_id": "ab58de40-d8be-4590-a549-0b182d675b5e",
+  "error": {
+    "code": "UNAUTHORIZED",
+    "message": "Invalid device credential",
+    "current_epoch": null,
+    "retry_after_ms": null
+  }
+}

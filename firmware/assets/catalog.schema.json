@@ -1,0 +1,609 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "asset_version": {
+      "const": 1
+    },
+    "import_palette": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+    },
+    "palettes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+          },
+          "colors": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$"
+            },
+            "minItems": 16,
+            "maxItems": 16
+          }
+        },
+        "required": [
+          "id",
+          "colors"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 16
+    },
+    "frames": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+          },
+          "size": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 8,
+              "maximum": 64
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "source": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "placeholder"
+                  },
+                  "shape": {
+                    "enum": [
+                      "box",
+                      "diamond",
+                      "circle"
+                    ]
+                  },
+                  "palette_index": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 15
+                  }
+                },
+                "required": [
+                  "kind",
+                  "shape",
+                  "palette_index"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "png"
+                  },
+                  "path": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 240
+                  },
+                  "crop": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "minItems": 4,
+                    "maxItems": 4
+                  }
+                },
+                "required": [
+                  "kind",
+                  "path",
+                  "crop"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "anchors": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+            },
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 63
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          }
+        },
+        "required": [
+          "id",
+          "size",
+          "source",
+          "anchors"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "clips": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+          },
+          "mode": {
+            "enum": [
+              "loop",
+              "once"
+            ]
+          },
+          "frames": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "frame": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+                },
+                "duration_ms": {
+                  "type": "integer",
+                  "minimum": 25,
+                  "maximum": 5000
+                }
+              },
+              "required": [
+                "frame",
+                "duration_ms"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 32
+          }
+        },
+        "required": [
+          "id",
+          "mode",
+          "frames"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "characters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+          },
+          "palettes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+            },
+            "minItems": 1,
+            "maxItems": 16
+          },
+          "animations": {
+            "type": "object",
+            "properties": {
+              "idle": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+              },
+              "blink": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+              },
+              "pat": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+              },
+              "needs_checkin": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+              },
+              "sleepy": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+              },
+              "ghost": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+              },
+              "eating": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+              },
+              "traveling": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+              },
+              "celebrate": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+              },
+              "neutral": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+              },
+              "revive": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+              }
+            },
+            "required": [
+              "idle",
+              "blink",
+              "pat",
+              "needs_checkin",
+              "sleepy",
+              "ghost",
+              "eating",
+              "traveling",
+              "celebrate",
+              "neutral",
+              "revive"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "palettes",
+          "animations"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 64
+    },
+    "accessories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+          },
+          "slot": {
+            "enum": [
+              "head",
+              "neck",
+              "body"
+            ]
+          },
+          "variants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "characters": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+                  },
+                  "minItems": 1,
+                  "maxItems": 64
+                },
+                "frame": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+                },
+                "anchor": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+                },
+                "origin": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 63
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "offset": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "minimum": -64,
+                    "maximum": 64
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "layer": {
+                  "enum": [
+                    "behind",
+                    "front"
+                  ]
+                }
+              },
+              "required": [
+                "characters",
+                "frame",
+                "anchor",
+                "origin",
+                "offset",
+                "layer"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 64
+          }
+        },
+        "required": [
+          "id",
+          "slot",
+          "variants"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0,
+      "maxItems": 64
+    },
+    "backgrounds": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+              },
+              "kind": {
+                "const": "solid"
+              },
+              "color": {
+                "type": "string",
+                "pattern": "^#[0-9A-Fa-f]{6}$"
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "color"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+              },
+              "kind": {
+                "const": "png"
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 240
+              },
+              "size": {
+                "enum": [
+                  [
+                    60,
+                    60
+                  ],
+                  [
+                    240,
+                    240
+                  ]
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "path",
+              "size"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 64
+    },
+    "scenes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+          },
+          "background": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+          },
+          "character_root": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 239
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "scale": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6
+          },
+          "props": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "frame": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+                },
+                "screen_xy": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "minimum": -240,
+                    "maximum": 480
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "scale": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 6
+                },
+                "layer": {
+                  "enum": [
+                    "behind",
+                    "front"
+                  ]
+                }
+              },
+              "required": [
+                "frame",
+                "screen_xy",
+                "scale",
+                "layer"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 0,
+            "maxItems": 8
+          }
+        },
+        "required": [
+          "id",
+          "background",
+          "character_root",
+          "scale",
+          "props"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 64
+    },
+    "scene_bindings": {
+      "type": "object",
+      "properties": {
+        "idle": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+        },
+        "blink": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+        },
+        "pat": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+        },
+        "needs_checkin": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+        },
+        "sleepy": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+        },
+        "ghost": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+        },
+        "eating": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+        },
+        "traveling": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+        },
+        "celebrate": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+        },
+        "neutral": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+        },
+        "revive": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9._-]{0,63}$"
+        }
+      },
+      "required": [
+        "idle",
+        "blink",
+        "pat",
+        "needs_checkin",
+        "sleepy",
+        "ghost",
+        "eating",
+        "traveling",
+        "celebrate",
+        "neutral",
+        "revive"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "asset_version",
+    "import_palette",
+    "palettes",
+    "frames",
+    "clips",
+    "characters",
+    "accessories",
+    "backgrounds",
+    "scenes",
+    "scene_bindings"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Okanegachi compiled asset catalog v1"
+}
