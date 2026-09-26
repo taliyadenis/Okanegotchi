@@ -6,9 +6,9 @@ The pet lives on a small physical handheld device and reacts to financial activi
 
 ## Project status
 
-This repository is the starting point for the **companion website and its backend integration**. It currently contains project documentation and a `.gitignore`; the application has not been scaffolded yet.
+This repository contains the **companion website**, scaffolded with React, Vite, TypeScript, and Tailwind CSS. The first screens are a login form and an informational character-setup placeholder.
 
-The features and architecture below describe the planned MVP. A running website, deployed API, bank connection, and tested connection to the physical device are not yet available in this repository.
+The features and architecture below describe the planned MVP. The local frontend runs in demo mode; real authentication, character editing/saving, a deployed API, bank connections, and physical-device integration are not implemented yet.
 
 ## The experience
 
@@ -46,7 +46,7 @@ Arbitrary pixel-art uploads, AI-generated financial advice, and live production 
 | Website hosting | Cloudflare Pages |
 | Optional financial data | Plaid Sandbox |
 
-These are the selections from the project handoff; dependencies and deployment configuration have not been added yet.
+These are the selections from the project handoff. React, Vite, TypeScript, and Tailwind are installed; the remaining services and deployment configuration are future work.
 
 ## How the website connects to the pet
 
@@ -63,7 +63,7 @@ The hardware team's planned platform is an ESP32-S3 with a 240 × 240 display, a
 
 ## Development roadmap
 
-- [ ] Scaffold the React/Vite/TypeScript application and local preview.
+- [x] Scaffold the React/Vite/TypeScript application and local preview.
 - [ ] Build the dashboard and pet creator against typed demo fixtures.
 - [ ] Implement authentication, database migrations, and owner-scoped APIs.
 - [ ] Verify one queued reaction with a software device simulator.
@@ -73,7 +73,25 @@ The hardware team's planned platform is an ESP32-S3 with a 240 × 240 display, a
 
 ## Local development
 
-There is no runnable application or development command yet. Installation steps, required environment variables, and preview commands will be added when the app is scaffolded.
+Use Node.js 22 or newer and npm. From the repository folder:
+
+```sh
+npm install
+npm run dev
+```
+
+Open the local URL printed by Vite (normally http://127.0.0.1:5173). Saved source changes update the preview automatically.
+
+```sh
+npm run build    # Type-check and produce the production bundle in dist/
+npm run preview  # Serve that bundle locally
+```
+
+No environment variables or accounts are required for this version. The login form validates required fields and email format, supports showing/hiding the password, and displays a loading state followed by an honest service-unavailable message for valid input. It does not contact an authentication service or persist credentials.
+
+Choose **Continue in demo mode** to view the character-setup instructions. This is navigation only, not authentication. The placeholder explains the planned pet, name, palette, and accessory choices; it does not collect or save them. **Back to login** returns to a cleared form. Refreshing also returns to login.
+
+The static handheld illustration is decorative concept art, not a live device mirror or finalized firmware sprite. There are no animations or character controls in this version.
 
 Keep credentials out of source control. Future `.env.example` files should contain placeholder values only; privileged backend keys and financial-provider secrets must never be included in browser code or device firmware.
 
