@@ -1,0 +1,83 @@
+{
+  "api_version": 1,
+  "request_id": "ab58de40-d8be-4590-a549-0b182d675b5e",
+  "epoch": "ef286bf8-928d-46f7-b697-bf2379ccac7b",
+  "server_time": "2026-09-25T18:30:05Z",
+  "state_version": 18,
+  "next_sync_ms": 2000,
+  "demo_mode": true,
+  "pet": {
+    "pet_id": "cat",
+    "name": "Mochi",
+    "palette": "mint",
+    "accessory": "cap",
+    "asset_version": 1
+  },
+  "care": {
+    "stage": "content",
+    "elapsed_connected_ms": 7200000,
+    "streak_days": 2,
+    "timezone": "America/New_York",
+    "local_date": "2026-09-25",
+    "current_window": "PM",
+    "am_complete": true,
+    "pm_complete": false
+  },
+  "finance": {
+    "snapshot_version": 12,
+    "data_source": "demo",
+    "as_of": "2026-09-25T18:30:00Z",
+    "currency": "USD",
+    "period_start": "2026-09-21",
+    "period_end": "2026-09-28",
+    "spend_minor": 3750,
+    "budget_minor": 10000,
+    "budget_status": "on_track",
+    "summary": "$37.50 of your $100.00 weekly budget used."
+  },
+  "goal": {
+    "name": "Weekend adventure",
+    "target_minor": 10000,
+    "saved_minor": 5000,
+    "currency": "USD"
+  },
+  "review": {
+    "review_id": "cfac611e-a234-478c-a3f2-38cb90437d70",
+    "expires_at": "2026-09-25T18:35:05Z",
+    "financial_snapshot_version": 12,
+    "finance": {
+      "snapshot_version": 12,
+      "data_source": "demo",
+      "as_of": "2026-09-25T18:30:00Z",
+      "currency": "USD",
+      "period_start": "2026-09-21",
+      "period_end": "2026-09-28",
+      "spend_minor": 3750,
+      "budget_minor": 10000,
+      "budget_status": "on_track",
+      "summary": "$37.50 of your $100.00 weekly budget used."
+    },
+    "goal": {
+      "name": "Weekend adventure",
+      "target_minor": 10000,
+      "saved_minor": 5000,
+      "currency": "USD"
+    }
+  },
+  "event_results": [
+    {
+      "event_id": "ebd57f92-e0d4-43f7-956c-0f4aa73eac85",
+      "status": "accepted",
+      "reason": null
+    }
+  ],
+  "commands": [
+    {
+      "seq": 5,
+      "command_id": "65bf2677-6917-4544-ab48-1b73d33697a3",
+      "animation": "eating",
+      "duration_ms": 8000,
+      "expires_at": "2026-09-25T18:32:00Z"
+    }
+  ]
+}

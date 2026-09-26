@@ -1,0 +1,2 @@
+# Pack schema validation only. Cursor pins additional pyserial/Pillow utilities if needed.
+jsonschema[format-nongpl]==4.26.0

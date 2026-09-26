@@ -1,0 +1,693 @@
+{
+  "schema_version": 1,
+  "asset_version": 1,
+  "import_palette": "mint",
+  "palettes": [
+    {
+      "id": "mint",
+      "colors": [
+        "#000000",
+        "#FFFFFF",
+        "#222222",
+        "#50BFA0",
+        "#F48A8A",
+        "#9370DB",
+        "#F5D56A",
+        "#5C9BD5",
+        "#B47850",
+        "#F5E8CA",
+        "#699E55",
+        "#9B536C",
+        "#D5D5D5",
+        "#683F2E",
+        "#D28742",
+        "#2C4C63"
+      ]
+    },
+    {
+      "id": "coral",
+      "colors": [
+        "#000000",
+        "#FFFFFF",
+        "#222222",
+        "#F48A8A",
+        "#F48A8A",
+        "#9370DB",
+        "#F5D56A",
+        "#5C9BD5",
+        "#B47850",
+        "#F5E8CA",
+        "#699E55",
+        "#9B536C",
+        "#D5D5D5",
+        "#683F2E",
+        "#D28742",
+        "#2C4C63"
+      ]
+    },
+    {
+      "id": "lavender",
+      "colors": [
+        "#000000",
+        "#FFFFFF",
+        "#222222",
+        "#9370DB",
+        "#F48A8A",
+        "#9370DB",
+        "#F5D56A",
+        "#5C9BD5",
+        "#B47850",
+        "#F5E8CA",
+        "#699E55",
+        "#9B536C",
+        "#D5D5D5",
+        "#683F2E",
+        "#D28742",
+        "#2C4C63"
+      ]
+    }
+  ],
+  "frames": [
+    {
+      "id": "piggy.0",
+      "size": [
+        32,
+        32
+      ],
+      "source": {
+        "kind": "placeholder",
+        "shape": "box",
+        "palette_index": 3
+      },
+      "anchors": {
+        "feet": [
+          16,
+          30
+        ],
+        "head": [
+          16,
+          6
+        ],
+        "neck": [
+          16,
+          16
+        ],
+        "body": [
+          16,
+          21
+        ]
+      }
+    },
+    {
+      "id": "piggy.1",
+      "size": [
+        32,
+        32
+      ],
+      "source": {
+        "kind": "placeholder",
+        "shape": "box",
+        "palette_index": 3
+      },
+      "anchors": {
+        "feet": [
+          16,
+          30
+        ],
+        "head": [
+          16,
+          5
+        ],
+        "neck": [
+          16,
+          15
+        ],
+        "body": [
+          16,
+          20
+        ]
+      }
+    },
+    {
+      "id": "cat.0",
+      "size": [
+        32,
+        32
+      ],
+      "source": {
+        "kind": "placeholder",
+        "shape": "diamond",
+        "palette_index": 3
+      },
+      "anchors": {
+        "feet": [
+          16,
+          30
+        ],
+        "head": [
+          16,
+          6
+        ],
+        "neck": [
+          16,
+          16
+        ],
+        "body": [
+          16,
+          21
+        ]
+      }
+    },
+    {
+      "id": "cat.1",
+      "size": [
+        32,
+        32
+      ],
+      "source": {
+        "kind": "placeholder",
+        "shape": "diamond",
+        "palette_index": 3
+      },
+      "anchors": {
+        "feet": [
+          16,
+          30
+        ],
+        "head": [
+          16,
+          5
+        ],
+        "neck": [
+          16,
+          15
+        ],
+        "body": [
+          16,
+          20
+        ]
+      }
+    },
+    {
+      "id": "dragon.0",
+      "size": [
+        32,
+        32
+      ],
+      "source": {
+        "kind": "placeholder",
+        "shape": "circle",
+        "palette_index": 3
+      },
+      "anchors": {
+        "feet": [
+          16,
+          30
+        ],
+        "head": [
+          16,
+          6
+        ],
+        "neck": [
+          16,
+          16
+        ],
+        "body": [
+          16,
+          21
+        ]
+      }
+    },
+    {
+      "id": "dragon.1",
+      "size": [
+        32,
+        32
+      ],
+      "source": {
+        "kind": "placeholder",
+        "shape": "circle",
+        "palette_index": 3
+      },
+      "anchors": {
+        "feet": [
+          16,
+          30
+        ],
+        "head": [
+          16,
+          5
+        ],
+        "neck": [
+          16,
+          15
+        ],
+        "body": [
+          16,
+          20
+        ]
+      }
+    },
+    {
+      "id": "cap.frame",
+      "size": [
+        16,
+        16
+      ],
+      "source": {
+        "kind": "placeholder",
+        "shape": "box",
+        "palette_index": 6
+      },
+      "anchors": {}
+    },
+    {
+      "id": "scarf.frame",
+      "size": [
+        16,
+        16
+      ],
+      "source": {
+        "kind": "placeholder",
+        "shape": "box",
+        "palette_index": 4
+      },
+      "anchors": {}
+    },
+    {
+      "id": "food-prop.frame",
+      "size": [
+        16,
+        16
+      ],
+      "source": {
+        "kind": "placeholder",
+        "shape": "box",
+        "palette_index": 8
+      },
+      "anchors": {}
+    }
+  ],
+  "clips": [
+    {
+      "id": "piggy.idle",
+      "mode": "loop",
+      "frames": [
+        {
+          "frame": "piggy.0",
+          "duration_ms": 500
+        },
+        {
+          "frame": "piggy.1",
+          "duration_ms": 500
+        },
+        {
+          "frame": "piggy.0",
+          "duration_ms": 500
+        },
+        {
+          "frame": "piggy.1",
+          "duration_ms": 500
+        }
+      ]
+    },
+    {
+      "id": "piggy.eating",
+      "mode": "loop",
+      "frames": [
+        {
+          "frame": "piggy.0",
+          "duration_ms": 125
+        },
+        {
+          "frame": "piggy.1",
+          "duration_ms": 125
+        },
+        {
+          "frame": "piggy.0",
+          "duration_ms": 125
+        },
+        {
+          "frame": "piggy.1",
+          "duration_ms": 125
+        }
+      ]
+    },
+    {
+      "id": "piggy.traveling",
+      "mode": "loop",
+      "frames": [
+        {
+          "frame": "piggy.0",
+          "duration_ms": 200
+        },
+        {
+          "frame": "piggy.1",
+          "duration_ms": 200
+        },
+        {
+          "frame": "piggy.0",
+          "duration_ms": 200
+        },
+        {
+          "frame": "piggy.1",
+          "duration_ms": 200
+        }
+      ]
+    },
+    {
+      "id": "cat.idle",
+      "mode": "loop",
+      "frames": [
+        {
+          "frame": "cat.0",
+          "duration_ms": 500
+        },
+        {
+          "frame": "cat.1",
+          "duration_ms": 500
+        },
+        {
+          "frame": "cat.0",
+          "duration_ms": 500
+        },
+        {
+          "frame": "cat.1",
+          "duration_ms": 500
+        }
+      ]
+    },
+    {
+      "id": "cat.eating",
+      "mode": "loop",
+      "frames": [
+        {
+          "frame": "cat.0",
+          "duration_ms": 125
+        },
+        {
+          "frame": "cat.1",
+          "duration_ms": 125
+        },
+        {
+          "frame": "cat.0",
+          "duration_ms": 125
+        },
+        {
+          "frame": "cat.1",
+          "duration_ms": 125
+        }
+      ]
+    },
+    {
+      "id": "cat.traveling",
+      "mode": "loop",
+      "frames": [
+        {
+          "frame": "cat.0",
+          "duration_ms": 200
+        },
+        {
+          "frame": "cat.1",
+          "duration_ms": 200
+        },
+        {
+          "frame": "cat.0",
+          "duration_ms": 200
+        },
+        {
+          "frame": "cat.1",
+          "duration_ms": 200
+        }
+      ]
+    },
+    {
+      "id": "dragon.idle",
+      "mode": "loop",
+      "frames": [
+        {
+          "frame": "dragon.0",
+          "duration_ms": 500
+        },
+        {
+          "frame": "dragon.1",
+          "duration_ms": 500
+        },
+        {
+          "frame": "dragon.0",
+          "duration_ms": 500
+        },
+        {
+          "frame": "dragon.1",
+          "duration_ms": 500
+        }
+      ]
+    },
+    {
+      "id": "dragon.eating",
+      "mode": "loop",
+      "frames": [
+        {
+          "frame": "dragon.0",
+          "duration_ms": 125
+        },
+        {
+          "frame": "dragon.1",
+          "duration_ms": 125
+        },
+        {
+          "frame": "dragon.0",
+          "duration_ms": 125
+        },
+        {
+          "frame": "dragon.1",
+          "duration_ms": 125
+        }
+      ]
+    },
+    {
+      "id": "dragon.traveling",
+      "mode": "loop",
+      "frames": [
+        {
+          "frame": "dragon.0",
+          "duration_ms": 200
+        },
+        {
+          "frame": "dragon.1",
+          "duration_ms": 200
+        },
+        {
+          "frame": "dragon.0",
+          "duration_ms": 200
+        },
+        {
+          "frame": "dragon.1",
+          "duration_ms": 200
+        }
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "piggy",
+      "palettes": [
+        "mint",
+        "coral",
+        "lavender"
+      ],
+      "animations": {
+        "idle": "piggy.idle",
+        "blink": "piggy.idle",
+        "pat": "piggy.idle",
+        "needs_checkin": "piggy.idle",
+        "sleepy": "piggy.idle",
+        "ghost": "piggy.idle",
+        "eating": "piggy.eating",
+        "traveling": "piggy.traveling",
+        "celebrate": "piggy.idle",
+        "neutral": "piggy.idle",
+        "revive": "piggy.idle"
+      }
+    },
+    {
+      "id": "cat",
+      "palettes": [
+        "mint",
+        "coral",
+        "lavender"
+      ],
+      "animations": {
+        "idle": "cat.idle",
+        "blink": "cat.idle",
+        "pat": "cat.idle",
+        "needs_checkin": "cat.idle",
+        "sleepy": "cat.idle",
+        "ghost": "cat.idle",
+        "eating": "cat.eating",
+        "traveling": "cat.traveling",
+        "celebrate": "cat.idle",
+        "neutral": "cat.idle",
+        "revive": "cat.idle"
+      }
+    },
+    {
+      "id": "dragon",
+      "palettes": [
+        "mint",
+        "coral",
+        "lavender"
+      ],
+      "animations": {
+        "idle": "dragon.idle",
+        "blink": "dragon.idle",
+        "pat": "dragon.idle",
+        "needs_checkin": "dragon.idle",
+        "sleepy": "dragon.idle",
+        "ghost": "dragon.idle",
+        "eating": "dragon.eating",
+        "traveling": "dragon.traveling",
+        "celebrate": "dragon.idle",
+        "neutral": "dragon.idle",
+        "revive": "dragon.idle"
+      }
+    }
+  ],
+  "accessories": [
+    {
+      "id": "cap",
+      "slot": "head",
+      "variants": [
+        {
+          "characters": [
+            "piggy",
+            "cat",
+            "dragon"
+          ],
+          "frame": "cap.frame",
+          "anchor": "head",
+          "origin": [
+            8,
+            12
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "layer": "front"
+        }
+      ]
+    },
+    {
+      "id": "scarf",
+      "slot": "neck",
+      "variants": [
+        {
+          "characters": [
+            "piggy",
+            "cat",
+            "dragon"
+          ],
+          "frame": "scarf.frame",
+          "anchor": "neck",
+          "origin": [
+            8,
+            4
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "layer": "front"
+        }
+      ]
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "room",
+      "kind": "solid",
+      "color": "#F5E8CA"
+    },
+    {
+      "id": "kitchen",
+      "kind": "solid",
+      "color": "#D5D5D5"
+    },
+    {
+      "id": "city",
+      "kind": "solid",
+      "color": "#5C9BD5"
+    },
+    {
+      "id": "night",
+      "kind": "solid",
+      "color": "#222222"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "room",
+      "background": "room",
+      "character_root": [
+        120,
+        190
+      ],
+      "scale": 4,
+      "props": []
+    },
+    {
+      "id": "kitchen",
+      "background": "kitchen",
+      "character_root": [
+        120,
+        190
+      ],
+      "scale": 4,
+      "props": [
+        {
+          "frame": "food-prop.frame",
+          "screen_xy": [
+            166,
+            158
+          ],
+          "scale": 2,
+          "layer": "front"
+        }
+      ]
+    },
+    {
+      "id": "city",
+      "background": "city",
+      "character_root": [
+        120,
+        190
+      ],
+      "scale": 4,
+      "props": []
+    },
+    {
+      "id": "night",
+      "background": "night",
+      "character_root": [
+        120,
+        190
+      ],
+      "scale": 4,
+      "props": []
+    }
+  ],
+  "scene_bindings": {
+    "idle": "room",
+    "blink": "room",
+    "pat": "room",
+    "needs_checkin": "room",
+    "sleepy": "room",
+    "ghost": "night",
+    "eating": "kitchen",
+    "traveling": "city",
+    "celebrate": "room",
+    "neutral": "room",
+    "revive": "room"
+  }
+}

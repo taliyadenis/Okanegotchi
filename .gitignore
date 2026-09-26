@@ -1,0 +1,23 @@
+# Real credentials and generated build outputs
+.env
+.env.*
+!.env.example
+**/secrets.h
+**/provisioning.local.json
+**/credentials.local.json
+**/private-config.json
+*.key
+build/
+.pio/
+.venv/
+__pycache__/
+*.pyc
+*.elf
+*.bin
+*.map
+node_modules/
+dist/
+*.zip
+.DS_Store
+Thumbs.db
+# Keep schemas, source art, generated source assets and reproducible build config.

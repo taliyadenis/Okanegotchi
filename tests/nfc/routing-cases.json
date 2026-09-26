@@ -1,0 +1,588 @@
+[
+  {
+    "id": "demo-food",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync"
+      },
+      {
+        "op": "nfc",
+        "present": true,
+        "tag_type": "ntag213",
+        "ndef_hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe"
+      },
+      {
+        "op": "advance",
+        "ms": 1200
+      }
+    ],
+    "expect": {
+      "counts": [
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "demo_trigger"
+          },
+          "eq": 1
+        },
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "review_requested"
+          },
+          "eq": 0
+        }
+      ],
+      "equals": {
+        "requests.1.events.0.type": "demo_trigger",
+        "requests.1.events.0.payload.scenario": "food"
+      }
+    }
+  },
+  {
+    "id": "demo-ride",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync"
+      },
+      {
+        "op": "nfc",
+        "present": true,
+        "tag_type": "ntag213",
+        "ndef_hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a72696465fe"
+      },
+      {
+        "op": "advance",
+        "ms": 1200
+      }
+    ],
+    "expect": {
+      "counts": [
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "demo_trigger"
+          },
+          "eq": 1
+        },
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "review_requested"
+          },
+          "eq": 0
+        }
+      ],
+      "equals": {
+        "requests.1.events.0.type": "demo_trigger",
+        "requests.1.events.0.payload.scenario": "ride"
+      }
+    }
+  },
+  {
+    "id": "demo-savings",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync"
+      },
+      {
+        "op": "nfc",
+        "present": true,
+        "tag_type": "ntag213",
+        "ndef_hex": "0321d1011d5402656e6f6b616e6567616368693a64656d6f3a76313a736176696e6773fe"
+      },
+      {
+        "op": "advance",
+        "ms": 1200
+      }
+    ],
+    "expect": {
+      "counts": [
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "demo_trigger"
+          },
+          "eq": 1
+        },
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "review_requested"
+          },
+          "eq": 0
+        }
+      ],
+      "equals": {
+        "requests.1.events.0.type": "demo_trigger",
+        "requests.1.events.0.payload.scenario": "savings"
+      }
+    }
+  },
+  {
+    "id": "review-sticker",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync"
+      },
+      {
+        "op": "nfc",
+        "present": true,
+        "tag_type": "ntag213",
+        "ndef_hex": "0320d1011c5402656e6f6b616e6567616368693a64656d6f3a76313a726576696577fe"
+      },
+      {
+        "op": "advance",
+        "ms": 1200
+      }
+    ],
+    "expect": {
+      "counts": [
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "demo_trigger"
+          },
+          "eq": 0
+        },
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "review_requested"
+          },
+          "eq": 1
+        }
+      ],
+      "equals": {
+        "requests.1.events.0.type": "review_requested",
+        "requests.1.events.0.payload.source": "sticker"
+      }
+    }
+  },
+  {
+    "id": "normal-food-review",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {
+          "demo_mode": false,
+          "next_sync_ms": 30000
+        }
+      },
+      {
+        "op": "nfc",
+        "present": true,
+        "tag_type": "ntag213",
+        "ndef_hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe"
+      },
+      {
+        "op": "advance",
+        "ms": 200
+      }
+    ],
+    "expect": {
+      "counts": [
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "demo_trigger"
+          },
+          "eq": 0
+        },
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "review_requested"
+          },
+          "eq": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "offline-no-new-demo",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync"
+      },
+      {
+        "op": "connectivity",
+        "online": false
+      },
+      {
+        "op": "nfc",
+        "present": true,
+        "tag_type": "ntag213",
+        "ndef_hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe"
+      },
+      {
+        "op": "advance",
+        "ms": 200
+      }
+    ],
+    "expect": {
+      "counts": [
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "demo_trigger"
+          },
+          "eq": 0
+        },
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "review_requested"
+          },
+          "eq": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "stale-demo-pending-refresh",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync"
+      },
+      {
+        "op": "advance",
+        "ms": 11000
+      },
+      {
+        "op": "nfc",
+        "present": true,
+        "tag_type": "ntag213",
+        "ndef_hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe"
+      },
+      {
+        "op": "advance",
+        "ms": 200
+      }
+    ],
+    "expect": {
+      "counts": [
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "demo_trigger"
+          },
+          "eq": 0
+        },
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "review_requested"
+          },
+          "eq": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "stale-demo-fresh-confirmation",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync"
+      },
+      {
+        "op": "advance",
+        "ms": 11000
+      },
+      {
+        "op": "nfc",
+        "present": true,
+        "tag_type": "ntag213",
+        "ndef_hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe"
+      },
+      {
+        "op": "advance",
+        "ms": 200
+      },
+      {
+        "op": "sync"
+      }
+    ],
+    "expect": {
+      "counts": [
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "demo_trigger"
+          },
+          "eq": 1
+        },
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "review_requested"
+          },
+          "eq": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "held-demo-one-event",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync"
+      },
+      {
+        "op": "nfc",
+        "present": true,
+        "tag_type": "ntag213",
+        "ndef_hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe"
+      },
+      {
+        "op": "advance",
+        "ms": 5000
+      }
+    ],
+    "expect": {
+      "counts": [
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "demo_trigger"
+          },
+          "eq": 1
+        },
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "review_requested"
+          },
+          "eq": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "intentional-retap",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync"
+      },
+      {
+        "op": "nfc",
+        "present": true,
+        "tag_type": "ntag213",
+        "ndef_hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe"
+      },
+      {
+        "op": "advance",
+        "ms": 200
+      },
+      {
+        "op": "nfc",
+        "present": false
+      },
+      {
+        "op": "advance",
+        "ms": 600
+      },
+      {
+        "op": "nfc",
+        "present": true,
+        "tag_type": "ntag213",
+        "ndef_hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe"
+      },
+      {
+        "op": "advance",
+        "ms": 200
+      }
+    ],
+    "expect": {
+      "counts": [
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "demo_trigger"
+          },
+          "eq": 2
+        },
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "review_requested"
+          },
+          "eq": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "read-error-not-removal",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync"
+      },
+      {
+        "op": "nfc",
+        "present": true,
+        "tag_type": "ntag213",
+        "ndef_hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe"
+      },
+      {
+        "op": "advance",
+        "ms": 200
+      },
+      {
+        "op": "nfc",
+        "observation": "error"
+      },
+      {
+        "op": "advance",
+        "ms": 600
+      },
+      {
+        "op": "nfc",
+        "present": true,
+        "tag_type": "ntag213",
+        "ndef_hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe"
+      },
+      {
+        "op": "advance",
+        "ms": 200
+      }
+    ],
+    "expect": {
+      "counts": [
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "demo_trigger"
+          },
+          "eq": 1
+        },
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "review_requested"
+          },
+          "eq": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "absence-must-be-continuous",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync"
+      },
+      {
+        "op": "nfc",
+        "present": true,
+        "tag_type": "ntag213",
+        "ndef_hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe"
+      },
+      {
+        "op": "advance",
+        "ms": 200
+      },
+      {
+        "op": "nfc",
+        "present": false
+      },
+      {
+        "op": "advance",
+        "ms": 300
+      },
+      {
+        "op": "nfc",
+        "observation": "error"
+      },
+      {
+        "op": "advance",
+        "ms": 100
+      },
+      {
+        "op": "nfc",
+        "present": false
+      },
+      {
+        "op": "advance",
+        "ms": 300
+      },
+      {
+        "op": "nfc",
+        "present": true,
+        "tag_type": "ntag213",
+        "ndef_hex": "031ed1011a5402656e6f6b616e6567616368693a64656d6f3a76313a666f6f64fe"
+      },
+      {
+        "op": "advance",
+        "ms": 200
+      }
+    ],
+    "expect": {
+      "counts": [
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "demo_trigger"
+          },
+          "eq": 1
+        },
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "review_requested"
+          },
+          "eq": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "malformed-tag-no-action",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync"
+      },
+      {
+        "op": "nfc",
+        "present": true,
+        "tag_type": "ntag213",
+        "ndef_hex": "0308d1"
+      },
+      {
+        "op": "advance",
+        "ms": 200
+      }
+    ],
+    "expect": {
+      "counts": [
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "demo_trigger"
+          },
+          "eq": 0
+        },
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "review_requested"
+          },
+          "eq": 0
+        }
+      ]
+    }
+  }
+]

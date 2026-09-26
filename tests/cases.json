@@ -1,0 +1,1563 @@
+[
+  {
+    "id": "bootstrap-empty",
+    "seed": {
+      "paired": false
+    },
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {}
+      }
+    ],
+    "expect": {
+      "equals": {
+        "requests.0.epoch": null,
+        "requests.0.ack_command_seq": 0,
+        "requests.0.events": [],
+        "snapshot.epoch": "ef286bf8-928d-46f7-b697-bf2379ccac7b"
+      },
+      "counts": [],
+      "ordered": []
+    }
+  },
+  {
+    "id": "single-food",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {
+          "commands": [
+            {
+              "seq": 5,
+              "command_id": "00000000-0000-4000-8000-000000000005",
+              "animation": "eating",
+              "duration_ms": 8000
+            }
+          ]
+        }
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.active_animation": "eating",
+        "snapshot.ack_command_seq": 5
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "animation_start"
+          },
+          "eq": 1
+        }
+      ],
+      "ordered": [
+        {
+          "type": "cursor_saved",
+          "seq": 5
+        },
+        {
+          "type": "animation_start",
+          "seq": 5,
+          "animation": "eating"
+        }
+      ]
+    }
+  },
+  {
+    "id": "duplicate-food",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {
+          "commands": [
+            {
+              "seq": 5,
+              "command_id": "00000000-0000-4000-8000-000000000005",
+              "animation": "eating",
+              "duration_ms": 8000
+            }
+          ]
+        }
+      },
+      {
+        "op": "advance",
+        "ms": 2000
+      },
+      {
+        "op": "sync",
+        "patch": {
+          "commands": [
+            {
+              "seq": 5,
+              "command_id": "00000000-0000-4000-8000-000000000005",
+              "animation": "eating",
+              "duration_ms": 8000
+            }
+          ]
+        }
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.ack_command_seq": 5
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "animation_start"
+          },
+          "eq": 1
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "food-then-ride",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {
+          "commands": [
+            {
+              "seq": 5,
+              "command_id": "00000000-0000-4000-8000-000000000005",
+              "animation": "eating",
+              "duration_ms": 8000
+            },
+            {
+              "seq": 6,
+              "command_id": "00000000-0000-4000-8000-000000000006",
+              "animation": "traveling",
+              "duration_ms": 8000
+            }
+          ]
+        }
+      },
+      {
+        "op": "advance",
+        "ms": 8100
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.active_animation": "traveling",
+        "snapshot.ack_command_seq": 6
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "animation_start"
+          },
+          "eq": 2
+        }
+      ],
+      "ordered": [
+        {
+          "type": "animation_start",
+          "seq": 5,
+          "animation": "eating"
+        },
+        {
+          "type": "cursor_saved",
+          "seq": 6
+        },
+        {
+          "type": "animation_start",
+          "seq": 6,
+          "animation": "traveling"
+        }
+      ]
+    }
+  },
+  {
+    "id": "return-idle",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {
+          "commands": [
+            {
+              "seq": 5,
+              "command_id": "00000000-0000-4000-8000-000000000005",
+              "animation": "eating",
+              "duration_ms": 8000
+            }
+          ]
+        }
+      },
+      {
+        "op": "advance",
+        "ms": 8100
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.active_animation": "idle"
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "animation_start"
+          },
+          "eq": 1
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "sequence-gap",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {
+          "commands": [
+            {
+              "seq": 9,
+              "command_id": "00000000-0000-4000-8000-000000000009",
+              "animation": "eating",
+              "duration_ms": 8000
+            }
+          ]
+        }
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.ack_command_seq": 9
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "animation_start"
+          },
+          "eq": 1
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "expired-consumed",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {
+          "commands": [
+            {
+              "seq": 5,
+              "command_id": "00000000-0000-4000-8000-000000000005",
+              "animation": "eating",
+              "duration_ms": 8000,
+              "expires_at": "2026-09-25T18:29:00Z"
+            }
+          ]
+        }
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.ack_command_seq": 5,
+        "snapshot.active_animation": "idle"
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "animation_start"
+          },
+          "eq": 0
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "descending-rejected",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {
+          "commands": [
+            {
+              "seq": 6,
+              "command_id": "00000000-0000-4000-8000-000000000006",
+              "animation": "eating",
+              "duration_ms": 8000
+            },
+            {
+              "seq": 5,
+              "command_id": "00000000-0000-4000-8000-000000000005",
+              "animation": "eating",
+              "duration_ms": 8000
+            }
+          ]
+        }
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.ack_command_seq": 4
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "animation_start"
+          },
+          "eq": 0
+        },
+        {
+          "where": {
+            "type": "response_rejected"
+          },
+          "eq": 1
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "oversized-command-batch",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {
+          "commands": [
+            {
+              "seq": 5,
+              "command_id": "00000000-0000-4000-8000-000000000005",
+              "animation": "eating",
+              "duration_ms": 8000
+            },
+            {
+              "seq": 6,
+              "command_id": "00000000-0000-4000-8000-000000000006",
+              "animation": "eating",
+              "duration_ms": 8000
+            },
+            {
+              "seq": 7,
+              "command_id": "00000000-0000-4000-8000-000000000007",
+              "animation": "eating",
+              "duration_ms": 8000
+            },
+            {
+              "seq": 8,
+              "command_id": "00000000-0000-4000-8000-000000000008",
+              "animation": "eating",
+              "duration_ms": 8000
+            },
+            {
+              "seq": 9,
+              "command_id": "00000000-0000-4000-8000-000000000009",
+              "animation": "eating",
+              "duration_ms": 8000
+            }
+          ]
+        }
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.ack_command_seq": 4
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "animation_start"
+          },
+          "eq": 0
+        },
+        {
+          "where": {
+            "type": "response_rejected"
+          },
+          "eq": 1
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "stale-state",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {
+          "state_version": 17,
+          "commands": [
+            {
+              "seq": 5,
+              "command_id": "00000000-0000-4000-8000-000000000005",
+              "animation": "eating",
+              "duration_ms": 8000
+            }
+          ]
+        }
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.state_version": 18,
+        "snapshot.ack_command_seq": 4
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "animation_start"
+          },
+          "eq": 0
+        },
+        {
+          "where": {
+            "type": "response_rejected"
+          },
+          "eq": 1
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "wrong-request",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {
+          "request_id": "33333333-3333-4333-8333-333333333333",
+          "commands": [
+            {
+              "seq": 5,
+              "command_id": "00000000-0000-4000-8000-000000000005",
+              "animation": "eating",
+              "duration_ms": 8000
+            }
+          ]
+        }
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.ack_command_seq": 4
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "response_rejected"
+          },
+          "eq": 1
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "wrong-epoch",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {
+          "epoch": "22222222-2222-4222-8222-222222222222",
+          "commands": [
+            {
+              "seq": 5,
+              "command_id": "00000000-0000-4000-8000-000000000005",
+              "animation": "eating",
+              "duration_ms": 8000
+            }
+          ]
+        }
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.epoch": "ef286bf8-928d-46f7-b697-bf2379ccac7b",
+        "snapshot.ack_command_seq": 4
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "response_rejected"
+          },
+          "eq": 1
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "fractional-cents-reject-whole-response",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {
+          "finance": {
+            "spend_minor": 1.5
+          },
+          "commands": [
+            {
+              "seq": 5,
+              "command_id": "00000000-0000-4000-8000-000000000005",
+              "animation": "eating",
+              "duration_ms": 8000
+            }
+          ]
+        }
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.ack_command_seq": 4
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "response_rejected"
+          },
+          "eq": 1
+        },
+        {
+          "where": {
+            "type": "animation_start"
+          },
+          "eq": 0
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "ghost-suppresses-food",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {
+          "state_version": 19,
+          "care": {
+            "stage": "ghost"
+          },
+          "commands": [
+            {
+              "seq": 5,
+              "command_id": "00000000-0000-4000-8000-000000000005",
+              "animation": "eating",
+              "duration_ms": 8000
+            }
+          ]
+        }
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.care_stage": "ghost",
+        "snapshot.ack_command_seq": 5,
+        "snapshot.active_animation": "idle"
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "animation_start"
+          },
+          "eq": 0
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "server-revival",
+    "seed": {
+      "ghost": true
+    },
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {
+          "state_version": 19,
+          "care": {
+            "stage": "content"
+          },
+          "commands": [
+            {
+              "seq": 5,
+              "command_id": "00000000-0000-4000-8000-000000000005",
+              "animation": "revive",
+              "duration_ms": 2000
+            }
+          ]
+        }
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.active_animation": "revive",
+        "snapshot.care_stage": "content"
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "animation_start"
+          },
+          "eq": 1
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "store-fault-no-start",
+    "seed": {},
+    "steps": [
+      {
+        "op": "fail_store",
+        "writes": 100
+      },
+      {
+        "op": "sync",
+        "patch": {
+          "commands": [
+            {
+              "seq": 5,
+              "command_id": "00000000-0000-4000-8000-000000000005",
+              "animation": "eating",
+              "duration_ms": 8000
+            }
+          ]
+        }
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.storage_fault": true
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "animation_start"
+          },
+          "eq": 0
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "cursor-survives-reboot",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {
+          "commands": [
+            {
+              "seq": 5,
+              "command_id": "00000000-0000-4000-8000-000000000005",
+              "animation": "eating",
+              "duration_ms": 8000
+            }
+          ]
+        }
+      },
+      {
+        "op": "reboot"
+      },
+      {
+        "op": "sync",
+        "patch": {
+          "commands": [
+            {
+              "seq": 5,
+              "command_id": "00000000-0000-4000-8000-000000000005",
+              "animation": "eating",
+              "duration_ms": 8000
+            }
+          ]
+        }
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.ack_command_seq": 5
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "animation_start"
+          },
+          "eq": 1
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "outbox-bounded",
+    "seed": {},
+    "steps": [
+      {
+        "op": "enqueue",
+        "event": {
+          "event_id": "10000000-0000-4000-8000-000000000001",
+          "type": "review_requested",
+          "payload": {
+            "source": "card"
+          }
+        }
+      },
+      {
+        "op": "enqueue",
+        "event": {
+          "event_id": "10000000-0000-4000-8000-000000000002",
+          "type": "review_requested",
+          "payload": {
+            "source": "card"
+          }
+        }
+      },
+      {
+        "op": "enqueue",
+        "event": {
+          "event_id": "10000000-0000-4000-8000-000000000003",
+          "type": "review_requested",
+          "payload": {
+            "source": "card"
+          }
+        }
+      },
+      {
+        "op": "enqueue",
+        "event": {
+          "event_id": "10000000-0000-4000-8000-000000000004",
+          "type": "review_requested",
+          "payload": {
+            "source": "card"
+          }
+        }
+      },
+      {
+        "op": "enqueue",
+        "event": {
+          "event_id": "10000000-0000-4000-8000-000000000005",
+          "type": "review_requested",
+          "payload": {
+            "source": "card"
+          }
+        }
+      },
+      {
+        "op": "enqueue",
+        "event": {
+          "event_id": "10000000-0000-4000-8000-000000000006",
+          "type": "review_requested",
+          "payload": {
+            "source": "card"
+          }
+        }
+      },
+      {
+        "op": "enqueue",
+        "event": {
+          "event_id": "10000000-0000-4000-8000-000000000007",
+          "type": "review_requested",
+          "payload": {
+            "source": "card"
+          }
+        }
+      },
+      {
+        "op": "enqueue",
+        "event": {
+          "event_id": "10000000-0000-4000-8000-000000000008",
+          "type": "review_requested",
+          "payload": {
+            "source": "card"
+          }
+        }
+      },
+      {
+        "op": "enqueue",
+        "event": {
+          "event_id": "10000000-0000-4000-8000-000000000009",
+          "type": "review_requested",
+          "payload": {
+            "source": "card"
+          }
+        }
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.outbox_size": 8
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "event_queued"
+          },
+          "eq": 8
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "outbox-survives-reboot",
+    "seed": {},
+    "steps": [
+      {
+        "op": "enqueue",
+        "event": {
+          "event_id": "10000000-0000-4000-8000-000000000001",
+          "type": "review_requested",
+          "payload": {
+            "source": "card"
+          }
+        }
+      },
+      {
+        "op": "reboot"
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.outbox_size": 1
+      },
+      "counts": [],
+      "ordered": []
+    }
+  },
+  {
+    "id": "outbox-save-failure",
+    "seed": {},
+    "steps": [
+      {
+        "op": "fail_store",
+        "writes": 100
+      },
+      {
+        "op": "enqueue",
+        "event": {
+          "event_id": "10000000-0000-4000-8000-000000000001",
+          "type": "review_requested",
+          "payload": {
+            "source": "card"
+          }
+        }
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.outbox_size": 0,
+        "snapshot.storage_fault": true
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "event_queued"
+          },
+          "eq": 0
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "terminal-removes-matching",
+    "seed": {},
+    "steps": [
+      {
+        "op": "enqueue",
+        "event": {
+          "event_id": "10000000-0000-4000-8000-000000000001",
+          "type": "review_requested",
+          "payload": {
+            "source": "card"
+          }
+        }
+      },
+      {
+        "op": "sync",
+        "patch": {
+          "event_results": [
+            {
+              "event_id": "10000000-0000-4000-8000-000000000001",
+              "status": "accepted",
+              "reason": null
+            }
+          ]
+        }
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.outbox_size": 0
+      },
+      "counts": [],
+      "ordered": []
+    }
+  },
+  {
+    "id": "unsolicited-result-not-submitted",
+    "seed": {},
+    "steps": [
+      {
+        "op": "advance",
+        "ms": 5
+      },
+      {
+        "op": "enqueue",
+        "event": {
+          "event_id": "10000000-0000-4000-8000-000000000001",
+          "type": "review_requested",
+          "payload": {
+            "source": "card"
+          }
+        }
+      },
+      {
+        "op": "sync",
+        "patch": {
+          "event_results": [
+            {
+              "event_id": "10000000-0000-4000-8000-000000000001",
+              "status": "accepted",
+              "reason": null
+            }
+          ]
+        }
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.outbox_size": 1
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "response_rejected"
+          },
+          "eq": 1
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "missing-result-retains",
+    "seed": {},
+    "steps": [
+      {
+        "op": "enqueue",
+        "event": {
+          "event_id": "10000000-0000-4000-8000-000000000001",
+          "type": "review_requested",
+          "payload": {
+            "source": "card"
+          }
+        }
+      },
+      {
+        "op": "sync",
+        "patch": {}
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.outbox_size": 1
+      },
+      "counts": [],
+      "ordered": []
+    }
+  },
+  {
+    "id": "reset-clears-stale",
+    "seed": {},
+    "steps": [
+      {
+        "op": "enqueue",
+        "event": {
+          "event_id": "10000000-0000-4000-8000-000000000001",
+          "type": "review_requested",
+          "payload": {
+            "source": "card"
+          }
+        }
+      },
+      {
+        "op": "sync",
+        "patch": {
+          "commands": [
+            {
+              "seq": 5,
+              "command_id": "00000000-0000-4000-8000-000000000005",
+              "animation": "eating",
+              "duration_ms": 8000
+            }
+          ]
+        }
+      },
+      {
+        "op": "advance",
+        "ms": 2000
+      },
+      {
+        "op": "http",
+        "status": 409,
+        "body_fixture": "reset"
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.outbox_size": 0,
+        "snapshot.ack_command_seq": 0,
+        "snapshot.active_animation": "idle"
+      },
+      "counts": [],
+      "ordered": []
+    }
+  },
+  {
+    "id": "reset-bootstrap-after-reboot",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {}
+      },
+      {
+        "op": "advance",
+        "ms": 2000
+      },
+      {
+        "op": "http",
+        "status": 409,
+        "body_fixture": "reset"
+      },
+      {
+        "op": "reboot"
+      },
+      {
+        "op": "sync",
+        "patch": {}
+      }
+    ],
+    "expect": {
+      "equals": {
+        "requests.2.epoch": null,
+        "requests.2.ack_command_seq": 0,
+        "requests.2.events": [],
+        "snapshot.epoch": "22222222-2222-4222-8222-222222222222"
+      },
+      "counts": [],
+      "ordered": []
+    }
+  },
+  {
+    "id": "unauthorized-stops-retry",
+    "seed": {},
+    "steps": [
+      {
+        "op": "http",
+        "status": 401,
+        "body_fixture": "unauthorized"
+      },
+      {
+        "op": "advance",
+        "ms": 120000
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.network_status": "unauthorized"
+      },
+      "counts": [],
+      "ordered": [],
+      "request_count": 1
+    }
+  },
+  {
+    "id": "offline-care-stable",
+    "seed": {},
+    "steps": [
+      {
+        "op": "http",
+        "status": 503,
+        "body": "temporary"
+      },
+      {
+        "op": "advance",
+        "ms": 1000
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.care_stage": "content",
+        "snapshot.network_status": "backoff"
+      },
+      "counts": [],
+      "ordered": [],
+      "request_count": 1
+    }
+  },
+  {
+    "id": "normal-poll-30s",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {
+          "demo_mode": false,
+          "next_sync_ms": 30000
+        }
+      },
+      {
+        "op": "advance",
+        "ms": 29999
+      }
+    ],
+    "expect": {
+      "equals": {},
+      "counts": [],
+      "ordered": [],
+      "request_count": 1
+    }
+  },
+  {
+    "id": "demo-poll-2s",
+    "seed": {},
+    "steps": [
+      {
+        "op": "sync",
+        "patch": {}
+      },
+      {
+        "op": "advance",
+        "ms": 2000
+      }
+    ],
+    "expect": {
+      "equals": {},
+      "counts": [],
+      "ordered": [],
+      "request_count": 2
+    }
+  },
+  {
+    "id": "short-button",
+    "seed": {},
+    "steps": [
+      {
+        "op": "button",
+        "name": "C",
+        "down": true
+      },
+      {
+        "op": "advance",
+        "ms": 30
+      },
+      {
+        "op": "button",
+        "name": "C",
+        "down": false
+      },
+      {
+        "op": "advance",
+        "ms": 30
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.page": "Goal"
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "button_short",
+            "button": "C"
+          },
+          "eq": 1
+        },
+        {
+          "where": {
+            "type": "button_long"
+          },
+          "eq": 0
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "bounce-ignored",
+    "seed": {},
+    "steps": [
+      {
+        "op": "button",
+        "name": "C",
+        "down": true
+      },
+      {
+        "op": "advance",
+        "ms": 10
+      },
+      {
+        "op": "button",
+        "name": "C",
+        "down": false
+      },
+      {
+        "op": "advance",
+        "ms": 30
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.page": "Pet"
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "button_short"
+          },
+          "eq": 0
+        },
+        {
+          "where": {
+            "type": "button_long"
+          },
+          "eq": 0
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "long-not-short",
+    "seed": {},
+    "steps": [
+      {
+        "op": "button",
+        "name": "B",
+        "down": true
+      },
+      {
+        "op": "advance",
+        "ms": 1050
+      },
+      {
+        "op": "button",
+        "name": "B",
+        "down": false
+      },
+      {
+        "op": "advance",
+        "ms": 30
+      }
+    ],
+    "expect": {
+      "equals": {},
+      "counts": [
+        {
+          "where": {
+            "type": "button_long",
+            "button": "B"
+          },
+          "eq": 1
+        },
+        {
+          "where": {
+            "type": "button_short"
+          },
+          "eq": 0
+        },
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "review_requested"
+          },
+          "eq": 1
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "hold-does-not-repeat",
+    "seed": {},
+    "steps": [
+      {
+        "op": "button",
+        "name": "B",
+        "down": true
+      },
+      {
+        "op": "advance",
+        "ms": 4000
+      }
+    ],
+    "expect": {
+      "equals": {},
+      "counts": [
+        {
+          "where": {
+            "type": "button_long",
+            "button": "B"
+          },
+          "eq": 1
+        },
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "review_requested"
+          },
+          "eq": 1
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "startup-held-ignored",
+    "seed": {
+      "buttons_held": [
+        "B"
+      ]
+    },
+    "steps": [
+      {
+        "op": "advance",
+        "ms": 2000
+      },
+      {
+        "op": "button",
+        "name": "B",
+        "down": false
+      },
+      {
+        "op": "advance",
+        "ms": 30
+      }
+    ],
+    "expect": {
+      "equals": {},
+      "counts": [
+        {
+          "where": {
+            "type": "button_short"
+          },
+          "eq": 0
+        },
+        {
+          "where": {
+            "type": "button_long"
+          },
+          "eq": 0
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "timer-wrap-short",
+    "seed": {
+      "monotonic_ms": 4294967280
+    },
+    "steps": [
+      {
+        "op": "button",
+        "name": "C",
+        "down": true
+      },
+      {
+        "op": "advance",
+        "ms": 40
+      },
+      {
+        "op": "button",
+        "name": "C",
+        "down": false
+      },
+      {
+        "op": "advance",
+        "ms": 40
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.page": "Goal"
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "button_short"
+          },
+          "eq": 1
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "nfc-held-one-review",
+    "seed": {},
+    "steps": [
+      {
+        "op": "nfc",
+        "present": true
+      },
+      {
+        "op": "advance",
+        "ms": 3000
+      }
+    ],
+    "expect": {
+      "equals": {},
+      "counts": [
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "review_requested"
+          },
+          "eq": 1
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "nfc-rearm-on-removal",
+    "seed": {},
+    "steps": [
+      {
+        "op": "nfc",
+        "present": true
+      },
+      {
+        "op": "advance",
+        "ms": 200
+      },
+      {
+        "op": "nfc",
+        "present": false
+      },
+      {
+        "op": "advance",
+        "ms": 600
+      },
+      {
+        "op": "nfc",
+        "present": true
+      },
+      {
+        "op": "advance",
+        "ms": 200
+      }
+    ],
+    "expect": {
+      "equals": {},
+      "counts": [
+        {
+          "where": {
+            "type": "event_queued",
+            "event_type": "review_requested"
+          },
+          "eq": 2
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "long-c-opens-game",
+    "seed": {},
+    "steps": [
+      {
+        "op": "button",
+        "name": "C",
+        "down": true
+      },
+      {
+        "op": "advance",
+        "ms": 1050
+      },
+      {
+        "op": "button",
+        "name": "C",
+        "down": false
+      },
+      {
+        "op": "advance",
+        "ms": 30
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.page": "Game"
+      },
+      "counts": [
+        {
+          "where": {
+            "type": "button_short"
+          },
+          "eq": 0
+        },
+        {
+          "where": {
+            "type": "button_long",
+            "button": "C"
+          },
+          "eq": 1
+        }
+      ],
+      "ordered": []
+    }
+  },
+  {
+    "id": "ghost-blocks-game",
+    "seed": {
+      "ghost": true
+    },
+    "steps": [
+      {
+        "op": "button",
+        "name": "C",
+        "down": true
+      },
+      {
+        "op": "advance",
+        "ms": 1050
+      },
+      {
+        "op": "button",
+        "name": "C",
+        "down": false
+      },
+      {
+        "op": "advance",
+        "ms": 30
+      }
+    ],
+    "expect": {
+      "equals": {
+        "snapshot.page": "Pet",
+        "snapshot.care_stage": "ghost"
+      },
+      "counts": [],
+      "ordered": []
+    }
+  }
+]

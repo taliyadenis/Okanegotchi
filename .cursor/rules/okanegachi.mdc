@@ -1,0 +1,5 @@
+---
+description: Okanegachi firmware scope, protocol and verification rules
+alwaysApply: true
+---
+Read MASTER_PROMPT.md and docs/EXECUTION_STATUS.md for the active authorized task. Physical pet first. Firmware is C++; final sprites excluded; placeholder renderer required. Shared hardware SPI, pins in hardware/firmware_pins.h. v1 schemas/protocol authoritative. Preserve existing team code. Secrets never committed. Cursor agents use isolated worktrees; parent integrates and owns shared files/status. No fake test passes: distinguish host tests, cross-compilation, hardware and live service. Check installed library APIs. No indefinite NFC/network waits in UI, no setInsecure, no fabricated battery percentage, no local authoritative money/care. This rule does not override tool permissions.
