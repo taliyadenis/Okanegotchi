@@ -1,5 +1,8 @@
 # Okanegotchi
 
+Reference-style: 
+![two gators][<img width="380" height="188" alt="Image" src="https://github.com/user-attachments/assets/3c5f443f-89be-4cef-9c81-d24853284e95" />]
+
 A retro pixel-pet companion designed to make checking your finances feel more approachable and personal.
 
 The pet lives on a small physical handheld device and reacts to financial activity. The companion website helps users customize their pet, set savings goals, review spending, and understand what their pet is responding to.
