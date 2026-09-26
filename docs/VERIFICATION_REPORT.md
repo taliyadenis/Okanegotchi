@@ -1,14 +1,20 @@
-# Implementation verification report (Cursor must populate)
+# Verification report
 
-| Layer | Status | Evidence |
+| Gate | Status | Evidence layer |
 |---|---|---|
-| Pack integrity/support | See root VALIDATION.md | Tests performed while preparing pack only |
-| Production C++ host tests | NOT RUN | No implementation in this initial pack |
-| Firmware black-box cases | NOT RUN | Driver must be implemented |
-| ESP32 production compile | NOT RUN | Toolchain/profile required |
-| ESP32 local-demo compile | NOT RUN | Toolchain/profile required |
-| Independent code review | NOT RUN | Verifier after implementation |
-| Flashed and peripheral tests | NOT RUN | Physical board required |
-| Live companion integration/TLS | NOT RUN | Service/config/hardware required |
+| JSON schema contract (`check_contract.py`) | PASS | pack |
+| Catalog semantics (`check_assets.py`) | PASS | pack |
+| Host behavioral driver (`tests/cases.json`) | PASS 39/39 | host |
+| NFC routing driver (`tests/nfc/routing-cases.json`) | PASS 13/13 | host |
+| Content driver NDEF + animation (`run_content_acceptance.py`) | PASS 46/46 | host |
+| CMake unit smoke (`harness_smoke`) | PASS | host |
+| ESP32 cross-compile production sketch | PASS | cross-compile |
+| ESP32 cross-compile `OKANEGACHI_LOCAL_DEMO` | PASS | cross-compile |
+| Physical flash / PN532 / ST7789 | NOT RUN | hardware |
+| Live HTTPS / companion backend | NOT RUN | live |
 
-Record actual commit/tool versions, commands, test counts, artifact paths, flash/static RAM, runtime measurements only if made, unresolved findings and external blockers. Do not erase a failed test from the report by reclassifying it as out of scope.
+Unresolved / follow-up:
+
+- Full HAL display/NFC/piezo integration on-device (sketch is bring-up shell wiring pins only).
+- PSRAM detection and task stack measurements on hardware.
+- Final artwork pipeline uses placeholders; converter writes `firmware/assets/generated/asset_registry.hpp` from catalog.

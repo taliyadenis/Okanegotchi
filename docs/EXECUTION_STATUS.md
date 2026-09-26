@@ -1,14 +1,26 @@
 # Firmware execution checkpoint
 
-Status: NOT STARTED. This file ships with an instruction/test pack, not firmware implementation.
+Status: MVP implementation complete on branch `codex/firmware-mvp` (host + cross-compile verified in cloud agent).
 
-Revision2 pack: modular catalog/scene/clothing/animation specifications and mandatory NDEF demo stickers added. Supplied Python checks test metadata/reference bytes, not C++ firmware. Use UPDATE_PROMPT.md if applying to a repository whose implementation is already in progress; preserve that repository's actual status instead of overwriting it with this template.
+- Board profile: Waveshare ESP32-S3-Zero FH4R2 (4MB flash, 2MB QSPI PSRAM), pins from `hardware/firmware_pins.h`.
+- Completed: portable C++17 core (state/sync/outbox/commands/buttons/NFC demo routing), JSON codec (ArduinoJson), NDEF parser, animation sampler, host drivers, asset tools, minimal ESP32 sketch.
+- Host gates: `python3 tools/check_contract.py` 44/44; `run_acceptance.py` 39/39; `run_content_acceptance.py` 46/46; NFC routing 13/13; CMake `ctest` harness_smoke PASS.
+- ESP32: `arduino-cli compile` FQBN `esp32:esp32:esp32s3:FlashSize=4M,PSRAM=opi` — production ~356 KiB flash / ~39 KiB RAM (sketch shell).
+- Hardware flash/NFC/display bench: NOT RUN (no device in agent).
+- Next: flash identified board, run USB provisioning smoke, validate SPI wiring on received Waveshare unit.
 
-- Repository/remote/branch: Cursor to inspect.
-- Board profile: Waveshare ESP32-S3-Zero assumed for build; received replacement not inspected.
-- Completed: contract/pin references, execution brief, test runner/support and fixture definitions.
-- Implementation/host firmware tests/cross-compile: NOT RUN; code not yet written by this pack.
-- Hardware/live backend/artwork: pending external inputs.
-- Next: inspect repository, freeze shared C++ interfaces, establish toolchain and isolated agent tasks.
+Build (host):
 
-At each milestone replace this snapshot with concise actual status, branch/worktree owners, exact commands, failure/blocker and next action. Never rewrite another teammate's status file. Parent owns this checkpoint.
+```bash
+cmake -S . -B build -DCMAKE_CXX_COMPILER=g++-12
+cmake --build build
+python3 tools/run_acceptance.py --driver build/firmware_test_driver
+python3 tools/run_content_acceptance.py --driver build/content_test_driver
+```
+
+Build (ESP32):
+
+```bash
+export PATH="/workspace/bin:$PATH"  # arduino-cli
+scripts/build_esp32.sh
+```

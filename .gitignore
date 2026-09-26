@@ -8,6 +8,8 @@
 **/private-config.json
 *.key
 build/
+bin/
+firmware/assets/generated/
 .pio/
 .venv/
 __pycache__/
