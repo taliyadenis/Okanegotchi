@@ -107,6 +107,8 @@ Keep credentials out of source control. Future `.env.example` files should conta
 
 ## Team coordination
 
+See [current project status](docs/PROJECT_STATUS.md) for verified behavior and remaining checks, and [Supabase setup](docs/SUPABASE_SETUP.md) to configure and test website accounts locally.
+
 The project has two hardware/firmware contributors and two website/integration contributors. Both pairs need to agree on API payloads, pet asset IDs, and changes that affect the device.
 
 The supplied handoff's `MVP_BUILD_PLAN.md` and `mvp/DEVICE_PROTOCOL_V1.md` define the current MVP and supersede older drafts. Those reference files have not yet been imported into this repository. As implementation progresses, document what is working, how it was checked, and the next integration milestone here.
