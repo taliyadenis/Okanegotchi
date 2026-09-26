@@ -1,0 +1,175 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "kind",
+    "messageId",
+    "revision",
+    "createdAt",
+    "sourceAt",
+    "source",
+    "destination",
+    "companion",
+    "goal",
+    "preferences"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "enum": [
+        "okanegotchi.demo-letter.v4"
+      ]
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "configuration"
+      ]
+    },
+    "messageId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[a-zA-Z0-9-]+$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "createdAt": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 24,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+    },
+    "sourceAt": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 24,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "demo"
+      ]
+    },
+    "destination": {
+      "type": "string",
+      "enum": [
+        "demo-egg"
+      ]
+    },
+    "companion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "pet"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 24
+        },
+        "pet": {
+          "type": "string",
+          "enum": [
+            "piggy",
+            "cat",
+            "dragon"
+          ]
+        }
+      }
+    },
+    "goal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "revision",
+        "name",
+        "targetMinor",
+        "savedMinor",
+        "currency",
+        "basis"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "enum": [
+            "primary-savings-goal"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "targetMinor": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 99999999999
+        },
+        "savedMinor": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 99999999999
+        },
+        "currency": {
+          "type": "string",
+          "enum": [
+            "USD"
+          ]
+        },
+        "basis": {
+          "type": "string",
+          "enum": [
+            "full-savings-balance"
+          ]
+        }
+      }
+    },
+    "preferences": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "timezone",
+        "weeklyBudgetMinor",
+        "currency"
+      ],
+      "properties": {
+        "timezone": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "weeklyBudgetMinor": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 99999999999
+        },
+        "currency": {
+          "type": "string",
+          "enum": [
+            "USD"
+          ]
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Proposed Okanegotchi demo letter (not firmware protocol)",
+  "description": "Strict UTF-8 JSON; additional runtime constraints: 2048 bytes maximum, canonical real UTC dates and nonblank text."
+}

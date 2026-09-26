@@ -1,0 +1,28 @@
+{
+  "schema": "okanegotchi.demo-letter.v4",
+  "kind": "configuration",
+  "messageId": "demo-example-1",
+  "revision": 1,
+  "createdAt": "2026-09-26T12:00:00.000Z",
+  "sourceAt": "2026-09-26T12:00:00.000Z",
+  "source": "demo",
+  "destination": "demo-egg",
+  "companion": {
+    "name": "Penny",
+    "pet": "piggy"
+  },
+  "goal": {
+    "id": "primary-savings-goal",
+    "revision": 1,
+    "name": "Rainy day fund",
+    "targetMinor": 500000,
+    "savedMinor": 380000,
+    "currency": "USD",
+    "basis": "full-savings-balance"
+  },
+  "preferences": {
+    "timezone": "America/New_York",
+    "weeklyBudgetMinor": 15000,
+    "currency": "USD"
+  }
+}

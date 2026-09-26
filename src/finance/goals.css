@@ -1,0 +1,34 @@
+.goal-layout { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:30px; margin-top:30px; align-items:start; }
+.goal-card { background:var(--pink); border:3px solid var(--ink); border-radius:16px; padding:30px; box-shadow:7px 7px var(--ink); }
+.goal-card h2 { font-size:32px; font-weight:900; line-height:1.15; margin:18px 0; letter-spacing:-1px; overflow-wrap:anywhere; }
+.goal-card p { line-height:1.65; font-size:14px; }
+.goal-card form { margin-top:26px; }
+.goal-card select { width:100%; padding:14px 10px; border:2px solid var(--ink); border-radius:6px; background:var(--paper); font:inherit; color:var(--ink); }
+.goal-rule { font-size:12px!important; line-height:1.7; }
+.goal-empty,.goal-remove { background:var(--paper); border:2px dashed var(--ink); padding:18px; border-radius:8px; margin-top:20px; }
+.goal-empty h3 { font-weight:800; }
+.goal-amount { display:grid; gap:6px; margin:28px 0 20px; }
+.goal-amount strong { font-size:clamp(32px,4vw,46px); letter-spacing:-1px; }
+.goal-amount span { font-size:14px; }
+.goal-card progress { display:block; appearance:none; width:100%; height:22px; border:2px solid var(--ink); border-radius:12px; overflow:hidden; background:var(--paper); }
+.goal-card progress::-webkit-progress-bar { background:var(--paper); }
+.goal-card progress::-webkit-progress-value { background:var(--green); }
+.goal-card progress::-moz-progress-bar { background:var(--green); }
+.goal-progress-label { display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; font-size:12px; margin:12px 0 24px; }
+.goal-actions { display:flex; gap:22px; margin-top:22px; }
+.goal-companion { text-align:center; padding:24px 16px; }
+.goal-companion h2 { font-size:25px; font-weight:900; margin:28px 0 12px; }
+.goal-companion p { font-size:14px; line-height:1.7; }
+.goal-companion .finance-badge { font-size:10px; }
+.goal-egg { width:210px; height:250px; margin:35px auto 20px; background:var(--green); border:3px solid var(--ink); border-radius:48% 48% 42% 42%; padding:65px 22px 20px; box-shadow:7px 7px var(--ink); position:relative; }
+.egg-screen { background:var(--paper); border:6px solid var(--ink); border-radius:12px; padding:12px 3px; font:bold 7px monospace; }
+.egg-face { font:bold 27px monospace; margin:18px 0; color:var(--green); }
+.egg-buttons { margin-top:16px; color:var(--yellow); letter-spacing:10px; padding-left:10px; }
+.egg-spark { position:absolute; color:var(--blue); font-size:40px; opacity:0; }
+.egg-spark.left { left:-30px; top:25px; }.egg-spark.right { right:-28px; bottom:20px; }
+.celebrating .egg-spark { opacity:1; }.celebrating { animation:egg-cheer .7s ease-in-out 3; }
+@keyframes egg-cheer { 25% { transform:rotate(-6deg) translateY(-4px) } 75% { transform:rotate(6deg) translateY(-4px) } }
+.finance-goal-entry { display:flex; align-items:center; justify-content:space-between; gap:18px; padding:22px; border:2px solid var(--ink); border-radius:10px; background:var(--pink); margin:28px 0; }
+.finance-goal-entry h2 { font-weight:900; font-size:22px; margin:0 0 8px; }.finance-goal-entry p { margin:0; font-size:13px; line-height:1.6; }.finance-goal-entry .primary-button { width:auto; flex-shrink:0; }
+@media(max-width:720px) { .goal-layout { grid-template-columns:minmax(0,1fr); }.goal-card { padding:22px; }.finance-goal-entry { flex-direction:column; align-items:stretch; }.goal-companion { padding-inline:8px; } }
+@media(prefers-reduced-motion:reduce) { .celebrating { animation:none; } }

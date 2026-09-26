@@ -12,7 +12,7 @@ The features and architecture below describe the planned MVP. Supabase authentic
 
 ## The experience
 
-- **A pet with personality:** choose Piggy, Cat, or Dragon, then customize its name, color palette, and accessory.
+- **A pet with personality:** choose Piggy, Cat, or Dragon, then give it a name.
 - **Financial reactions:** food expenses trigger an eating animation, rides trigger traveling, and savings contributions trigger a celebration.
 - **Savings goals:** see progress toward a named goal alongside clear spending context.
 - **Daily check-ins:** review a financial summary and confirm a check-in, with one target in the morning and one in the afternoon/evening.
@@ -26,7 +26,7 @@ Spending money is never required to care for or revive the pet. Care reflects ch
 | --- | --- |
 | Account setup | Sign-in and owner-scoped access to a pet and device |
 | Dashboard | Spending summary, savings goal, check-in progress, and device connection status |
-| Pet creator | Three preset pets; mint, coral, or lavender palettes; no accessory, cap, or scarf |
+| Pet creator | Three preset pets with a custom name; no palettes or accessories |
 | Pet preview | A pixel-art preview using the same asset IDs as the device |
 | Goals and preferences | Savings target, optional weekly budget, and timezone |
 | Demo controls | Clearly labeled food, ride, savings, and accelerated care scenarios |
@@ -122,3 +122,20 @@ Connect accounts from three fictional institutions, review cash and credit balan
 Selections and simulated statuses are saved under versioned `okanegotchi:finance-demo:v1:` localStorage keys, separately for guests and signed-in identities. No passwords, real bank information or tokens are saved by this feature. Invalid storage starts empty; unavailable storage uses memory. Demo dates and balances are fixed; refresh does not generate new transactions. The guest navigation returns to login on reload, but saved financial accounts reappear when reopening the feature.
 
 Run `npm test` for 15 financial provider/data tests and `npm run build` for the production build. Browser checks covered connection, filtering, reload persistence, retry/reconnect, cancellation, disconnect/reset, and keyboard/narrow layout. Live authentication and live financial connections remain unverified. See [the financial integration handoff](docs/FINANCIAL_ACCOUNTS.md) for implementation boundaries and the teammate's future Plaid/Supabase work.
+## Savings goal demo
+
+From **Financial accounts**, select **Your savings goal**. Connect a savings account first if needed. Create one named goal per demo identity, choose a positive USD target, and link a connected savings account. Progress uses the account's entire current balance, not contributions since goal creation; it does not reserve or transfer money. This tracking rule is an initial demo choice for the team to review.
+
+Goals can be edited or removed and use a separate versioned `okanegotchi:savings-goal:v1:` localStorage key. Removing/resetting financial connections preserves the named goal and shows unavailable progress until its savings account is reconnected or replaced. Stale account data is explicitly identified. With unavailable browser storage, goal state lasts only while the goal screen stays mounted.
+
+The egg illustration is a proposed on-screen concept. **Preview a $50 savings celebration** changes only the illustration and message; it neither changes the goal/account nor sends hardware events. The preview respects reduced-motion settings. Future real savings events and device presentation need agreement with the hardware team and the missing device protocol. Care continues to depend on check-ins, not contributions.
+
+Validation: 20 tests pass, including amount parsing, goal progress/completion, missing accounts, persistence isolation and invalid storage. Production build passes. Browser checks verified the savings prerequisite, invalid target handling, create/edit, 76% progress, completed target, persistence after reload, and the celebration with unchanged balances. Narrow sidebar layout has no horizontal overflow. Live Supabase, Plaid, and egg communication remain unimplemented or unverified.
+
+## Send a little letter to your egg
+
+After your saved savings goal, choose **Continue to your egg**. Review your previously saved companion and the letter, and press **Pack & send to demo egg**. The paper folds into an envelope, seals and flies away; a separate simulator validation/application step determines the receipt. The screen supports demo offline queueing, reconnect, failures, unknown receipt status and retry with the same frozen letter. History and companion selection are saved per identity. JSON download and animation replay never submit a letter.
+
+**Physical pairing is unavailable.** The packet schema and appearance identifiers are proposals pending the missing firmware contract. No real device or delivery backend is connected. See [Egg transfer handoff](docs/EGG_TRANSFER_HANDOFF.md) for schema limits, simulator behavior, cancellation/persistence rules and hardware-team requirements. Savings, transactions and care are unchanged by sending. Companion choices are saved on the initial setup screen; the letter screen reuses them. Accessories are not supported.
+
+Setup now includes a reviewed timezone and optional weekly USD budget. The demo letter v4 includes these preferences, with integer cents or null for no budget. Legacy companion choices are preserved; users review preferences before their next letter. These fields do not yet implement check-in scheduling, budget calculations, care or reaction events.

@@ -33,3 +33,9 @@ The supplied v1 protocol and data model were read from the handoff archive; sche
 Awaiting the user's selected 32×32 sprite export. The earlier gator test in Downloads was explicitly excluded. Shared asset generation and physical rendering remain untested. Existing appearance IDs remain piggy/cat/dragon pending hardware-team agreement on the gator. Plaid and AI remain later milestones.
 
 **Next single action:** verify Confirm Email and test a fresh account before email confirmation.
+
+## Local letter-transfer extension
+
+The website now includes savings goals and a final demo letter flow: review of the previously selected companion, immutable validated JSON snapshot, pack/seal/fly animation, local simulator application and receipts, replay/download, bounded history and recovery controls. Physical delivery and pairing remain unavailable. See `EGG_TRANSFER_HANDOFF.md` for the proposed contract and hardware questions. The initial setup screen now saves the pet and name; the letter step only reviews those choices. Accessories are not supported. No deployment or external authentication settings changed in this work.
+
+Setup now includes a reviewed timezone and optional weekly USD budget. The demo letter v4 includes these preferences, with integer cents or null for no budget. Legacy companion choices are preserved; users review preferences before their next letter. These fields do not yet implement check-in scheduling, budget calculations, care or reaction events.

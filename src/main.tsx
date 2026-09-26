@@ -2,6 +2,7 @@ import { StrictMode, useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import type { FormEvent } from 'react'
 import './styles.css'
+import { CompanionSetup } from './egg/CompanionSetup'
 import { FinanceScreen } from './finance/FinanceScreen'
 import { supabase } from './auth'
 import type { Session } from '@supabase/supabase-js'
@@ -174,14 +175,8 @@ function App() {
           <span className="demo-badge">{session ? 'SIGNED IN' : 'DEMO PREVIEW'}</span>
           {session && <p className="account-email">Signed in as {session.user.email}</p>}
           <h2 ref={heading} tabIndex={-1}>Let’s create your companion</h2>
-          <p className="card-intro">Your companion will live on your Okanegotchi device. Here’s what you’ll choose when character creation is ready.</p>
-          <ol className="steps">
-            <li><span className="step-number">01</span><div><h3>Choose your pet</h3><p>Piggy, Cat, or Dragon.</p></div></li>
-            <li><span className="step-number">02</span><div><h3>Give it a name</h3><p>Pick something that feels personal.</p></div></li>
-            <li><span className="step-number">03</span><div><h3>Make it yours</h3><p>Choose a mint, coral, or lavender palette and an optional cap or scarf.</p></div></li>
-          </ol>
-          <button className="primary-button" onClick={() => navigate('finance')}>Financial accounts ↗</button>
-          <div className="coming-soon"><span aria-hidden="true">✦</span> Character creation coming soon</div>
+          <p className="card-intro">Choose your little companion, then connect demo accounts and give your savings a goal.</p>
+          <CompanionSetup key={session?.user.id ?? 'guest'} identity={session ? `user:${session.user.id}` : 'guest'} onContinue={() => navigate('finance')} />
           {authError && <p className="auth-error" role="alert">{authError}</p>}
           <button className="demo-button back-button" disabled={loading} onClick={() => session ? void logout() : navigate('login')}><span aria-hidden="true">←</span> {loading ? 'Logging out…' : session ? 'Log out' : 'Back to login'}</button>
         </div>}

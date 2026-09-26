@@ -34,3 +34,9 @@ Food, transportation and savings can later map to README pet reactions using sta
 `npm test` runs Node's built-in test runner with TypeScript transformation (use a recent Node 22 release or newer). Fifteen tests cover validation, duplicates, cancellation, persistence and isolation, corrupted/unavailable storage, failure/retry, disconnect/reset, stale asynchronous operations and money rules. `npm run build` checks application types and produces the Vite bundle.
 
 Browser verification covered guest entry, connection of multiple accounts/institutions, filtering, reload persistence, refresh failure and retry, attention/reconnect, disconnect cancellation and completion, reset, keyboard operation, and narrow layout. Login/sign-up navigation was checked; live authentication/logout remains unverified without Supabase configuration. No real financial provider was contacted.
+
+## Savings goals extension
+
+`goals.ts` owns versioned goal persistence, integer-cent target parsing, and pure progress calculation; `SavingsGoalScreen.tsx` owns the create/edit/view/remove flow and illustrative egg preview. One goal is stored per demo identity separately from financial connections. Goal progress uses the complete linked savings balance. Missing connections show unavailable progress, while stale connections retain labeled snapshot progress. Removing a goal never changes financial accounts.
+
+The $50 contribution button is visual-only and never mutates provider balances, creates transactions, queues hardware events, or awards care. Real contribution tracking needs a product decision on baseline/allocation and transaction provenance before implementing server-side goal updates and idempotent device reactions. The displayed egg and celebration are concepts, not agreed firmware assets or payloads.
