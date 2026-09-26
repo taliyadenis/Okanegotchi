@@ -4,8 +4,10 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host 127.0.0.1",
-    "build": "tsc --noEmit && vite build",
+    "dev": "node tools/assets/build.mjs && vite --host 127.0.0.1",
+    "build": "npm run assets:build && tsc --noEmit && vite build",
+    "assets:build": "node tools/assets/build.mjs",
+    "test:assets": "node tools/assets/build.mjs && node --test tools/assets/build.test.mjs",
     "preview": "vite preview --host 127.0.0.1",
     "test": "node --experimental-transform-types --test tests/*.test.ts"
   },
@@ -19,6 +21,7 @@
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
     "@vitejs/plugin-react": "^4.5.0",
+    "pngjs": "^7.0.0",
     "tailwindcss": "^4.1.0",
     "typescript": "~5.8.3",
     "vite": "^6.3.5"

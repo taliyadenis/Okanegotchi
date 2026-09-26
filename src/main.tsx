@@ -177,6 +177,7 @@ function App() {
           <h2 ref={heading} tabIndex={-1}>Let’s create your companion</h2>
           <p className="card-intro">Choose your little companion, then connect demo accounts and give your savings a goal.</p>
           <CompanionSetup key={session?.user.id ?? 'guest'} identity={session ? `user:${session.user.id}` : 'guest'} onContinue={() => navigate('finance')} />
+
           {authError && <p className="auth-error" role="alert">{authError}</p>}
           <button className="demo-button back-button" disabled={loading} onClick={() => session ? void logout() : navigate('login')}><span aria-hidden="true">←</span> {loading ? 'Logging out…' : session ? 'Log out' : 'Back to login'}</button>
         </div>}

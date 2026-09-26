@@ -1,0 +1,153 @@
+{
+  "frames": 96,
+  "indexed_bytes": 98304,
+  "mask_bytes": 12288,
+  "palette_bytes": 62,
+  "rgb565_reference_bytes": 196608,
+  "sheets": {
+    "gator_idle": {
+      "frames": 4,
+      "width": 128,
+      "height": 32,
+      "trailing_bytes_ignored": 0
+    },
+    "gator_eating": {
+      "frames": 6,
+      "width": 192,
+      "height": 32,
+      "trailing_bytes_ignored": 2
+    },
+    "gator_traveling": {
+      "frames": 4,
+      "width": 128,
+      "height": 32,
+      "trailing_bytes_ignored": 0
+    },
+    "gator_celebrate": {
+      "frames": 4,
+      "width": 128,
+      "height": 32,
+      "trailing_bytes_ignored": 0
+    },
+    "gator_sleepy": {
+      "frames": 4,
+      "width": 128,
+      "height": 32,
+      "trailing_bytes_ignored": 2
+    },
+    "gator_ghost": {
+      "frames": 4,
+      "width": 128,
+      "height": 32,
+      "trailing_bytes_ignored": 1
+    },
+    "gator_needs_checkin": {
+      "frames": 2,
+      "width": 64,
+      "height": 32,
+      "trailing_bytes_ignored": 0
+    },
+    "gator_revive": {
+      "frames": 4,
+      "width": 128,
+      "height": 32,
+      "trailing_bytes_ignored": 0
+    },
+    "robot_idle": {
+      "frames": 4,
+      "width": 128,
+      "height": 32,
+      "trailing_bytes_ignored": 1
+    },
+    "robot_eating": {
+      "frames": 6,
+      "width": 192,
+      "height": 32,
+      "trailing_bytes_ignored": 0
+    },
+    "robot_traveling": {
+      "frames": 4,
+      "width": 128,
+      "height": 32,
+      "trailing_bytes_ignored": 0
+    },
+    "robot_celebrate": {
+      "frames": 4,
+      "width": 128,
+      "height": 32,
+      "trailing_bytes_ignored": 2
+    },
+    "robot_sleepy": {
+      "frames": 4,
+      "width": 128,
+      "height": 32,
+      "trailing_bytes_ignored": 0
+    },
+    "robot_ghost": {
+      "frames": 4,
+      "width": 128,
+      "height": 32,
+      "trailing_bytes_ignored": 2
+    },
+    "robot_needs_checkin": {
+      "frames": 2,
+      "width": 64,
+      "height": 32,
+      "trailing_bytes_ignored": 2
+    },
+    "robot_revive": {
+      "frames": 4,
+      "width": 128,
+      "height": 32,
+      "trailing_bytes_ignored": 1
+    },
+    "duck_idle": {
+      "frames": 4,
+      "width": 128,
+      "height": 32,
+      "trailing_bytes_ignored": 0
+    },
+    "duck_eating": {
+      "frames": 6,
+      "width": 192,
+      "height": 32,
+      "trailing_bytes_ignored": 0
+    },
+    "duck_traveling": {
+      "frames": 4,
+      "width": 128,
+      "height": 32,
+      "trailing_bytes_ignored": 0
+    },
+    "duck_celebrate": {
+      "frames": 4,
+      "width": 128,
+      "height": 32,
+      "trailing_bytes_ignored": 0
+    },
+    "duck_sleepy": {
+      "frames": 4,
+      "width": 128,
+      "height": 32,
+      "trailing_bytes_ignored": 0
+    },
+    "duck_ghost": {
+      "frames": 4,
+      "width": 128,
+      "height": 32,
+      "trailing_bytes_ignored": 0
+    },
+    "duck_needs_checkin": {
+      "frames": 2,
+      "width": 64,
+      "height": 32,
+      "trailing_bytes_ignored": 0
+    },
+    "duck_revive": {
+      "frames": 4,
+      "width": 128,
+      "height": 32,
+      "trailing_bytes_ignored": 1
+    }
+  }
+}

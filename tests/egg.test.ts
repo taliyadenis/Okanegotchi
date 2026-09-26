@@ -7,8 +7,18 @@ import { DemoMailbox,mailboxKey } from '../src/egg/transport.ts'
 import { sendLetter,bounded } from '../src/egg/send.ts'
 const packet=(revision=1):Packet=>({...structuredClone(example),messageId:`test-${revision}`,revision,goal:{...example.goal,revision}} as Packet)
 const memory=()=>{const map=new Map<string,string>();return {getItem:(k:string)=>map.get(k)??null,setItem:(k:string,v:string)=>{map.set(k,v)}}}
+
+test('current pet IDs persist and reach the demo egg without changing frozen legacy letters',async()=>{
+  for(const pet of ['gator','robot','duck'] as const) {
+    const storage=memory();const mailbox=new DemoMailbox(pet,storage);const p=packet();
+    p.companion={name:'Friend',pet};mailbox.setSetup(p.companion,p.preferences);
+    await mailbox.submit(p,'online');await mailbox.status(p.messageId);
+    const restored=new DemoMailbox(pet,storage).snapshot();
+    assert.equal(restored.companion?.pet,pet);assert.equal(restored.applied?.companion.pet,pet);
+  }
+})
 test('sample JSON matches runtime schema and round-trips Unicode and quotes',()=>{validatePacket(example);const p=packet();p.companion.name='小猫 "Penny"';assert.deepEqual(parsePacket(serializePacket(p)),p)})
-test('rejects unknown/private fields, versions, assets, fractions, nonfinite and malformed dates',()=>{for(const change of [(p:any)=>p.secret='no',(p:any)=>p.schema='v9',(p:any)=>p.companion.pet='gator',(p:any)=>p.goal.savedMinor=1.2,(p:any)=>p.goal.targetMinor=NaN,(p:any)=>p.createdAt='2026-02-30T00:00:00.000Z',(p:any)=>p.companion.name=' '.repeat(3),(p:any)=>p.goal.currency='EUR']){const p=packet();change(p);assert.throws(()=>serializePacket(p))}})
+test('rejects unknown/private fields, versions, assets, fractions, nonfinite and malformed dates',()=>{for(const change of [(p:any)=>p.secret='no',(p:any)=>p.schema='v9',(p:any)=>p.companion.pet='unavailable-pet',(p:any)=>p.goal.savedMinor=1.2,(p:any)=>p.goal.targetMinor=NaN,(p:any)=>p.createdAt='2026-02-30T00:00:00.000Z',(p:any)=>p.companion.name=' '.repeat(3),(p:any)=>p.goal.currency='EUR']){const p=packet();change(p);assert.throws(()=>serializePacket(p))}})
 test('UTF-8 bytes are bounded independently of character count',()=>{assert.throws(()=>parsePacket(' '.repeat(2049)));const p=packet();p.goal.name='🐱'.repeat(61);assert.throws(()=>serializePacket(p));p.goal.name='🐱'.repeat(60);assert.doesNotThrow(()=>serializePacket(p))})
 test('queued is distinct from validated applied receipt; source packet cannot mutate saved data',async()=>{const m=new DemoMailbox('guest',memory());const p=packet();assert.equal((await m.submit(p,'online')).status,'queued');assert.equal(m.snapshot().applied,null);p.goal.savedMinor=1;const d=await m.status('test-1');assert.equal(d.status,'received');assert.equal(m.snapshot().applied?.goal.savedMinor,380000)})
 test('duplicate submissions and receipts are idempotent',async()=>{const m=new DemoMailbox('guest',memory());await Promise.all([m.submit(packet(),'duplicate'),m.submit(packet(),'duplicate')]);await m.status('test-1');await m.status('test-1');assert.equal(m.snapshot().history.length,1);assert.equal(m.snapshot().applied?.revision,1)})

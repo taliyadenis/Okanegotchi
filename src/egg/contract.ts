@@ -1,6 +1,7 @@
 import schema from './packet.schema.json' with { type: 'json' }
-export const assets = { pet: ['piggy', 'cat', 'dragon'] } as const
-export type Companion = { name: string; pet: typeof assets.pet[number] }
+export const assets = { pet: ['gator', 'robot', 'duck'] } as const
+// Legacy IDs remain readable in immutable saved letters; setup only offers current assets.
+export type Companion = { name: string; pet: typeof assets.pet[number] | 'piggy' | 'cat' | 'dragon' }
 export type Preferences = { timezone: string; weeklyBudgetMinor: number | null; currency: 'USD' }
 export function validatePreferences(value: unknown): asserts value is Preferences {
   validate(value, schema.properties.preferences as Rule, 'Preferences')

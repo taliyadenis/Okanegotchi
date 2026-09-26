@@ -1,0 +1,127 @@
+{
+  "asset_version": 1,
+  "canvas": {
+    "width": 32,
+    "height": 32
+  },
+  "anchors": {
+    "center": [
+      16,
+      16
+    ],
+    "feet": [
+      16,
+      31
+    ]
+  },
+  "presets": {
+    "gator": {
+      "label": "Gator",
+      "palette": [
+        null,
+        "#03ac00",
+        "#026000",
+        "#aabd00",
+        "#3b5905",
+        "#f9f9f9",
+        "#000000",
+        "#ffa3f8",
+        "#00c7ff",
+        "#005875",
+        "#f4e646"
+      ]
+    },
+    "robot": {
+      "label": "Robot",
+      "palette": [
+        null,
+        "#255a87",
+        "#fdff00",
+        "#81bdd1",
+        "#bfe7ff",
+        "#000000",
+        "#ffa3f8",
+        "#46aaff",
+        "#ffffff",
+        "#0f2436",
+        "#00c7ff"
+      ]
+    },
+    "duck": {
+      "label": "Duck",
+      "palette": [
+        null,
+        "#ffe700",
+        "#442d12",
+        "#ffffff",
+        "#000000",
+        "#ffcaec",
+        "#b07100",
+        "#46aaff",
+        "#00c7ff"
+      ]
+    }
+  },
+  "animations": {
+    "idle": {
+      "file": "idle.png",
+      "frames": 4,
+      "frame_ms": 240,
+      "duration_ms": null,
+      "label": "Idle / blink"
+    },
+    "eating": {
+      "file": "eating.png",
+      "frames": 6,
+      "frame_ms": 160,
+      "duration_ms": 8000,
+      "label": "Eating"
+    },
+    "traveling": {
+      "file": "walking.png",
+      "frames": 4,
+      "frame_ms": 180,
+      "duration_ms": 8000,
+      "label": "Walking"
+    },
+    "celebrate": {
+      "file": "celebrate.png",
+      "frames": 4,
+      "frame_ms": 180,
+      "duration_ms": 8000,
+      "label": "Celebrate"
+    },
+    "sleepy": {
+      "file": "sleepy.png",
+      "frames": 4,
+      "frame_ms": 400,
+      "duration_ms": null,
+      "label": "Sleepy"
+    },
+    "ghost": {
+      "file": "ghost.png",
+      "frames": 4,
+      "frame_ms": 320,
+      "duration_ms": null,
+      "label": "Ghost"
+    },
+    "needs_checkin": {
+      "file": "neglected.png",
+      "frames": 2,
+      "frame_ms": 500,
+      "duration_ms": null,
+      "label": "Neglected"
+    },
+    "revive": {
+      "file": "revive.png",
+      "frames": 4,
+      "frame_ms": 180,
+      "duration_ms": 2000,
+      "label": "Revive"
+    }
+  },
+  "aliases": {
+    "neutral": "idle",
+    "blink": "idle"
+  }
+}

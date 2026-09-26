@@ -1,11 +1,29 @@
 # Supabase account setup
 
-1. Create a Supabase project at https://supabase.com/dashboard. Keep the database password private.
+1. For this team, use the existing Okanegotchi Supabase project. Ask the project owner for its Project URL and publishable key; do not create a separate project just to run a teammate's checkout. Only create a new project at https://supabase.com/dashboard when intentionally setting up a separate environment. Keep database passwords private.
 2. Enable the Email provider under Authentication and keep Confirm Email enabled.
 3. Under Authentication → URL Configuration, set the local Site URL to `http://127.0.0.1:5173/` and allow the same Redirect URL. Add deployment URLs separately when deployment is authorized.
 4. Copy the Project URL and publishable key from the project's Connect dialog.
 5. Copy `.env.example` to `.env.local` in the app root and fill in both values. Never put a service-role/secret key in a `VITE_*` variable: those variables are exposed in the browser bundle. `.env.local` is ignored by Git.
 6. Run `npm ci` and `npm run dev`. Restart Vite after changing environment variables.
+
+## Refresh a collaborator's local preview
+
+From the actual Okanegotchi Git clone, run `git status` and preserve any local work before switching branches. Then update main:
+
+```sh
+git fetch origin
+git switch main
+git pull --ff-only origin main
+npm ci
+npm run dev
+```
+
+If Git reports local changes or divergent history, stop and reconcile that work rather than resetting or overwriting it. Stop any older preview first so the browser does not keep showing another checkout on port 5173. Use the exact URL printed by the newly started server, then refresh the browser.
+
+`http://127.0.0.1:5173/` points to each person's own computer. Sharing that address does not share a running preview. A downloaded ZIP/snapshot does not update when GitHub changes, and a hosted website changes only after its separate deployment workflow runs.
+
+The repository includes signup and **Continue in demo mode → Financial accounts**. The financial demo works without Supabase configuration. Actual signup/login requires each checkout's own ignored `.env.local`; Git never transfers that file. Use the same team's Project URL and publishable key to access the same Auth project. Demo account selections are stored per browser and do not sync between collaborators.
 
 ## Account verification
 

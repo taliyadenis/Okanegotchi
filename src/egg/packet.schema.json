@@ -78,7 +78,10 @@
         "pet": {
           "type": "string",
           "enum": [
-            "piggy",
+            "gator",
+          "robot",
+          "duck",
+          "piggy",
             "cat",
             "dragon"
           ]

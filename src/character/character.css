@@ -1,0 +1,18 @@
+.character-creator { margin-bottom: 24px; }
+.pet-options, .appearance-options { display:flex; gap:8px; flex-wrap:wrap; }
+.pet-options button { flex:1; padding:12px 6px; background:var(--paper); border:2px solid var(--ink); font-weight:800; }
+.pet-options small { display:block; font-size:10px; margin-top:4px; }
+.character-creator button:disabled { cursor:not-allowed; }
+.character-creator button.selected, .character-creator button[aria-pressed="true"] { background:var(--yellow); box-shadow:3px 3px 0 var(--ink); }
+.pet-stage { display:flex; flex-direction:column; align-items:center; gap:8px; margin:22px 0; padding:16px; border:2px solid var(--ink); border-radius:18px; background:var(--paper); box-shadow:5px 5px 0 var(--ink); }
+.pet-stage canvas { width:128px; height:128px; image-rendering:pixelated; background-color:#e6eadb; background-image:linear-gradient(45deg,#dbe1cf 25%,transparent 25%),linear-gradient(-45deg,#dbe1cf 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#dbe1cf 75%),linear-gradient(-45deg,transparent 75%,#dbe1cf 75%);background-size:16px 16px;background-position:0 0,0 8px,8px -8px,-8px 0; }
+.pet-stage strong { max-width:100%; overflow-wrap:anywhere; }
+.pet-stage-label { font:700 11px 'Courier New',monospace; text-transform:uppercase; letter-spacing:1px; }
+.play-toggle { border:0; background:none; text-decoration:underline; font-size:12px; padding:8px; }
+.character-creator fieldset { border:0; padding:0; margin:18px 0; min-width:0; }
+.character-creator legend { font-weight:800; font-size:13px; margin-bottom:10px; }
+.appearance-options button, .animation-options button { border:2px solid var(--ink); background:var(--paper); padding:9px 10px; font-size:12px; text-transform:capitalize; border-radius:5px; }
+.appearance-options i { display:inline-block; width:12px; height:12px; border:1px solid var(--ink); border-radius:50%; margin-right:6px; }
+.animation-options { display:flex; flex-wrap:wrap; gap:8px; }
+.character-creator .primary-button { margin-top:20px; }
+@media (prefers-reduced-motion:reduce) { .character-creator button { transition:none; } }
