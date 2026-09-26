@@ -5,17 +5,17 @@ import './styles.css'
 
 function PixelPet({ small = false }: { small?: boolean }) {
   return <svg className={small ? 'pixel-pet small' : 'pixel-pet'} viewBox="0 0 32 32" aria-hidden="true" shapeRendering="crispEdges">
-    <path fill="#34594d" d="M7 7h6v4h6V7h6v6h3v12h-4v3H8v-3H4V13h3z" />
-    <path fill="#a6d9ba" d="M8 9h3v5h10V9h3v6h2v9h-4v2H10v-2H6v-9h2z" />
-    <path fill="#6cb98e" d="M6 21h3v3h14v-3h3v3h-4v2H10v-2H6z" />
-    <path fill="#34594d" d="M11 16h2v3h-2zm8 0h2v3h-2zm-5 5h4v2h-4z" />
-    <path fill="#e99586" d="M8 20h3v2H8zm13 0h3v2h-3z" />
-    <path fill="#eff8d2" d="M15 12h2v2h-2z" />
+    <path fill="#191919" d="M7 7h6v4h6V7h6v6h3v12h-4v3H8v-3H4V13h3z" />
+    <path fill="#00875A" d="M8 9h3v5h10V9h3v6h2v9h-4v2H10v-2H6v-9h2z" />
+    <path fill="#2448FF" d="M6 21h3v3h14v-3h3v3h-4v2H10v-2H6z" />
+    <path fill="#191919" d="M11 16h2v3h-2zm8 0h2v3h-2zm-5 5h4v2h-4z" />
+    <path fill="#FF90C2" d="M8 20h3v2H8zm13 0h3v2h-3z" />
+    <path fill="#FFD600" d="M15 12h2v2h-2z" />
   </svg>
 }
 
 function DeviceIllustration() {
-  return <div className="illustration" role="img" aria-label="A mint handheld device with a friendly pixel pet on its screen">
+  return <div className="illustration" role="img" aria-label="A bright green handheld device with a friendly pixel pet on its screen">
     <span className="spark spark-one">✦</span><span className="spark spark-two">+</span>
     <div className="device">
       <div className="device-top"><span>OKANEGOTCHI</span><span className="indicator" /></div>
@@ -82,8 +82,8 @@ function App() {
     <main className="main-layout">
       <section className="story-panel">
         <div className="eyebrow"><span className="tiny-star">✦</span> YOUR EVERYDAY LITTLE COMPANION</div>
-        <h1>A little companion<br />for your <span>financial<br className="desktop-break" /> journey.</span></h1>
-        <p className="story-copy">A little care. A little progress. A pixel friend<br className="desktop-break" /> to share the journey with you.</p>
+        <h1>Little pet.<br /><span>Big<br />personality.</span></h1>
+        <p className="story-copy">A little companion for your financial journey.</p>
         <DeviceIllustration />
         <div className="story-footnote"><span>♡</span> Made for progress, one small step at a time.</div>
       </section>
@@ -116,7 +116,7 @@ function App() {
           <div className="coming-soon"><span aria-hidden="true">✦</span> Character creation coming soon</div>
           <button className="demo-button back-button" onClick={() => navigate('login')}><span aria-hidden="true">←</span> Back to login</button>
         </div>}
-        <p className="below-card">A softer way to get started.</p>
+        <p className="below-card">YOUR NEXT CHAPTER STARTS SMALL.</p>
       </section>
     </main>
     <footer className="flex flex-wrap items-center justify-between gap-3"><span>© {new Date().getFullYear()} Okanegotchi</span><span>A little companion. A lot of possibility. <span className="footer-star">✦</span></span></footer>
