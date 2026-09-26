@@ -6,9 +6,9 @@ The pet lives on a small physical handheld device and reacts to financial activi
 
 ## Project status
 
-This repository contains the **companion website**, scaffolded with React, Vite, TypeScript, and Tailwind CSS. The first screens are a login form and an informational character-setup placeholder.
+This repository contains the **companion website**, scaffolded with React, Vite, TypeScript, and Tailwind CSS. The first screens provide login, sign-up, and an informational character-setup placeholder.
 
-The features and architecture below describe the planned MVP. The local frontend runs in demo mode; real authentication, character editing/saving, a deployed API, bank connections, and physical-device integration are not implemented yet.
+The features and architecture below describe the planned MVP. Supabase authentication is implemented but requires project configuration and live verification. Demo mode remains available without configuration. Character editing/saving, a deployed API, real bank connections, and physical-device integration are not implemented yet. A complete fictional financial-account connection demo is available.
 
 ## The experience
 
@@ -87,9 +87,19 @@ npm run build    # Type-check and produce the production bundle in dist/
 npm run preview  # Serve that bundle locally
 ```
 
-No environment variables or accounts are required for this version. The login form validates required fields and email format, supports showing/hiding the password, and displays a loading state followed by an honest service-unavailable message for valid input. It does not contact an authentication service or persist credentials.
+Demo mode requires no environment variables. To connect your existing Supabase project:
 
-Choose **Continue in demo mode** to view the character-setup instructions. This is navigation only, not authentication. The placeholder explains the planned pet, name, palette, and accessory choices; it does not collect or save them. **Back to login** returns to a cleared form. Refreshing also returns to login.
+1. Copy `.env.example` to `.env.local`.
+2. Set `VITE_SUPABASE_URL` to the project URL and `VITE_SUPABASE_PUBLISHABLE_KEY` to its publishable key (a legacy anon key also works). Never use a secret or service-role key.
+3. Enable the email/password provider in Supabase Authentication. Set its minimum password length to at least 8, matching the form.
+4. Add `http://127.0.0.1:5173` to Authentication URL Configuration's allowed redirect URLs. Add your production origin before deploying and set the production Site URL there.
+5. Restart `npm run dev` after changing environment variables.
+
+Sign-up supports email confirmation: when confirmation is enabled, the UI asks the user to check their inbox; when Supabase returns a session immediately, it opens the companion screen. Existing accounts can log in with email and password. Sessions are restored after refresh, and Log out ends the current browser session. Supabase manages session tokens; the app does not store passwords. Demo navigation never creates an authenticated session.
+
+Live acceptance checks (require a configured project and a test inbox): create an account, follow its confirmation link, log out, reject an incorrect password, log in successfully, refresh and retain the session, then log out and refresh to verify the login screen. Also verify expired confirmation links and the project's rate limits. Until those checks are performed, successful real authentication is unverified.
+
+Choose **Continue in demo mode** to view the character-setup instructions without an account. This placeholder does not collect or save character choices. Future owner-scoped database tables and APIs must enforce authorization with RLS/server checks; the companion screen is not a data-access security boundary.
 
 The static handheld illustration is decorative concept art, not a live device mirror or finalized firmware sprite. There are no animations or character controls in this version.
 
@@ -100,3 +110,13 @@ Keep credentials out of source control. Future `.env.example` files should conta
 The project has two hardware/firmware contributors and two website/integration contributors. Both pairs need to agree on API payloads, pet asset IDs, and changes that affect the device.
 
 The supplied handoff's `MVP_BUILD_PLAN.md` and `mvp/DEVICE_PROTOCOL_V1.md` define the current MVP and supersede older drafts. Those reference files have not yet been imported into this repository. As implementation progresses, document what is working, how it was checked, and the next integration milestone here.
+
+## Financial account demo
+
+Choose **Continue in demo mode → Financial accounts** on the companion screen. The same entry is available after sign-in, and all financial data stays explicitly labeled **Demo data**. No Supabase configuration or real bank access is required.
+
+Connect accounts from three fictional institutions, review cash and credit balances separately, filter 25 sample transactions by account, and refresh or disconnect institutions. The demo controls simulate connection failures, failed refreshes, and attention/reconnect states. Failed refreshes retain the previous snapshot. **Reset demo data** removes all saved demo connections after confirmation.
+
+Selections and simulated statuses are saved under versioned `okanegotchi:finance-demo:v1:` localStorage keys, separately for guests and signed-in identities. No passwords, real bank information or tokens are saved by this feature. Invalid storage starts empty; unavailable storage uses memory. Demo dates and balances are fixed; refresh does not generate new transactions. The guest navigation returns to login on reload, but saved financial accounts reappear when reopening the feature.
+
+Run `npm test` for 15 financial provider/data tests and `npm run build` for the production build. Browser checks covered connection, filtering, reload persistence, retry/reconnect, cancellation, disconnect/reset, and keyboard/narrow layout. Live authentication and live financial connections remain unverified. See [the financial integration handoff](docs/FINANCIAL_ACCOUNTS.md) for implementation boundaries and the teammate's future Plaid/Supabase work.
