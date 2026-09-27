@@ -1,5 +1,7 @@
 # Using the firmware package
 
+For ongoing team work, use review branch `codex/firmware-usb-bringup-noel` and its PR rather than re-importing the older ZIP. The ZIP/patch instructions below describe the original pre-board handoff and do not include the newer USB bench diagnostics or measured results. Website/backend reviewers should start at `INTEGRATION.md` and `../../team-workflow/status/firmware.md`.
+
 1. Keep the team's current repository. Create a hardware feature branch from current main. Do not replace the website folder with an older project snapshot.
 2. Prefer applying the accompanying Git patch with `git am <path-to-Okanegachi-Firmware-Implementation.patch>`. It adds the firmware implementation, v1 contracts and documentation; the original shared art already on main is not replaced. Resolve any genuine same-file team changes before proceeding; do not force an overwrite.
 3. Alternatively, extract the source ZIP into a separate folder for inspection. It includes `firmware/`, the required `assets/`, `mvp/`, hardware pin reference and firmware docs, but not a new website implementation or dependency installation. Start at `firmware/README.md`.

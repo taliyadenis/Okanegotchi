@@ -34,6 +34,9 @@ uint64_t wifi_retry{}, frame_due{}, tone_until{}, all_held_since{};
 std::string serial_line;
 bool serial_overflow{};
 uint64_t serial_since{};
+// USB bench input exists only in LOCAL DEMO. Deadlines release each simulated
+// button even if the test client disconnects; physical reset consent is separate.
+uint64_t demo_button_until[3]{};
 uint16_t tile[240 * 16];
 int strip = 240;
 Appearance frame_pet;
@@ -216,6 +219,34 @@ void status() {
   d["psram_bytes"] = ESP.getPsramSize();
   d["flash_bytes"] = ESP.getFlashChipSize();
   d["pending"] = engine->persistent().outbox.size();
+  d["uptime_ms"] = clock_.now();
+  if (local_demo) {
+    const auto &s = engine->state();
+    const auto &g = engine->game();
+    const char *pages[] = {"pet", "goal", "checkin", "menu", "review", "game",
+                           "connection"};
+    auto info = d["demo"].to<JsonObject>();
+    info["page"] = pages[static_cast<int>(engine->page())];
+    info["animation"] = engine->animation();
+    info["pet"] = engine->appearance().pet;
+    info["care_stage"] = s.stage;
+    info["spend_minor"] = s.finance.spend;
+    if (s.goal)
+      info["saved_minor"] = s.goal->saved;
+    else
+      info["saved_minor"] = nullptr;
+    info["am_complete"] = s.am;
+    info["pm_complete"] = s.pm;
+    info["ack_command_seq"] = engine->persistent().ack;
+    info["queued_commands"] = engine->queued();
+    info["mute"] = engine->persistent().mute;
+    info["storage_fault"] = engine->storage_fault();
+    info["review_available"] = bool(engine->displayed_review());
+    info["game_started"] = g.started;
+    info["game_paused"] = g.paused;
+    info["game_lane"] = g.lane;
+    info["notice"] = engine->notice();
+  }
   serializeJson(d, Serial);
   Serial.println();
 }
@@ -228,6 +259,19 @@ void serial_command(const std::string &raw) {
   auto op = d["op"].as<std::string>();
   if (op == "status") {
     status();
+    return;
+  }
+  if (local_demo && op == "demo_button") {
+    auto name = d["button"].as<std::string>();
+    int index = name == "A" ? 0 : name == "B" ? 1 : name == "C" ? 2 : -1;
+    if (index < 0 || !d["duration_ms"].is<int>() ||
+        d["duration_ms"].as<int>() < 80 ||
+        d["duration_ms"].as<int>() > 2000) {
+      Serial.println("{\"ok\":false,\"error\":\"invalid_demo_button\"}");
+      return;
+    }
+    demo_button_until[index] = clock_.now() + d["duration_ms"].as<int>();
+    Serial.println("{\"ok\":true}");
     return;
   }
   if (op == "configure") {
@@ -364,6 +408,11 @@ void loop_device() {
       all_held_since = now;
   } else
     all_held_since = 0;
+  if (local_demo) {
+    a = a || now < demo_button_until[0];
+    b = b || now < demo_button_until[1];
+    c = c || now < demo_button_until[2];
+  }
   engine->button(core::ButtonId::A, a);
   engine->button(core::ButtonId::B, b);
   engine->button(core::ButtonId::C, c);

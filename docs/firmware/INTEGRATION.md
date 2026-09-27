@@ -2,6 +2,16 @@
 
 Current firmware: `firmware/`, based on website main `17df40f` and the earlier v1 device schemas. The physical screen renders the pet; the browser is its companion dashboard. The website's `okanegotchi.demo-letter.v4` local mailbox is **not** a device API.
 
+## September 26 software-branch coordination
+
+New `software` branch commit `0d504d3` adds account persistence, device token issuance/revocation and a state-only sync handler. Those are useful integration foundations; that branch's deployment guide says migrations/functions still need deployment. This firmware review does not deploy or modify that branch.
+
+The state-only handler rejects nonempty `events` with HTTP 501 and never issues animation commands or review receipts. Firmware correctly retains those events and backs off, so pressing review against that milestone can leave the device waiting until event support is implemented. Do not discard the outbox or claim a complete NFC/check-in demo from a successful empty bootstrap.
+
+Use the strict `mvp` schemas in this firmware branch for the next backend step. In particular: goal names 32 characters, timezone 64, amounts at most 2,147,483,647 cents. The new backend currently slices goal names at 60, inherits broader website preferences, uses full savings-account balances and emits palette `mint`; coordinate these with the v1 financial semantics and use `original` for the actual shared artwork. Schema tests must cover the exact response the function produces, including long valid website input.
+
+Reviewers should start with `firmware/README.md`, this guide, `mvp/DEVICE_PROTOCOL_V1.md` and `team-workflow/status/firmware.md`. The former `hardware/firmware-mvp` sketch is not this runtime. The spare-board evidence proves LOCAL DEMO execution, not hosted HTTPS or physical peripherals. Keep website changes on the software team's branch; coordinate the remaining event/queue/care work rather than replacing their new persistence implementation.
+
 ```mermaid
 flowchart LR
   Web[Website: goals, pet choice, demo transactions] -->|User-authenticated app API| DB[Backend: ledger, care, reviews, commands]

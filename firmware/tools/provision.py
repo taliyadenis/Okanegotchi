@@ -37,7 +37,7 @@ def main():
             try:result=json.loads(raw)
             except (ValueError,UnicodeError):continue
             # Only display known safe response fields, even if the attached board is wrong.
-            safe={k:result[k] for k in ('ok','error','restarting','firmware','mode','configured','status','nfc','heap_free','heap_min','psram_bytes','flash_bytes','pending') if k in result}
+            safe={k:result[k] for k in ('ok','error','restarting','firmware','mode','configured','status','nfc','heap_free','heap_min','psram_bytes','flash_bytes','pending','uptime_ms','demo') if k in result}
             if safe:print(json.dumps(safe,indent=2));return 0 if result.get('ok',True) else 1
         raise TimeoutError('No response. Confirm board, USB data cable, CDC-on-boot setting and port.')
 if __name__=='__main__':

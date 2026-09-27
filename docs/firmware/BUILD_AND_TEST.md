@@ -21,6 +21,20 @@ Start with `firmware/README.md` for pinned dependencies and commands. Run from t
 9. Test power interruption during a pending event and command start. NVS should retain a consistent record; cursor replay is prohibited, while an effect may be lost in the documented save-before-start window. `--factory-reset` requires holding all three buttons for 2 seconds and clears local configuration/state; it does not reset the server ledger.
 10. Only after USB operation is stable, resume the separate battery/charger/boost wiring guide. This firmware does not measure battery voltage, manage charging, provide load sharing or make simultaneous USB/boost power safe.
 
+## Spare-board USB test (no peripherals)
+
+With only the spare ESP32-S3-Zero connected by a USB data cable, flash the **LOCAL DEMO** build. Select the confirmed serial port explicitly. The board can execute the real firmware with no display, NFC reader or switches connected; an NFC error is expected in this setup.
+
+```sh
+python firmware/tools/bench_smoke.py --port COM6 --report firmware/build/bench-smoke.json
+```
+
+Replace COM6 with the identified spare board's port. This resets its fictional ledger, selects all three pets, exercises queued food/ride/savings reactions, ghost/review/revive, navigation and game controls. USB-injected button presses traverse the normal debounce/hold logic and expire automatically. They do not test the physical GPIO/switch wiring. The test finishes at the local-demo baseline. It refuses to run against a cloud build.
+
+Local-demo status includes current animation/page, care, fictional totals, queue/cursor, storage fault and game state. The `demo_button` serial command is local-demo-only: `{"op":"demo_button","button":"B","duration_ms":1200}`. Duration must be 80–2000 ms. It cannot satisfy the physical three-button factory-reset requirement. The device sync schema is unchanged; cloud status does not expose local-demo state.
+
+USB success establishes that this board boots and runs those code paths. It does not establish LCD output, NFC RF, buzzer sound, electrical buttons, Wi-Fi/TLS, live backend connectivity or battery behavior. Follow the arrival checklist for those tests.
+
 ## Reproducing a website-team transaction without hardware
 
 Run `python firmware/tools/demo_console.py`. Try `food`, `review`, `confirm`, `neglect`, `review`, `confirm`, and `reset`. The actual C++ engine exchanges validated request/response JSON with the local fake server. `offline` keeps actions pending; `online` resumes sync. This tests software flow, not ESP32 electrical behavior or the deployed backend.
@@ -29,4 +43,4 @@ To export the horizontal sheets as 96 individual PNGs, run `python firmware/tool
 
 ## Deployment boundary
 
-Changes remain on `codex/firmware-runtime` until reviewed/merged. No device has been flashed and no Supabase service has been deployed by this implementation task. The website team must adopt the amended pet IDs and implement the device endpoint in `INTEGRATION.md`; a working browser-local preview does not establish connectivity.
+The implementation is prepared for team review on `codex/firmware-usb-bringup-noel`; merge remains a separate step. A USB-only spare board on COM6 has been flashed with LOCAL DEMO and passed 25 board-runtime checks; see `bench/2026-09-26-COM6-local-demo.json` and the firmware lane status. Peripherals and live networking remain untested. No Supabase service has been deployed by this implementation task. The website team must coordinate the amended contract and complete the endpoint in `INTEGRATION.md`; a working browser-local preview does not establish connectivity.
