@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
-import { accountBackend } from './backend'
-import { accountLoadMessage } from './backend-errors'
 import { accountBackend, AccountSaveError, AccountSchemaError } from './backend'
+import { accountLoadMessage } from './backend-errors'
 import { attachStorage, CloudStore, detachStorage } from './cloud-store'
 import { DemoMailbox } from '../egg/transport'
 
@@ -22,7 +21,6 @@ export function AccountGate({userId,onReady,onLogout,children}:{userId:string;on
       const saved=new DemoMailbox(next.identity,next).snapshot()
       onReady(!!saved.companion&&!!saved.preferences)
     }).catch(cause=>{if(active){setStatus('error');setError(accountLoadMessage(cause))}})
-    }).catch(error=>{if(active){setStatus('error');setError(error instanceof AccountSchemaError ? error.message : 'We could not load your saved account. Check your connection and try again.')}})
     return()=>{active=false;unsubscribe();detachStorage(next)}
   },[userId,attempt])
   useEffect(()=>{
@@ -35,6 +33,6 @@ export function AccountGate({userId,onReady,onLogout,children}:{userId:string;on
     if(store?.hasUnsaved()&&!window.confirm('Discard unsaved changes from this tab and load the latest cloud copy?'))return
     setAttempt(n=>n+1)
   }
-  if(!store)return <main className="form-card"><h2>Your Account</h2><p role="status">{error||'Loading your saved companion…'}</p>{error&&<button className="primary-button" onClick={()=>setAttempt(n=>n+1)}>Retry loading</button>}<button className="text-button" onClick={onLogout}>Log out</button></main>
-  return <><aside className="account-sync" aria-label="Account sync"><p role="status">{status==='saved'?'Saved to your account':status==='saving'?'Saving to your account…':status==='conflict'?'Another browser saved newer data. Your changes have not been saved.':store.errorMessage||'Cloud save failed. Keep this tab open and retry.'}</p>{status==='error'&&<button className="small-button" onClick={()=>void store.flush().catch(()=>{})}>Retry save</button>}<button className="text-button" onClick={reload}>Load latest saved data</button><button className="text-button" onClick={()=>{if(!store.hasUnsaved()||window.confirm('Some changes are not saved. Log out anyway?'))onLogout()}}>Log out</button></aside><div key={attempt}>{children}</div></>
+  if(!store)return <main className="form-card"><h2>Your Account</h2><p role="status">{error||'Loading your saved companion…'}</p>{error&&<button className="primary-button" onClick={()=>setAttempt(0)}>Retry</button>}</main>
+  return <><aside className="account-sync" aria-label="Account sync"><p role="status">{status==='saved'?'Saved to your account':status==='saving'?'Saving to your account…':status==='conflict'?'Account conflict':null}</p></aside>{children}</>
 }
