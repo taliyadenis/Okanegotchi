@@ -1,14 +1,5 @@
 # Okanegotchi
 
-**Rebase integration update:** The teammate’s `account_documents` revision-checked CloudStore and AccountGate now provide signed-in persistence. The earlier companion_workspaces migration and snapshot-sync adapter were superseded and removed. Onboarding completion is stored within the setup document and survives pet edits. Guest state remains local. Device registration/status uses the teammate’s app-api foundation; physical letter delivery still awaits verified firmware compatibility and acknowledgement. See `docs/CONNECTION_SETUP.md` (or `CONNECTION_SETUP.md` from this folder) for current backend deployment steps. Earlier persistence notes below are historical.
-
-## September 26 — current onboarding/navigation update
-
-The website now has permanent Dashboard · Pet · Accounts · Goals · Letters navigation, separate onboarding completion, named gator/robot/duck previews, and a physical-only letter screen. The header/favicon use the supplied gator and the requested copy/Japanese footer is applied. Developer account controls and manual goal celebration are removed.
-
-Local persistence works; the account-sync adapter and owner-scoped SQL migration are prepared but not deployed. Physical sending is disabled because firmware species/asset versions and receipt/provisioning contracts remain incompatible or unverified. See [onboarding/device handoff](docs/ONBOARDING_DEVICE_HANDOFF.md) for exact fields, source revision, verification and blockers. Earlier implementation notes below describe historical stages and do not establish current physical connectivity.
-
-
 <img width="380" height="188" alt="Image" src="https://github.com/user-attachments/assets/3c5f443f-89be-4cef-9c81-d24853284e95" />
 
 A retro pixel-pet companion designed to make checking your finances feel more approachable and personal.
@@ -73,16 +64,6 @@ The device normally checks for updates every 30 seconds. A temporary demo sessio
 The pet keeps animating with its last known state when disconnected. The website may mirror the pet, but the device does not depend on an open browser.
 
 The hardware team's planned platform is an ESP32-S3 with a 240 × 240 display, a PN532 NFC reader, and three buttons, using Arduino C++. NFC opens a financial review or triggers an explicitly enabled demo scenario; a tap does not make a payment or retrieve bank details.
-
-## Development roadmap
-
-- [x] Scaffold the React/Vite/TypeScript application and local preview.
-- [ ] Build the dashboard and pet creator against typed demo fixtures.
-- [ ] Implement authentication, database migrations, and owner-scoped APIs.
-- [ ] Verify one queued reaction with a software device simulator.
-- [ ] Connect the physical device and verify financial reactions and appearance updates.
-- [ ] Add review/check-in, goal, and ghost/revival flows.
-- [ ] Rehearse a complete demo and deploy the companion website.
 
 ## Local development
 
