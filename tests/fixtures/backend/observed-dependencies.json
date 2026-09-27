@@ -1,0 +1,197 @@
+[
+  {
+    "table_name": "account_documents",
+    "deptype": "a",
+    "dependent": "constraint account_documents_owner_document_key_key on table account_documents"
+  },
+  {
+    "table_name": "account_documents",
+    "deptype": "a",
+    "dependent": "constraint account_documents_owner_document_key_key on table account_documents"
+  },
+  {
+    "table_name": "account_documents",
+    "deptype": "a",
+    "dependent": "constraint account_documents_owner_fkey on table account_documents"
+  },
+  {
+    "table_name": "account_documents",
+    "deptype": "a",
+    "dependent": "constraint account_documents_pkey on table account_documents"
+  },
+  {
+    "table_name": "account_documents",
+    "deptype": "a",
+    "dependent": "default value for column content of table account_documents"
+  },
+  {
+    "table_name": "account_documents",
+    "deptype": "a",
+    "dependent": "default value for column created_at of table account_documents"
+  },
+  {
+    "table_name": "account_documents",
+    "deptype": "a",
+    "dependent": "default value for column id of table account_documents"
+  },
+  {
+    "table_name": "account_documents",
+    "deptype": "a",
+    "dependent": "default value for column revision of table account_documents"
+  },
+  {
+    "table_name": "account_documents",
+    "deptype": "a",
+    "dependent": "default value for column updated_at of table account_documents"
+  },
+  {
+    "table_name": "account_documents",
+    "deptype": "a",
+    "dependent": "policy account_documents_owner_read on table account_documents"
+  },
+  {
+    "table_name": "account_documents",
+    "deptype": "n",
+    "dependent": "policy account_documents_owner_read on table account_documents"
+  },
+  {
+    "table_name": "account_documents",
+    "deptype": "a",
+    "dependent": "policy account_documents_owner_update on table account_documents"
+  },
+  {
+    "table_name": "account_documents",
+    "deptype": "n",
+    "dependent": "policy account_documents_owner_update on table account_documents"
+  },
+  {
+    "table_name": "account_documents",
+    "deptype": "n",
+    "dependent": "policy account_documents_owner_update on table account_documents"
+  },
+  {
+    "table_name": "account_documents",
+    "deptype": "a",
+    "dependent": "policy account_documents_owner_upsert on table account_documents"
+  },
+  {
+    "table_name": "account_documents",
+    "deptype": "n",
+    "dependent": "policy account_documents_owner_upsert on table account_documents"
+  },
+  {
+    "table_name": "account_documents",
+    "deptype": "i",
+    "dependent": "toast table pg_toast.pg_toast_17609"
+  },
+  {
+    "table_name": "account_documents",
+    "deptype": "a",
+    "dependent": "trigger touch_account_documents_updated_at on table account_documents"
+  },
+  {
+    "table_name": "account_documents",
+    "deptype": "i",
+    "dependent": "type account_documents"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "a",
+    "dependent": "constraint registered_devices_owner_device_id_key on table registered_devices"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "a",
+    "dependent": "constraint registered_devices_owner_device_id_key on table registered_devices"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "a",
+    "dependent": "constraint registered_devices_owner_fkey on table registered_devices"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "a",
+    "dependent": "constraint registered_devices_pkey on table registered_devices"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "a",
+    "dependent": "default value for column created_at of table registered_devices"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "a",
+    "dependent": "default value for column id of table registered_devices"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "a",
+    "dependent": "default value for column is_revoked of table registered_devices"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "a",
+    "dependent": "default value for column updated_at of table registered_devices"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "a",
+    "dependent": "policy registered_devices_owner_delete on table registered_devices"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "n",
+    "dependent": "policy registered_devices_owner_delete on table registered_devices"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "n",
+    "dependent": "policy registered_devices_owner_insert on table registered_devices"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "a",
+    "dependent": "policy registered_devices_owner_insert on table registered_devices"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "a",
+    "dependent": "policy registered_devices_owner_read on table registered_devices"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "n",
+    "dependent": "policy registered_devices_owner_read on table registered_devices"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "n",
+    "dependent": "policy registered_devices_owner_update on table registered_devices"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "a",
+    "dependent": "policy registered_devices_owner_update on table registered_devices"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "n",
+    "dependent": "policy registered_devices_owner_update on table registered_devices"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "i",
+    "dependent": "toast table pg_toast.pg_toast_17628"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "a",
+    "dependent": "trigger touch_registered_devices_updated_at on table registered_devices"
+  },
+  {
+    "table_name": "registered_devices",
+    "deptype": "i",
+    "dependent": "type registered_devices"
+  }
+]

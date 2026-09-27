@@ -37,13 +37,13 @@ Deno.serve(async req=>{
       return respond({device_id:id,token:secret,api_base:url+'/functions/v1/device-api',sync_url:url+'/functions/v1/device-api/v1/sync'},201)
     }
     if(req.method==='GET'&&path.endsWith('/v1/devices')) {
-      const {data,error}=await admin.from('registered_devices').select('id,created_at,last_seen,firmware,asset_version').eq('user_id',owner).is('revoked_at',null)
+      const {data,error}=await admin.from('registered_devices').select('id,created_at,last_seen,firmware,asset_version').eq('user_id',owner).eq('is_revoked',false).is('revoked_at',null)
       if(error)throw error
       return respond({devices:data})
     }
     const id=path.split('/').pop()
     if(req.method==='DELETE'&&path.includes('/v1/devices/')&&uuid(id)) {
-      const {error}=await admin.from('registered_devices').update({revoked_at:new Date().toISOString()}).eq('id',id).eq('user_id',owner).is('revoked_at',null)
+      const {error}=await admin.from('registered_devices').update({is_revoked:true,revoked_at:new Date().toISOString()}).eq('id',id).eq('user_id',owner).eq('is_revoked',false).is('revoked_at',null)
       if(error)throw error
       return respond({revoked:true})
     }

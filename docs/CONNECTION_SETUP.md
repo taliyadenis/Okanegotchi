@@ -8,17 +8,21 @@ This is the **connection/state-sync portion** of build-plan section 3, not the f
 
 ## Deploy
 
-Use the official Supabase CLI while signed into the project owner's/team member's account:
+**Existing project upgrade blocked pending reconciliation (2026-09-27).** Live read-only inspection confirms `account_documents` uses `owner/document_key/content`, while this application expects `user_id/kind/value`. The device table also differs. Do not run `db push`, database reset, or paste the old migrations into this existing project. The `CREATE TABLE IF NOT EXISTS` statement does not align an existing table. See [integration change record](BACKEND_INTEGRATION_CHANGELOG.md) for inventory and progress.
+
+Before an existing-project deployment: obtain a private recoverable backup, audit schema/functions/grants and data mappings, rehearse a data-preserving upgrade and rollback locally, and reconcile migration history. Do not mark old migrations applied while the live definitions remain incompatible. Current official guidance: [Supabase migrations](https://supabase.com/docs/guides/deployment/database-migrations) and [backups](https://supabase.com/docs/guides/platform/backups).
+
+The following historical commands describe **fresh installation only**, after confirming an empty target database and reviewing all migrations. They are not the upgrade procedure for `ynutfftknaieisbaioaz`:
 
 ```sh
 npx supabase login
-npx supabase link --project-ref ynutfftknaieisbaioaz
+npx supabase link --project-ref <reviewed-empty-project-ref>
 npx supabase db push
-npx supabase functions deploy app-api --project-ref ynutfftknaieisbaioaz
-npx supabase functions deploy device-api --project-ref ynutfftknaieisbaioaz
+npx supabase functions deploy app-api --project-ref <reviewed-empty-project-ref>
+npx supabase functions deploy device-api --project-ref <reviewed-empty-project-ref>
 ```
 
-Review db push's migration list before applying. These files add account_documents, registered_devices, owner-read RLS policies and narrowly scoped RPCs; they do not drop existing tables. Alternatively, apply the two SQL files in filename order through Supabase SQL Editor, then deploy the functions. Do not apply the same migration twice.
+Review db push's migration list before applying. Track schema changes through migrations; do not bypass the history by applying the old SQL files manually to a nonempty project.
 
 Set ALLOWED_ORIGINS in Edge Function secrets to the deployed website origin plus local development origins, comma-separated. The default permits only http://127.0.0.1:5173 and http://localhost:5173.
 
