@@ -4,7 +4,7 @@ import type { CloudBackend, CloudRow, DocumentKind } from './cloud-store'
 import { SaveConflict } from './cloud-store'
 
 export class AccountSchemaError extends Error {
-  constructor() { super('You're signed in, but saved accounts are temporarily unavailable because the database update is pending. Please try again after the update.'); this.name='AccountSchemaError' }
+  constructor() { super('You\'re signed in, but saved accounts are temporarily unavailable because the database update is pending. Please try again after the update.'); this.name='AccountSchemaError' }
 }
 export class AccountSaveError extends Error {
   constructor(message:string) { super(message); this.name='AccountSaveError' }
