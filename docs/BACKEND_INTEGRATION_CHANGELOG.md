@@ -1,5 +1,16 @@
 # Backend integration handoff
 
+## 2026-09-27 — resumed after website changes reached main
+
+- Refreshed all published remote branches. `main` and `codex/backend-integration` are at `9f586a2`; current firmware remains `65149a8`, historical hardware remains `d17cdd7`, and software remains `0d504d3`. Preserve the website changes now on main.
+- The earlier inventory-in-progress entries below are historical. Commit `cb73cdd` added the observed-schema fixture, atomic upgrade generator, persistence alignment migration and migration regression tests. This is local implementation, not evidence of hosted deployment.
+- Re-ran `node --experimental-transform-types --test tests/alignment.test.ts tests/database.test.ts`: all four tests passed. Coverage includes fresh installation, synthetic observed-schema upgrade, ownership/revision isolation, preservation of document data and device identity/revocation, and invalid-data rollback. These tests do not establish a private live backup or restoration after a committed hosted migration.
+- Regenerated `.local-backend/upgrade.sql` with `node tools/backend/prepare-upgrade.mjs`. It remains ignored and is a review candidate only; do not execute before the backup, current inventory and deployment gates.
+- Inspected the authenticated hosted migration page: it still shows “Run your first migration.” This establishes absence of recorded migration history, not absence of manually applied changes. No hosted writes performed in this continuation.
+- Requested the user's backup location and any intervening manual deployment status. No `pg_dump`, `psql` or `supabase` command is currently on PATH; the local private-artifact folder contains only the generated upgrade candidate.
+
+Next action: confirm or create a private recoverable database backup, refresh schema/aggregate validation and rehearse restoration before reviewing the live upgrade. Task 1's hosted save/reload/isolation gate remains open. Do not treat the subsequent state projection, event processing, device transport or physical acceptance gates as complete.
+
 ## 2026-09-27 — inventory in progress
 
 User requested the eight tasks in the MVP execution plan in order, inspection of all branches, and a change/reason record for the next agent. No hosted database changes, deployment, firmware flash, commit or push have occurred in this session.
