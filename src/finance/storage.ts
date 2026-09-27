@@ -1,5 +1,6 @@
 import { accounts } from './fixtures.ts'
 import type { SavedState, StorageLike } from './types.ts'
+import { accountStorage } from '../account/cloud-store.ts'
 export const storageKey = (identity: string) => `okanegotchi:finance-demo:v1:${encodeURIComponent(identity)}`
 export function readState(storage: StorageLike | undefined, identity: string): SavedState {
   const empty: SavedState = { version: 1, connections: [] }
@@ -19,4 +20,11 @@ export function readState(storage: StorageLike | undefined, identity: string): S
 export function writeState(storage: StorageLike | undefined, identity: string, state: SavedState) {
   try { storage?.setItem(storageKey(identity), JSON.stringify(state)); return !!storage } catch { return false }
 }
-export function browserStorage(): StorageLike | undefined { try { return window.localStorage } catch { return undefined } }
+export function browserStorage(identity='guest'): StorageLike | undefined {
+  if(identity.startsWith('user:')) {
+    const store=accountStorage(identity)
+    if(!store)throw Error('Your account has not finished loading.')
+    return store
+  }
+  try { return window.localStorage } catch { return undefined }
+}

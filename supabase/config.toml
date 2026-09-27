@@ -1,0 +1,9 @@
+project_id = "okanegotchi"
+
+[functions.app-api]
+# Handler validates the user JWT with Auth; supports current signing keys.
+verify_jwt = false
+
+[functions.device-api]
+# Opaque device credentials are verified against their hashes, not as user JWTs.
+verify_jwt = false

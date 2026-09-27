@@ -8,7 +8,7 @@ import type { SavingsGoal } from './goals'
 import './goals.css'
 
 export function SavingsGoalScreen({ identity, data, onBack, onContinue }: { identity: string; data: Snapshot; onBack: () => void; onContinue: (goal: SavingsGoal | null) => void }) {
-  const [storage] = useState(browserStorage)
+  const [storage] = useState(()=>browserStorage(identity))
   const [goal, setGoal] = useState(() => readGoal(storage, identity))
   const [editing, setEditing] = useState(!goal)
   const [name, setName] = useState(goal?.name ?? '')
@@ -32,7 +32,7 @@ export function SavingsGoalScreen({ identity, data, onBack, onContinue }: { iden
     if (!name.trim() || name.trim().length > 60) { setError('Give your goal a name between 1 and 60 characters.'); document.getElementById('goal-name')?.focus(); return }
     if (cents === null) { setError('Enter a positive dollar amount with no more than two decimal places.'); document.getElementById('goal-target')?.focus(); return }
     if (!savings.some(a => a.id === accountId)) { setError('Choose a connected demo savings account.'); document.getElementById('goal-account')?.focus(); return }
-    persist({ name: name.trim(), target: cents, accountId }); setEditing(false); setError(''); setNotice('Your savings goal is saved. One little step forward.'); setConfirmRemove(false)
+    persist({ name: name.trim(), target: cents, accountId }); setEditing(false); setError(''); setNotice('Your goal is updated. For signed-in accounts, check the cloud save status above.'); setConfirmRemove(false)
   }
   return <main className="finance-page goal-page">
     <button className="text-button" onClick={onBack}>← Financial accounts</button>

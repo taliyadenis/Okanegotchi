@@ -10,7 +10,7 @@ import { SavingsGoalScreen } from './SavingsGoalScreen'
 export function FinanceScreen({ identity, onBack }: { identity: string; onBack: () => void }) {
   const [view, setView] = useState<'accounts' | 'goal' | 'letter'>('accounts')
   const [letterGoal, setLetterGoal] = useState<SavingsGoal | null>(null)
-  const [provider] = useState(() => new DemoProvider(identity, browserStorage()))
+  const [provider] = useState(() => new DemoProvider(identity, browserStorage(identity)))
   const [data, setData] = useState(() => provider.snapshot())
   const [busy, setBusy] = useState(false)
   const lock = useRef(false)
