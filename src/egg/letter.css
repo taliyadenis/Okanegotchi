@@ -13,10 +13,11 @@
 .mail-setup .stale-check { display:flex; align-items:flex-start; gap:10px; margin:16px 0; line-height:1.6; }.stale-check input { width:22px; height:22px; flex-shrink:0; }
 .letter-review { position:relative; background:var(--paper); border:2px solid var(--ink); padding:30px; box-shadow:6px 6px var(--ink); margin:30px 0; border-radius:3px; }
 .letter-review>h2 { font-family:Georgia,serif; font-size:27px; font-style:italic; font-weight:bold; margin:45px 0 15px; overflow-wrap:anywhere; }
+.letter-review>h2 { font-family:Impact,'Arial Black',sans-serif; font-style:normal; }
 .letter-stamp { position:absolute; right:22px; top:20px; width:57px; height:66px; border:3px dotted var(--ink); background:var(--yellow); text-align:center; font-size:25px; transform:rotate(8deg); }
 .letter-stamp small { display:block; font:bold 8px monospace; }
 .letter-review dl { margin:25px 0; }.letter-review dt { font:bold 10px monospace; text-transform:uppercase; margin-top:20px; color:#57574e; }.letter-review dd { margin:7px 0 0; font-size:17px; font-weight:700; overflow-wrap:anywhere; }
-.mail-signature { font:italic 20px Georgia,serif; padding-top:18px; border-top:1px solid #bbb7a5; }
+.mail-signature { font:700 20px/1.4 'Courier New',monospace; letter-spacing:.35px; padding-top:18px; border-top:1px solid #bbb7a5; }
 .letter-page details summary { cursor:pointer; font-size:12px; font-weight:700; padding:8px 0; }.letter-page pre { font:11px/1.6 monospace; white-space:pre-wrap; overflow-wrap:anywhere; background:#f1efdf; padding:14px; border-radius:5px; max-height:280px; overflow:auto; }
 .mail-stage-card { background:var(--paper); text-align:center; overflow:hidden; }
 .mail-stage { position:relative; height:260px; overflow:hidden; margin:5px -26px 0; }
@@ -27,6 +28,7 @@
 .envelope-front { position:absolute; inset:0; z-index:2; background:var(--pink); clip-path:polygon(0 0,50% 52%,100% 0,100% 100%,0 100%); border:3px solid var(--ink); border-radius:6px; }
 .envelope-flap { position:absolute; inset:0; z-index:3; background:var(--pink); clip-path:polygon(0 0,100% 0,50% 57%); transform:rotateX(180deg); transform-origin:top; border-top:3px solid var(--ink); }
 .envelope-address { position:absolute; z-index:4; bottom:17px; left:0; right:0; font:bold 9px monospace; letter-spacing:1px; }
+.envelope-back,.envelope-front,.envelope-flap { background:var(--pink-light); }
 .envelope-seal { position:absolute; z-index:5; top:58px; left:99px; background:var(--green); color:white; border:2px solid var(--ink); width:32px; height:32px; border-radius:50%; padding-top:3px; opacity:0; }
 .mail-destination-egg { position:absolute; right:20px; top:16px; font-size:38px; color:var(--green); }.mail-destination-egg small { display:block; font:bold 8px monospace; color:var(--ink); }
 .mail-trail { position:absolute; top:145px; left:15%; font-size:30px; color:var(--blue); opacity:0; }

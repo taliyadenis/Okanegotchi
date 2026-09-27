@@ -39,6 +39,9 @@
 .account-tile strong { font-size: 28px; letter-spacing: -.8px; }
 .account-tile > span:not(.account-type), .account-tile small { font-size: 12px; }
 .institution-bottom { border-top: 1px dashed #b8b5a6; font-size: 11px; line-height: 1.6; }
+.institution-bottom { padding: 10px 16px; line-height: 1.35; }
+.institution-bottom .small-button { padding: 7px 10px; font-size: 11px; }
+.institution-card>.finance-warning { margin: 8px 16px 12px; font-size: 11px; line-height: 1.45; }
 .small-button { border: 2px solid var(--ink); padding: 10px 14px; border-radius: 5px; background: var(--paper); font-size: 12px; font-weight: 700; color: var(--ink); }
 .finance-warning { margin: 15px 24px; font-size: 13px; color: #711221; line-height: 1.6; }
 .activity-panel { margin-top: 40px; background: var(--paper); border: 3px solid var(--ink); border-radius: 12px; padding: 24px; box-shadow: 5px 5px var(--ink); }
@@ -49,6 +52,11 @@
 .transaction-list { list-style: none; padding: 0; margin: 18px 0 0; }
 .transaction-list li { display: flex; align-items: center; gap: 13px; border-top: 1px solid #d1cebf; padding: 17px 0; }
 .transaction-icon { background: var(--pink); border: 1px solid var(--ink); border-radius: 7px; padding: 8px; font-size: 20px; }
+.transaction-clover-checking { background: #c9f0df; color: #075b49; }
+.transaction-clover-savings { background: #d8e1ff; color: #2448ff; }
+.transaction-pocket-checking { background: #ffe2ad; color: #7a4b00; }
+.transaction-pocket-credit { background: #ffd0de; color: #8b2336; }
+.transaction-sunny-savings { background: #fff0aa; color: #6b4c00; }
 .transaction-list li > div { flex: 1; min-width: 0; display: grid; gap: 5px; }
 .transaction-list strong { font-size: 14px; }
 .transaction-list small,.transaction-list div > span { font-size: 11px; line-height: 1.5; }

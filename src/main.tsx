@@ -136,7 +136,7 @@ function App() {
     {page !== 'login' && !initializing ? <Workspace key={session?.user.id ?? 'guest'} identity={session ? `user:${session.user.id}` : 'guest'} onLogout={()=>session?void logout():navigate('login')} /> : <main className="main-layout">
       <section className="story-panel">
 
-        <div className="eyebrow">Your friendly reminder.</div><h1>Little pet.<br /><span>Big<br />responsibility.</span></h1>
+        <div className="eyebrow">★ Your friendly reminder.</div><h1>Little pet.<br /><span>Big<br />responsibility.</span></h1>
         <p className="story-copy">A mini companion for your financial journey.</p>
         <DeviceIllustration />
         <div className="story-footnote"><span>♡</span> Made for progress, one small step at a time.</div>
@@ -164,7 +164,7 @@ function App() {
 
       </section>
     </main>}
-    <footer><span lang="ja">お金ごっち</span><span>Okanegachi</span></footer>
+    <footer><span lang="ja">お金ごっち</span><span>Okanegotchi</span></footer>
   </div>
 }
 

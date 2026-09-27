@@ -5,6 +5,7 @@
   --red: #ef343e;
   --blue: #2448ff;
   --pink: #ff90c2;
+  --pink-light: #ffb7d4;
   --green: #00875a;
   --ink: #191919;
   --paper: #fffdf4;
@@ -24,6 +25,7 @@ button:disabled { cursor: wait; opacity: .65; }
 a { color: inherit; text-decoration: none; }
 button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
 h2:focus { outline: none; }
+h1, h2, h3, h4 { font-family: Impact, 'Arial Black', sans-serif; }
 .site-shell { max-width: 1500px; margin: auto; padding: 0 5%; }
 header { height: 100px; border-bottom: 2px solid var(--ink); }
 .brand { font-size: 30px; font-weight: 900; letter-spacing: -1.5px; }
@@ -31,7 +33,7 @@ header { height: 100px; border-bottom: 2px solid var(--ink); }
 .pixel-pet.small { width: 40px; height: 40px; }
 .header-note { font-size: 12px; font-weight: 800; text-transform: uppercase; }
 .main-layout { display: grid; grid-template-columns: minmax(0,1.12fr) minmax(0,1fr); gap: 6%; align-items: center; padding: 48px 0; }
-.eyebrow, .section-number { font-family: 'Courier New', monospace; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
+.eyebrow, .section-number { font-family: 'Courier New', monospace; font-size: 13px; font-weight: 700; letter-spacing: 1px; }
 .eyebrow { display: flex; align-items: center; gap: 9px; }
 .tiny-star { color: var(--red); font-size: 27px; }
 .story-panel h1, .form-card h2 {

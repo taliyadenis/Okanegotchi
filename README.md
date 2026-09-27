@@ -4,7 +4,7 @@
 
 ## September 26 — current onboarding/navigation update
 
-The website now has permanent Dashboard · Pet · Banks · Goals · Letters navigation, separate onboarding completion, named gator/robot/duck previews, and a physical-only letter screen. The header/favicon use the supplied gator and the requested copy/Japanese footer is applied. Developer account controls and manual goal celebration are removed.
+The website now has permanent Dashboard · Pet · Accounts · Goals · Letters navigation, separate onboarding completion, named gator/robot/duck previews, and a physical-only letter screen. The header/favicon use the supplied gator and the requested copy/Japanese footer is applied. Developer account controls and manual goal celebration are removed.
 
 Local persistence works; the account-sync adapter and owner-scoped SQL migration are prepared but not deployed. Physical sending is disabled because firmware species/asset versions and receipt/provisioning contracts remain incompatible or unverified. See [onboarding/device handoff](docs/ONBOARDING_DEVICE_HANDOFF.md) for exact fields, source revision, verification and blockers. Earlier implementation notes below describe historical stages and do not establish current physical connectivity.
 

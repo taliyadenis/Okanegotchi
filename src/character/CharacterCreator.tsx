@@ -52,7 +52,7 @@ export function CharacterCreator({pet,onPetChange,name='okanegotchi'}:{pet:Pet;o
   },[assets,pet,animation,frame])
 
   return <div className="character-creator">
-    <p className="card-intro">Three little personalities. Choose a pet and try their moves.</p>
+    <p className="card-intro">Three little personalities. Choose one and try their moves.</p>
     <div className="pet-options" role="group" aria-label="Choose a companion">
       {(Object.keys(manifest.presets) as Pet[]).map(p=><button type="button" key={p} aria-pressed={pet===p} onClick={()=>{onPetChange(p);setFrame(0);setReplay(r=>r+1)}}>{manifest.presets[p].label}</button>)}
     </div>

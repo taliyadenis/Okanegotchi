@@ -16,6 +16,8 @@
 .goal-card progress::-moz-progress-bar { background:var(--green); }
 .goal-progress-label { display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; font-size:12px; margin:12px 0 24px; }
 .goal-actions { display:flex; gap:22px; margin-top:22px; }
+.goal-remove { display:flex; flex-wrap:wrap; align-items:center; gap:16px; }
+.goal-remove p { flex-basis:100%; margin:0; }
 .goal-companion { text-align:center; padding:24px 16px; }
 .goal-companion h2 { font-size:25px; font-weight:900; margin:28px 0 12px; }
 .goal-companion p { font-size:14px; line-height:1.7; }
@@ -25,6 +27,9 @@
 .egg-face { font:bold 27px monospace; margin:18px 0; color:var(--green); }
 .egg-buttons { margin-top:16px; color:var(--yellow); letter-spacing:10px; padding-left:10px; }
 .egg-spark { position:absolute; color:var(--blue); font-size:40px; opacity:0; }
+.goal-egg { width:200px; height:auto; padding:19px 18px 15px; margin:35px auto 20px; transform:rotate(-9deg); }
+.goal-egg .goal-screen { height:137px; }
+.goal-egg .egg-face { font:bold 27px monospace; margin:18px 0 0; color:var(--green); }
 .egg-spark.left { left:-30px; top:25px; }.egg-spark.right { right:-28px; bottom:20px; }
 .celebrating .egg-spark { opacity:1; }.celebrating { animation:egg-cheer .7s ease-in-out 3; }
 @keyframes egg-cheer { 25% { transform:rotate(-6deg) translateY(-4px) } 75% { transform:rotate(6deg) translateY(-4px) } }

@@ -9,7 +9,7 @@
 .physical-letter-page .letter-review{margin:0;padding:22px 24px}
 .physical-letter-page .letter-review>h2{font-family:inherit;font-style:normal;font-size:26px;font-weight:900;letter-spacing:-.7px;margin:14px 0}
 .physical-letter-page .letter-review dl{margin:12px 0 16px}.physical-letter-page .letter-review dt{margin-top:12px;color:var(--ink)}.physical-letter-page .letter-review dd{margin-top:4px;font-size:16px}
-.physical-letter-page .mail-signature{font:italic 17px Georgia,serif;padding-top:12px;margin:0;border-top-color:var(--ink)}
+.physical-letter-page .mail-signature{font:700 17px/1.4 'Courier New',monospace;letter-spacing:.35px;padding-top:12px;margin:0;border-top-color:var(--ink)}
 .physical-letter-page .mail-stage-card{margin:0}.physical-letter-page>.primary-button{margin-top:24px}
 .site-shell>footer{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
 @media(max-width:800px){.physical-letter-page .mail-layout{gap:22px}.physical-letter-page .letter-review,.physical-letter-page .mail-stage-card{padding:20px}.dashboard-grid section,.physical-letter-page .letter-review,.physical-letter-page .mail-stage-card{border-radius:12px}}
@@ -22,3 +22,14 @@
 .permanent-nav>button{flex:1 1 0;min-width:max-content;text-align:center}
 
 .physical-letter-page .mail-layout{align-items:stretch;grid-auto-rows:1fr}.physical-letter-page .mail-layout>section{height:100%;box-sizing:border-box}
+
+/* Keep the logo at the left edge while the wordmark stays centered in the header. */
+.site-shell>header{position:relative;justify-content:flex-start}.site-shell>header .brand{position:relative;width:100%;justify-content:center}.site-shell>header .brand-icon{position:absolute;left:0}
+.physical-letter-page .mail-letter-note{font-size:13px;line-height:1.6;margin:12px 0 0}
+.physical-letter-page .letter-review>h2{font-family:Impact,'Arial Black',sans-serif;font-style:normal}
+.sync-status{margin:8px 0 2px}.onboarding-note{margin:4px 0 10px}.finance-page{padding-top:16px}
+.physical-letter-page .mail-signature,.physical-letter-page .mail-letter-note{font:700 15px/1.4 'Courier New',monospace;letter-spacing:.35px}.physical-letter-page .mail-letter-note{margin:10px 0 0}
+.dashboard-pet-card h2{font-size:24px}
+.dashboard-pet-card>p{font-weight:400;margin:0 0 8px}
+.dashboard-grid>section h2{margin:0;line-height:1.15}.dashboard-grid>section>p{line-height:1.65}
+.dashboard-grid .dashboard-pet-card .small-button{margin-top:auto;font-size:12px;font-weight:700}
