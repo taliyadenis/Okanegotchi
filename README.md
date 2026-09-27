@@ -8,6 +8,8 @@ The pet lives on a small physical handheld device and reacts to financial activi
 
 ## Project status
 
+**Connection milestone (local implementation, deployment pending):** signed-in accounts load and save setup, sample-account selections, goals and demo-letter history through owner-protected Supabase storage. Returning users open Financial accounts after completed cloud setup. Device registration/revocation and authenticated state-sync endpoints are implemented; physical rendering and device actions remain unverified/unimplemented. See [connection setup and deployment](docs/CONNECTION_SETUP.md). Earlier local-storage descriptions below describe guest mode and the previous demo implementation.
+
 This repository contains the **companion website**, scaffolded with React, Vite, TypeScript, and Tailwind CSS. The first screens provide login, sign-up, and a character selector with animated Gator, Robot, and Duck previews.
 
 The features and architecture below describe the planned MVP. Supabase authentication is implemented but requires project configuration and live verification. Demo mode remains available without configuration. Companion names, pet choices, timezone and optional budgets save locally per demo identity. Fictional financial accounts, savings goals and demo egg-letter delivery are implemented. A deployed API, real bank connections, and physical-device integration remain future work.

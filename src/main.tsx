@@ -5,6 +5,7 @@ import './styles.css'
 import { CompanionSetup } from './egg/CompanionSetup'
 import { FinanceScreen } from './finance/FinanceScreen'
 import { supabase } from './auth'
+import { AccountGate } from './account/AccountGate'
 import type { Session } from '@supabase/supabase-js'
 
 function PixelPet({ small = false }: { small?: boolean }) {
@@ -64,7 +65,7 @@ function App() {
       setSession(nextSession)
       setInitializing(false)
       if (nextSession) {
-        setPage(current => current === 'finance' ? current : 'setup')
+        // AccountGate chooses the destination after cloud data loads.
         setPassword('')
         setConfirmPassword('')
         setAuthError('')
@@ -121,7 +122,7 @@ function App() {
         setNotice('Check your email for a confirmation link, then return to log in. If you already have an account, log in instead.')
       } else if (data.session) {
         setSession(data.session)
-        setPage('setup')
+        // AccountGate routes after loading the saved account.
       }
     } catch {
       setAuthError('Unable to reach the account service. Please check your connection and try again.')
@@ -137,7 +138,7 @@ function App() {
     setEmail(''); setPassword(''); setVisible(false); setErrors({}); setAuthError(''); setNotice(''); setConfirmPassword(''); setPage(next)
   }
 
-  return <div className="site-shell">
+  const screen = <>
     <header className="flex items-center justify-between gap-4">
       <a className="brand flex items-center gap-2" href="#" onClick={event => { event.preventDefault(); if (!loading) navigate(session ? 'setup' : 'login') }} aria-label="Okanegotchi home"><PixelPet small /><span>okanegotchi<span className="brand-dot">.</span></span></a>
       <span className="header-note">Small steps. More heart.</span>
@@ -184,6 +185,8 @@ function App() {
         <p className="below-card">YOUR NEXT CHAPTER STARTS SMALL.</p>
       </section>
     </main>}
+    </>
+  return <div className="site-shell">{session ? <AccountGate key={session.user.id} userId={session.user.id} onReady={complete=>setPage(complete?'finance':'setup')} onLogout={()=>void logout()}>{screen}</AccountGate> : screen}
     <footer className="flex flex-wrap items-center justify-between gap-3"><span>© {new Date().getFullYear()} Okanegotchi</span><span>A little companion. A lot of possibility. <span className="footer-star">✦</span></span></footer>
   </div>
 }

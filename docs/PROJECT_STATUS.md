@@ -4,6 +4,12 @@ Updated September 26, 2026. Local main incorporates Ayira’s `1702fd2` plus the
 
 ## Current implementation
 
+### Connection milestone — deployment pending
+
+Added owner-scoped cloud documents, revision-conflict handling, acknowledged setup saves and routing of returning users to Financial accounts. Supabase Auth supplies unique user IDs/session credentials; no shared account secret is generated. Guests remain local. Device registration returns a random token once, hashes it at rest, enforces one active device per user and supports revocation. Device state sync reads saved setup and normalized sample finance/goal state.
+
+Both SQL migrations run successfully in PGlite with ownership/permission, retry/conflict, device-token, epoch and revocation assertions. All 48 application/database tests and 28 asset tests pass; frontend TypeScript, production build (95 modules) and Deno Edge Function checks pass. The local preview was restarted and guest setup remained available. Hosted migration/function deployment, two-browser acceptance and physical provisioning/display are still pending; no CLI deployment credentials were available. This does not complete the full v1 action/reaction/care protocol: nonempty device event outboxes currently receive 501 without consumption. See CONNECTION_SETUP.md for exact scope and deployment commands.
+
 The latest remote app already includes Supabase signup/login, confirmation messaging, session restoration, sign-out, and a financial-account demo. Those newer implementations are preserved. The older desktop snapshot's overlapping authentication code was not copied over them.
 
 The user created a Supabase project and configured its URL and publishable key in ignored `.env.local` in both the older snapshot and current Git checkout. The active preview was switched to the current checkout after main reached `107ccae`. No service-role key was supplied or added to browser source. Collaborators need their own local configuration using the existing team project; Git does not transfer ignored environment files.

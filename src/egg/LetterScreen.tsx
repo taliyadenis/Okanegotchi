@@ -13,7 +13,7 @@ import type { Phase } from './send'
 import './letter.css'
 
 export function LetterScreen({identity,data,goal,onBack,onAccounts,onCompanion}:{identity:string;data:Snapshot;goal:SavingsGoal|null;onBack:()=>void;onAccounts:()=>void;onCompanion:()=>void}) {
-  const [mailbox]=useState(()=>new DemoMailbox(identity,browserStorage()))
+  const [mailbox]=useState(()=>new DemoMailbox(identity,browserStorage(identity)))
   const [box,setBox]=useState(()=>mailbox.snapshot())
   const [still,setStill]=useState(()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const [scenario,setScenario]=useState<Scenario>('online')
