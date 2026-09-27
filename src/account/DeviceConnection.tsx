@@ -2,7 +2,7 @@ import {useEffect,useState} from 'react'
 import {supabase} from '../auth'
 type Device={id:string;last_seen:string|null;firmware:string|null}
 type Credentials={device_id:string;token:string;api_base:string;sync_url:string}
-export function DeviceConnection({userId}:{userId:string}) {
+export function DeviceConnection({userId,name='okanegotchi'}:{userId:string;name?:string}) {
   const [devices,setDevices]=useState<Device[]>([])
   const [credentials,setCredentials]=useState<Credentials|null>(null)
   const [busy,setBusy]=useState(false),[error,setError]=useState('')
@@ -17,7 +17,7 @@ export function DeviceConnection({userId}:{userId:string}) {
   async function refresh(){const data=await request('GET');setDevices(data.devices)}
   async function run(action:()=>Promise<void>){setBusy(true);setError('');try{await action()}catch(e){setError(e instanceof Error?e.message:'Device request failed.')}finally{setBusy(false)}}
   useEffect(()=>{void run(refresh)},[userId])
-  return <section className="device-connection"><h2>Your physical companion</h2>
+  return <section className="device-connection"><h2>{name} · device registration</h2>
     <p>Register one device for your account, then provision it over USB with your hardware teammate. State sync requires the deployed API and compatible firmware.</p>
     <p>Connection milestone: saved companion, preferences and sample financial summary. Device actions, care and reaction commands are not enabled yet.</p>
     {error&&<p role="alert" className="auth-error">{error}</p>}

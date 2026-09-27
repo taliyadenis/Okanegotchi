@@ -24,7 +24,7 @@ export function browserStorage(identity='guest'): StorageLike | undefined {
   if(identity.startsWith('user:')) {
     const store=accountStorage(identity)
     if(!store)throw Error('Your account has not finished loading.')
-    return store
+    return {getItem:(key:string)=>store.getItem(key),setItem:(key:string,value:string)=>{store.setItem(key,value);window.dispatchEvent(new CustomEvent('workspace-change',{detail:key}))}}
   }
-  try { return window.localStorage } catch { return undefined }
+  try { return {getItem:(key:string)=>window.localStorage.getItem(key),setItem:(key:string,value:string)=>{window.localStorage.setItem(key,value);window.dispatchEvent(new CustomEvent('workspace-change',{detail:key}))}} } catch { return undefined }
 }

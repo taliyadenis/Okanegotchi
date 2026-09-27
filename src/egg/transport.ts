@@ -4,7 +4,7 @@ import type { Companion, Preferences, Packet, Receipt } from './contract.ts'
 export type Scenario = 'online' | 'offline' | 'failure' | 'reject' | 'timeout' | 'duplicate'
 export type Delivery = { packet: Packet; status: 'queued' | 'received' | 'failed' | 'unknown'; scenario: Scenario; note: string }
 export interface EggTransport { submit(packet: Packet, scenario: Scenario): Promise<Delivery>; status(messageId: string, reconnect?: boolean): Promise<Delivery> }
-type Mailbox = { version: 4; revision: number; applied: Packet | null; companion: Companion | null; preferences: Preferences | null; history: Delivery[] }
+type Mailbox = { onboardingComplete?: boolean; version: 4; revision: number; applied: Packet | null; companion: Companion | null; preferences: Preferences | null; history: Delivery[] }
 const sessionMailboxes = new Map<string, Mailbox>()
 const empty = (): Mailbox => ({version:4,revision:0,applied:null,companion:null,preferences:null,history:[]})
 export const mailboxKey = (identity: string) => `okanegotchi:demo-mail:v4:${encodeURIComponent(identity)}`
@@ -40,7 +40,7 @@ export class DemoMailbox implements EggTransport {
         ids.add(d.packet.messageId)
       }
       if (raw.applied && raw.applied.revision > raw.revision) throw Error()
-      this.state = {version:4,revision:raw.revision,companion:raw.companion ?? null,preferences:raw.preferences ?? null,applied:raw.applied ?? null,history:raw.history}
+      this.state = {version:4,onboardingComplete:raw.onboardingComplete===true,revision:raw.revision,companion:raw.companion ?? null,preferences:raw.preferences ?? null,applied:raw.applied ?? null,history:raw.history}
     } catch { this.state = empty() }
   }
   snapshot() { return structuredClone(this.state) }

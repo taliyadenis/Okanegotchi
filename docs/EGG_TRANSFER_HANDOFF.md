@@ -1,5 +1,7 @@
 # Egg letter transfer handoff
 
+**Historical simulator implementation.** The normal website now uses a physical-only pending flow. See [current onboarding/device handoff](ONBOARDING_DEVICE_HANDOFF.md) for the inspected firmware protocol and blockers. The simulator packet below is not the physical-device contract.
+
 ## Delivered, and what is not connected
 
 Open Demo mode → Financial accounts → Your savings goal → Continue to your egg. Use the companion saved on the initial setup screen, review the linked savings goal, select Demo egg simulator, and pack/send. Supabase auth remains separate. Physical pairing is deliberately unavailable; no backend queue, firmware endpoint, USB/Bluetooth/Web Serial transport, or real device acknowledgement is implemented.

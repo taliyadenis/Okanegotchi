@@ -4,7 +4,7 @@ import './character.css'
 
 export type Pet = keyof typeof manifest.presets
 type Animation = keyof typeof manifest.animations
-export function CharacterCreator({pet,onPetChange}:{pet:Pet;onPetChange:(pet:Pet)=>void}) {
+export function CharacterCreator({pet,onPetChange,name='okanegotchi'}:{pet:Pet;onPetChange:(pet:Pet)=>void;name?:string}) {
   const [animation,setAnimation]=useState<Animation>('idle')
   const [playing,setPlaying]=useState(()=>!window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const [retry,setRetry]=useState(0)
@@ -14,6 +14,8 @@ export function CharacterCreator({pet,onPetChange}:{pet:Pet;onPetChange:(pet:Pet
   const [frame,setFrame]=useState(0)
   const canvas=useRef<HTMLCanvasElement>(null)
   const ready=Object.keys(assets).length===Object.keys(manifest.presets).length*Object.keys(manifest.animations).length
+
+  useEffect(()=>{const query=window.matchMedia('(prefers-reduced-motion: reduce)');const changed=()=>{if(query.matches)setPlaying(false)};query.addEventListener('change',changed);return()=>query.removeEventListener('change',changed)},[])
 
   useEffect(()=>{
     let active=true
@@ -50,19 +52,19 @@ export function CharacterCreator({pet,onPetChange}:{pet:Pet;onPetChange:(pet:Pet
   },[assets,pet,animation,frame])
 
   return <div className="character-creator">
-    <p className="card-intro">Three little personalities. Choose your companion and try their moves.</p>
+    <p className="card-intro">Three little personalities. Choose a pet and try their moves.</p>
     <div className="pet-options" role="group" aria-label="Choose a companion">
       {(Object.keys(manifest.presets) as Pet[]).map(p=><button type="button" key={p} aria-pressed={pet===p} onClick={()=>{onPetChange(p);setFrame(0);setReplay(r=>r+1)}}>{manifest.presets[p].label}</button>)}
     </div>
     <div className="pet-stage">
       <span className="pet-stage-label">{manifest.animations[animation].label}</span>
-      <canvas ref={canvas} width={128} height={128} role="img" aria-label={manifest.presets[pet].label+': '+manifest.animations[animation].label} />
-      <strong>{manifest.presets[pet].label}</strong>
+      <canvas ref={canvas} width={128} height={128} role="img" aria-label={(name.trim() || 'okanegotchi')+': '+manifest.animations[animation].label} />
+      <strong>{name.trim() || 'okanegotchi'}</strong>
       <button type="button" className="play-toggle" disabled={!ready} onClick={()=>setPlaying(p=>!p)}>{playing?'Pause animation':'Play animation'}</button>
       {!ready&&!error&&<span role="status">Loading your companions…</span>}
     </div>
     {error&&<div role="alert" className="auth-error">{error} <button type="button" onClick={()=>setRetry(r=>r+1)}>Retry artwork</button></div>}
-    <fieldset><legend>Try an animation</legend><div className="animation-options">{(Object.keys(manifest.animations) as Animation[]).map(a=><button key={a} type="button" disabled={!ready} aria-pressed={animation===a} onClick={()=>{setAnimation(a);setFrame(0);setReplay(r=>r+1)}}>{manifest.animations[a].label}</button>)}</div></fieldset>
-    <p className="connection-note">Try the animations, then save your setup below. Your physical device is not connected yet.</p>
+    <fieldset><legend>Try an animation</legend><div className="animation-options">{(['idle','traveling','eating','celebrate','sleepy','needs_checkin','ghost','revive'] as Animation[]).map(a=><button key={a} type="button" disabled={!ready} aria-pressed={animation===a} onClick={()=>{setAnimation(a);setFrame(0);setReplay(r=>r+1)}}>{a==='idle'?'Idle':a==='celebrate'?'Celebrating':manifest.animations[a].label}</button>)}</div></fieldset>
+
   </div>
 }

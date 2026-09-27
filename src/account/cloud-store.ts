@@ -33,12 +33,23 @@ export class CloudStore implements StorageLike {
     if(this.closed)return
     this.rows=new Map(rows.map(row=>[row.kind,row]));this.notify('saved')
   }
-  getItem(key:string) {
+  private completionKey(){return `okanegotchi:onboarding:v1:${encodeURIComponent(this.identity)}`}
+  getItem(key:string): string | null {
+    if(key===this.completionKey()){
+      const setup=this.getItem(this.keys().setup)
+      try{return JSON.parse(setup??'null')?.onboardingComplete===true?'true':null}catch{return null}
+    }
     const kind=this.kind(key)
     if(this.closed||!kind)return null
     return this.pending.get(kind) ?? this.rows.get(kind)?.value ?? null
   }
   setItem(key:string,value:string) {
+    if(key===this.completionKey()){
+      if(value!=='true'&&value!=='false')throw Error('Invalid onboarding state.')
+      const setup=JSON.parse(this.getItem(this.keys().setup)??'null')
+      if(!setup)throw Error('Save your pet setup first.')
+      this.setItem(this.keys().setup,JSON.stringify({...setup,onboardingComplete:value==='true'}));return
+    }
     const kind=this.kind(key)
     if(this.closed||!kind)throw Error('Account storage is unavailable.')
     if(new TextEncoder().encode(value).length>131072)throw Error('Saved data is too large.')

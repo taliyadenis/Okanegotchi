@@ -1,7 +1,5 @@
 # Supabase account setup
 
-For the new cloud persistence and device connection code, also follow [CONNECTION_SETUP.md](CONNECTION_SETUP.md). The account document/device migrations and Edge Functions must be deployed before signed-in cloud loading and saving can work. Browser URL/publishable-key configuration alone is insufficient. Guest mode remains available.
-
 1. For this team, use the existing Okanegotchi Supabase project. Ask the project owner for its Project URL and publishable key; do not create a separate project just to run a teammate's checkout. Only create a new project at https://supabase.com/dashboard when intentionally setting up a separate environment. Keep database passwords private.
 2. Enable the Email provider under Authentication and keep Confirm Email enabled.
 3. Under Authentication → URL Configuration, set the local Site URL to `http://127.0.0.1:5173/` and allow the same Redirect URL. Add deployment URLs separately when deployment is authorized.
@@ -44,3 +42,6 @@ References:
 - https://supabase.com/docs/guides/getting-started/quickstarts/reactjs
 - https://supabase.com/docs/guides/getting-started/api-keys
 - https://supabase.com/docs/guides/auth/general-configuration
+
+For the new cloud persistence and device connection code, also follow [CONNECTION_SETUP.md](CONNECTION_SETUP.md). The account document/device migrations and Edge Functions must be deployed before signed-in cloud loading and saving can work. Browser URL/publishable-key configuration alone is insufficient. Guest mode remains available.
+

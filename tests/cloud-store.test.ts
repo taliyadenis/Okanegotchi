@@ -41,3 +41,14 @@ test('ending a session prevents further queued writes',async()=>{
   const server=backend(),store=new CloudStore('user:a',server);await store.hydrate();store.dispose()
   assert.equal(store.getItem(key('user:a')),null);assert.throws(()=>store.setItem(key('user:a'),'{}'));await assert.rejects(store.flush())
 })
+
+
+test('onboarding completion travels with setup and survives later pet edits',async()=>{
+ const server=backend(),first=new CloudStore('user:a',server);await first.hydrate()
+ const setupKey=key('user:a'),doneKey='okanegotchi:onboarding:v1:'+encodeURIComponent('user:a')
+ first.setItem(setupKey,JSON.stringify({version:4,revision:0,companion:{name:'Penny',pet:'gator'},preferences:{timezone:'UTC',weeklyBudgetMinor:null,currency:'USD'},applied:null,history:[]}));await first.flush()
+ first.setItem(doneKey,'true');await first.flush()
+ const second=new CloudStore('user:a',server);await second.hydrate();assert.equal(second.getItem(doneKey),'true')
+ const {DemoMailbox}=await import('../src/egg/transport.ts');const mailbox=new DemoMailbox('user:a',second);mailbox.setCompanion({name:'Mochi',pet:'duck'});await second.flush()
+ const third=new CloudStore('user:a',server);await third.hydrate();assert.equal(third.getItem(doneKey),'true');assert.equal(new DemoMailbox('user:a',third).snapshot().companion?.name,'Mochi')
+})

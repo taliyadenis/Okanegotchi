@@ -1,14 +1,17 @@
 # Okanegotchi project status
 
+**Rebase integration update:** The teammate’s `account_documents` revision-checked CloudStore and AccountGate now provide signed-in persistence. The earlier companion_workspaces migration and snapshot-sync adapter were superseded and removed. Onboarding completion is stored within the setup document and survives pet edits. Guest state remains local. Device registration/status uses the teammate’s app-api foundation; physical letter delivery still awaits verified firmware compatibility and acknowledgement. See `docs/CONNECTION_SETUP.md` (or `CONNECTION_SETUP.md` from this folder) for current backend deployment steps. Earlier persistence notes below are historical.
+
+## September 26 — current onboarding/navigation update
+
+The website now has permanent Dashboard · Pet · Banks · Goals · Letters navigation, separate onboarding completion, named gator/robot/duck previews, and a physical-only letter screen. The header/favicon use the supplied gator and the requested copy/Japanese footer is applied. Developer account controls and manual goal celebration are removed.
+
+Local persistence works; the account-sync adapter and owner-scoped SQL migration are prepared but not deployed. Physical sending is disabled because firmware species/asset versions and receipt/provisioning contracts remain incompatible or unverified. See [onboarding/device handoff](ONBOARDING_DEVICE_HANDOFF.md) for exact fields, source revision, verification and blockers. Earlier implementation notes below describe historical stages and do not establish current physical connectivity.
+
+
 Updated September 26, 2026. Local main incorporates Ayira’s `1702fd2` plus the Gator/Robot/Duck asset integration. No deployment performed.
 
 ## Current implementation
-
-### Connection milestone — deployment pending
-
-Added owner-scoped cloud documents, revision-conflict handling, acknowledged setup saves and routing of returning users to Financial accounts. Supabase Auth supplies unique user IDs/session credentials; no shared account secret is generated. Guests remain local. Device registration returns a random token once, hashes it at rest, enforces one active device per user and supports revocation. Device state sync reads saved setup and normalized sample finance/goal state.
-
-Both SQL migrations run successfully in PGlite with ownership/permission, retry/conflict, device-token, epoch and revocation assertions. All 48 application/database tests and 28 asset tests pass; frontend TypeScript, production build (95 modules) and Deno Edge Function checks pass. The local preview was restarted and guest setup remained available. Hosted migration/function deployment, two-browser acceptance and physical provisioning/display are still pending; no CLI deployment credentials were available. This does not complete the full v1 action/reaction/care protocol: nonempty device event outboxes currently receive 501 without consumption. See CONNECTION_SETUP.md for exact scope and deployment commands.
 
 The latest remote app already includes Supabase signup/login, confirmation messaging, session restoration, sign-out, and a financial-account demo. Those newer implementations are preserved. The older desktop snapshot's overlapping authentication code was not copied over them.
 
@@ -65,3 +68,10 @@ Generated data: indices 98,304 bytes, masks 12,288 bytes, palettes 62 bytes. The
 After fetching origin, main remained at `107ccae` and the active checkout's application source, package.json and lockfile had no content differences from origin/main. Signup and the financial demo are already in collaborator-authored commit `f851ccd`; the merged desktop handoff commit added documentation. There is no evidence of an unpushed application-source change in the current preview.
 
 Corrected the setup guide to reuse the team Supabase project and explain Git updates, restarting the correct checkout, local-only URLs, ignored `.env.local`, and browser-local demo data. The collaborator's exact URL/checkout and missing behavior have not yet been supplied, so the cause on her machine remains unconfirmed.
+
+### Connection milestone — deployment pending
+
+Added owner-scoped cloud documents, revision-conflict handling, acknowledged setup saves and routing of returning users to Financial accounts. Supabase Auth supplies unique user IDs/session credentials; no shared account secret is generated. Guests remain local. Device registration returns a random token once, hashes it at rest, enforces one active device per user and supports revocation. Device state sync reads saved setup and normalized sample finance/goal state.
+
+Both SQL migrations run successfully in PGlite with ownership/permission, retry/conflict, device-token, epoch and revocation assertions. All 48 application/database tests and 28 asset tests pass; frontend TypeScript, production build (95 modules) and Deno Edge Function checks pass. The local preview was restarted and guest setup remained available. Hosted migration/function deployment, two-browser acceptance and physical provisioning/display are still pending; no CLI deployment credentials were available. This does not complete the full v1 action/reaction/care protocol: nonempty device event outboxes currently receive 501 without consumption. See CONNECTION_SETUP.md for exact scope and deployment commands.
+

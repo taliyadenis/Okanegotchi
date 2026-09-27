@@ -2,10 +2,9 @@ import { StrictMode, useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import type { FormEvent } from 'react'
 import './styles.css'
-import { CompanionSetup } from './egg/CompanionSetup'
-import { FinanceScreen } from './finance/FinanceScreen'
+import { Workspace } from './workspace/Workspace'
+
 import { supabase } from './auth'
-import { AccountGate } from './account/AccountGate'
 import type { Session } from '@supabase/supabase-js'
 
 function PixelPet({ small = false }: { small?: boolean }) {
@@ -38,7 +37,7 @@ function DeviceIllustration() {
 }
 
 function App() {
-  const [page, setPage] = useState<'login' | 'setup' | 'finance'>('login')
+  const [page, setPage] = useState<'login' | 'setup' | 'finance'>(()=>{try{return sessionStorage.getItem('okanegotchi:guest-active')==='true'?'setup':'login'}catch{return 'login'}})
   const [mode, setMode] = useState<'login' | 'signup'>('login')
   const [session, setSession] = useState<Session | null>(null)
   const [initializing, setInitializing] = useState(!!supabase)
@@ -54,7 +53,7 @@ function App() {
   const firstRender = useRef(true)
 
   useEffect(() => {
-    document.title = `${page === 'login' ? 'Welcome' : 'Your companion'} · Okanegotchi`
+    document.title = `${page === 'login' ? 'Welcome' : 'Dashboard'} · Okanegotchi`
     if (firstRender.current) { firstRender.current = false; return }
     heading.current?.focus()
   }, [page])
@@ -65,7 +64,7 @@ function App() {
       setSession(nextSession)
       setInitializing(false)
       if (nextSession) {
-        // AccountGate chooses the destination after cloud data loads.
+        setPage('setup')
         setPassword('')
         setConfirmPassword('')
         setAuthError('')
@@ -122,7 +121,7 @@ function App() {
         setNotice('Check your email for a confirmation link, then return to log in. If you already have an account, log in instead.')
       } else if (data.session) {
         setSession(data.session)
-        // AccountGate routes after loading the saved account.
+        setPage('setup')
       }
     } catch {
       setAuthError('Unable to reach the account service. Please check your connection and try again.')
@@ -135,20 +134,21 @@ function App() {
   }
 
   function navigate(next: 'login' | 'setup' | 'finance') {
+    try {sessionStorage.setItem('okanegotchi:guest-active',next==='login'?'false':'true')} catch {}
     setEmail(''); setPassword(''); setVisible(false); setErrors({}); setAuthError(''); setNotice(''); setConfirmPassword(''); setPage(next)
   }
 
-  const screen = <>
+  return <div className="site-shell">
     <header className="flex items-center justify-between gap-4">
-      <a className="brand flex items-center gap-2" href="#" onClick={event => { event.preventDefault(); if (!loading) navigate(session ? 'setup' : 'login') }} aria-label="Okanegotchi home"><PixelPet small /><span>okanegotchi<span className="brand-dot">.</span></span></a>
-      <span className="header-note">Small steps. More heart.</span>
+      <a className="brand flex items-center gap-2" href="#" onClick={event => { event.preventDefault(); if (!loading) navigate(session ? 'setup' : 'login') }} aria-label="Okanegotchi home"><img className="brand-icon" src="/gator-icon.webp" alt=""/><span>Okanegotchi</span></a>
+
     </header>
 
-    {page === 'finance' ? <FinanceScreen key={session?.user.id ?? 'guest'} identity={session ? `user:${session.user.id}` : 'guest'} onBack={() => navigate('setup')} /> : <main className="main-layout">
+    {page !== 'login' && !initializing ? <Workspace key={session?.user.id ?? 'guest'} identity={session ? `user:${session.user.id}` : 'guest'} onLogout={()=>session?void logout():navigate('login')} /> : <main className="main-layout">
       <section className="story-panel">
-        <div className="eyebrow"><span className="tiny-star">✦</span> YOUR EVERYDAY LITTLE COMPANION</div>
-        <h1>Little pet.<br /><span>Big<br />personality.</span></h1>
-        <p className="story-copy">A little companion for your financial journey.</p>
+
+        <div className="eyebrow">Your friendly reminder.</div><h1>Little pet.<br /><span>Big<br />responsibility.</span></h1>
+        <p className="story-copy">A mini companion for your financial journey.</p>
         <DeviceIllustration />
         <div className="story-footnote"><span>♡</span> Made for progress, one small step at a time.</div>
       </section>
@@ -156,8 +156,8 @@ function App() {
       <section className="form-side" aria-label={page === 'login' ? 'Login' : 'Character setup'}>
         {initializing ? <div className="form-card" role="status">Restoring your session…</div> : page === 'login' ? <div className="form-card">
           <span className="section-number">01 / WELCOME HOME</span>
-          <h2 ref={heading} tabIndex={-1}>{mode === 'login' ? 'Hey, you.' : 'Join us.'}</h2>
-          <p className="card-intro">{mode === 'login' ? 'Good to see you. Your next little step starts here.' : 'Create an account and start your next chapter.'}</p>
+          <h2 ref={heading} tabIndex={-1}>{mode === 'login' ? 'Hello again!' : 'Join us!'}</h2>
+          <p className="card-intro">{mode === 'login' ? 'Good to see you. Your next little step starts here.' : 'Create an account and start building better financial habits.'}</p>
           <form noValidate onSubmit={login}>
             <div className="field"><label htmlFor="email">Email address</label><input id="email" type="email" autoComplete="username" placeholder="you@example.com" value={email} disabled={loading} onChange={event => setEmail(event.target.value)} aria-invalid={!!errors.email} aria-describedby={errors.email ? 'email-error' : undefined} />{errors.email && <p id="email-error" className="field-error">{errors.email}</p>}</div>
             <div className="field"><label htmlFor="password">Password</label><div className="password-wrap"><input id="password" type={visible ? 'text' : 'password'} autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} placeholder="Enter your password" value={password} disabled={loading} onChange={event => setPassword(event.target.value)} aria-invalid={!!errors.password} aria-describedby={errors.password ? 'password-error' : undefined} /><button className="password-toggle" type="button" disabled={loading} onClick={() => setVisible(!visible)} aria-label={visible ? 'Hide password' : 'Show password'} aria-pressed={visible}>{visible ? 'Hide' : 'Show'}</button></div>{errors.password && <p id="password-error" className="field-error">{errors.password}</p>}</div>
@@ -171,23 +171,11 @@ function App() {
           <button className="demo-button" disabled={loading} onClick={() => navigate('setup')}>Continue in demo mode <span aria-hidden="true">→</span></button>
           <p className="demo-note"><span className="note-dot" /> A little preview. No account needed.</p>
           {!supabase && <p className="connection-note">Accounts are being connected. The demo is available now.</p>}
-        </div> : <div className="form-card setup-card">
-          <span className="section-number">02 / A NEW LITTLE FRIEND</span>
-          <span className="demo-badge">{session ? 'SIGNED IN' : 'DEMO PREVIEW'}</span>
-          {session && <p className="account-email">Signed in as {session.user.email}</p>}
-          <h2 ref={heading} tabIndex={-1}>Let’s create your companion</h2>
-          <p className="card-intro">Choose your little companion, then connect demo accounts and give your savings a goal.</p>
-          <CompanionSetup key={session?.user.id ?? 'guest'} identity={session ? `user:${session.user.id}` : 'guest'} onContinue={() => navigate('finance')} />
+        </div> : null}
 
-          {authError && <p className="auth-error" role="alert">{authError}</p>}
-          <button className="demo-button back-button" disabled={loading} onClick={() => session ? void logout() : navigate('login')}><span aria-hidden="true">←</span> {loading ? 'Logging out…' : session ? 'Log out' : 'Back to login'}</button>
-        </div>}
-        <p className="below-card">YOUR NEXT CHAPTER STARTS SMALL.</p>
       </section>
     </main>}
-    </>
-  return <div className="site-shell">{session ? <AccountGate key={session.user.id} userId={session.user.id} onReady={complete=>setPage(complete?'finance':'setup')} onLogout={()=>void logout()}>{screen}</AccountGate> : screen}
-    <footer className="flex flex-wrap items-center justify-between gap-3"><span>© {new Date().getFullYear()} Okanegotchi</span><span>A little companion. A lot of possibility. <span className="footer-star">✦</span></span></footer>
+    <footer><span lang="ja">お金ごっち</span><small className="footer-japanese" lang="ja">「小さな一歩を、いっしょに。」</small></footer>
   </div>
 }
 

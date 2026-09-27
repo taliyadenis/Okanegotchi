@@ -1,5 +1,14 @@
 # Okanegotchi
 
+**Rebase integration update:** The teammate’s `account_documents` revision-checked CloudStore and AccountGate now provide signed-in persistence. The earlier companion_workspaces migration and snapshot-sync adapter were superseded and removed. Onboarding completion is stored within the setup document and survives pet edits. Guest state remains local. Device registration/status uses the teammate’s app-api foundation; physical letter delivery still awaits verified firmware compatibility and acknowledgement. See `docs/CONNECTION_SETUP.md` (or `CONNECTION_SETUP.md` from this folder) for current backend deployment steps. Earlier persistence notes below are historical.
+
+## September 26 — current onboarding/navigation update
+
+The website now has permanent Dashboard · Pet · Banks · Goals · Letters navigation, separate onboarding completion, named gator/robot/duck previews, and a physical-only letter screen. The header/favicon use the supplied gator and the requested copy/Japanese footer is applied. Developer account controls and manual goal celebration are removed.
+
+Local persistence works; the account-sync adapter and owner-scoped SQL migration are prepared but not deployed. Physical sending is disabled because firmware species/asset versions and receipt/provisioning contracts remain incompatible or unverified. See [onboarding/device handoff](docs/ONBOARDING_DEVICE_HANDOFF.md) for exact fields, source revision, verification and blockers. Earlier implementation notes below describe historical stages and do not establish current physical connectivity.
+
+
 <img width="380" height="188" alt="Image" src="https://github.com/user-attachments/assets/3c5f443f-89be-4cef-9c81-d24853284e95" />
 
 A retro pixel-pet companion designed to make checking your finances feel more approachable and personal.
@@ -7,8 +16,6 @@ A retro pixel-pet companion designed to make checking your finances feel more ap
 The pet lives on a small physical handheld device and reacts to financial activity. The companion website helps users customize their pet, set savings goals, review spending, and understand what their pet is responding to.
 
 ## Project status
-
-**Connection milestone (local implementation, deployment pending):** signed-in accounts load and save setup, sample-account selections, goals and demo-letter history through owner-protected Supabase storage. Returning users open Financial accounts after completed cloud setup. Device registration/revocation and authenticated state-sync endpoints are implemented; physical rendering and device actions remain unverified/unimplemented. See [connection setup and deployment](docs/CONNECTION_SETUP.md). Earlier local-storage descriptions below describe guest mode and the previous demo implementation.
 
 This repository contains the **companion website**, scaffolded with React, Vite, TypeScript, and Tailwind CSS. The first screens provide login, sign-up, and a character selector with animated Gator, Robot, and Duck previews.
 
@@ -147,3 +154,6 @@ After your saved savings goal, choose **Continue to your egg**. Review your prev
 Setup includes a reviewed timezone and optional weekly USD budget. The demo letter v4 includes these preferences, with integer cents or null for no budget. Historical letters retain their original pet IDs. Legacy Piggy/Cat/Dragon setups show Gator as the default for review before saving again; their names remain intact. These fields do not yet implement check-in scheduling, budget calculations, care or reaction events.
 
 Combined integration validation: TypeScript, the production build, 38 application tests and 28 asset tests pass. The browser shows the animated selector alongside companion name, timezone, budget and Save & continue. Physical delivery remains unverified.
+
+**Connection milestone (local implementation, deployment pending):** signed-in accounts load and save setup, sample-account selections, goals and demo-letter history through owner-protected Supabase storage. Returning users open Financial accounts after completed cloud setup. Device registration/revocation and authenticated state-sync endpoints are implemented; physical rendering and device actions remain unverified/unimplemented. See [connection setup and deployment](docs/CONNECTION_SETUP.md). Earlier local-storage descriptions below describe guest mode and the previous demo implementation.
+
