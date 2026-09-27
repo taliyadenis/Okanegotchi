@@ -1,5 +1,11 @@
 # Backend integration handoff
 
+## 2026-09-27 — account loading failure confirmed
+
+- A read-only hosted REST request selecting `kind,value,revision` with `limit=0` returned HTTP 400 / PostgreSQL `42703` (missing column). No account documents or credentials were retrieved. The website's current document contract remains incompatible with the hosted table.
+- `src/account/backend.ts` now classifies missing-column/missing-RPC errors; `src/account/AccountGate.tsx` explains that sign-in succeeded but the database update is pending instead of suggesting password or connection retries will repair the schema. Other errors retain the generic retry message.
+- This is an error-message fix only. The user confirmed no backup exists; backup creation and restoration verification remain prerequisites for the live upgrade. No hosted schema change or successful account hydration is claimed.
+
 ## 2026-09-27 — resumed after website changes reached main
 
 - Refreshed all published remote branches. `main` and `codex/backend-integration` are at `9f586a2`; current firmware remains `65149a8`, historical hardware remains `d17cdd7`, and software remains `0d504d3`. Preserve the website changes now on main.
@@ -52,3 +58,9 @@ This conflicts with the website's expected `user_id/kind/value` document contrac
 ### Gate status / next action
 
 Task 1 remains in progress. Tasks 2–8 remain pending; no live save, cross-account, TLS, device or physical display success is claimed. Continue read-only inventory, obtain required team handoff, then reproduce the observed database with synthetic data and rehearse alignment/rollback before any live upgrade. Firmware instructions are at `firmware/AGENTS.md` on the current firmware branch; read before editing its source. Keep physical letter Send disabled.
+## 2026-09-27 — hosted-schema compatibility adapter
+
+- Updated `src/account/backend.ts` to read the currently hosted `account_documents` columns (`owner`, `document_key`, `content`) and call the hosted `save_account_document(p_document_key, p_content, p_expected_revision)` contract.
+- Kept the adapter narrow and reversible; no hosted schema, migration, RPC, or device deployment was changed.
+- This should restore website account hydration and saves for the observed hosted schema after the updated frontend is deployed. Device communication still requires the reviewed alignment migration and Edge Function deployment.
+- Validation: TypeScript check and the four alignment/database tests pass. Browser/hosted account save verification remains outstanding.
