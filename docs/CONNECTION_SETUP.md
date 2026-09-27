@@ -49,7 +49,7 @@ POST /v1/sync uses the build-plan bootstrap request (epoch null, ack_command_seq
 
 ## Firmware compatibility and remaining work
 
-The inspected hardware/firmware-mvp branch still documents piggy/cat/dragon and its parser does not apply appearance to the display. Coordinate gator/robot/duck, asset_version 1 and the generated artwork before bench testing. Responses retain palette=mint and accessory=none only as compatibility fields; render original artwork without customization.
+Use `origin/codex/firmware-usb-bringup-noel` (reviewed at `65149a8`), its `mvp/*.schema.json`, `firmware/src/protocol.cpp`, and `docs/firmware/INTEGRATION.md` for alignment. The copied `hardware/firmware-mvp` prototype is not authoritative. Current firmware expects gator/robot/duck in original artwork, `palette=original`, `accessory=none`, and `asset_version=1`. The state-only backend still emits `palette=mint`; its goal-name, monetary bounds, goal semantics and state-version updates also need reconciliation against the actual schema/parser. This documentation correction does not establish compatibility or authorize device deployment.
 
 State currently supplies setup, sample weekly spending and the linked sample savings goal. Care fields are initial placeholders (content, zero elapsed/streak, no completed windows). Demo lease, review/check-in processing, reaction queue/ack delivery, reset and financial scenario ingestion are **not implemented**. Requests containing events return 501 without consuming the outbox; do not enable NFC/actions against this endpoint yet. Old firmware accepting an HTTP response is not proof of correct rendering.
 

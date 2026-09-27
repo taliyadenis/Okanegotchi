@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
+import { accountBackend } from './backend'
+import { accountLoadMessage } from './backend-errors'
 import { accountBackend, AccountSaveError, AccountSchemaError } from './backend'
 import { attachStorage, CloudStore, detachStorage } from './cloud-store'
 import { DemoMailbox } from '../egg/transport'
@@ -19,6 +21,7 @@ export function AccountGate({userId,onReady,onLogout,children}:{userId:string;on
       attachStorage(next);setStore(next)
       const saved=new DemoMailbox(next.identity,next).snapshot()
       onReady(!!saved.companion&&!!saved.preferences)
+    }).catch(cause=>{if(active){setStatus('error');setError(accountLoadMessage(cause))}})
     }).catch(error=>{if(active){setStatus('error');setError(error instanceof AccountSchemaError ? error.message : 'We could not load your saved account. Check your connection and try again.')}})
     return()=>{active=false;unsubscribe();detachStorage(next)}
   },[userId,attempt])

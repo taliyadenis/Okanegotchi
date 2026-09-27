@@ -1,4 +1,6 @@
 import { supabase } from '../auth'
+import { accountRequestError, AccountSessionError } from './backend-errors'
+import type { CloudBackend, CloudRow } from './cloud-store'
 import { SaveConflict } from './cloud-store'
 import type { CloudBackend, CloudRow, DocumentKind } from './cloud-store'
 
@@ -14,13 +16,17 @@ export function accountBackend(userId:string):CloudBackend {
   const client=supabase
   async function request(path:string,body?:unknown) {
     const {data:{session}}=await client.auth.getSession()
-    if(!session||session.user.id!==userId)throw Error('Account session changed.')
+    if(!session||session.user.id!==userId)throw new AccountSessionError()
     const response=await fetch(import.meta.env.VITE_SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/'+path,{
       method:body===undefined?'GET':'POST',
       headers:{apikey:import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,Authorization:'Bearer '+session.access_token,'Content-Type':'application/json'},
       body:body===undefined?undefined:JSON.stringify(body),
       signal:AbortSignal.timeout(15000),
     })
+    // Proxies can return a non-JSON failure; keep it in the safe error path.
+    const data=await response.json().catch(()=>null)
+    if(!response.ok)throw accountRequestError(response.status,data)
+    if(data===null)throw Error('Cloud account response was invalid.')
     const data=await response.json()
     if(!response.ok){
       if(data.code==='40001')throw new SaveConflict('Another device has saved newer data.')
