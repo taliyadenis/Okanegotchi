@@ -18,7 +18,6 @@ The features and architecture below describe the planned MVP. Supabase authentic
 
 - **Financial reactions:** food expenses trigger an eating animation, rides trigger traveling, and savings contributions trigger a celebration.
 - **Savings goals:** see progress toward a named goal alongside clear spending context.
-- **Daily check-ins:** review a financial summary and confirm a check-in, with one target in the morning and one in the afternoon/evening.
 - **Gentle care mechanics:** attention affects the pet's care state. A faded or ghost pet can be revived through a confirmed review without losing customization, savings, or history.
 
 Spending money is never required to care for or revive the pet. Care reflects check-in activity, while budget status reflects financial facts; these are separate concepts.
