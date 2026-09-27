@@ -1,5 +1,7 @@
+import { weeklySummary } from '../../../src/checkins/model.ts'
+import { accounts, transactions } from '../../../src/finance/fixtures.ts'
 import {createClient} from 'npm:@supabase/supabase-js@2'
-import {hashToken,json,newToken,uuid} from '../_shared/http.ts'
+import {boundedJson,hashToken,json,newToken,uuid} from '../_shared/http.ts'
 const url=Deno.env.get('SUPABASE_URL')!
 const admin=createClient(url,Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,{auth:{persistSession:false,autoRefreshToken:false}})
 Deno.serve(async req=>{
@@ -15,6 +17,19 @@ Deno.serve(async req=>{
     const {data,error}=await admin.auth.getUser(token)
     if(error||!data.user)return respond({error:'Sign in required'},401)
     const owner=data.user.id,path=new URL(req.url).pathname
+    if(req.method==='POST'&&path.endsWith('/v1/checkins/review')) {
+      let body:any
+      try {body=await boundedJson(req);if(!body||Object.keys(body).join()!=='request_id'||!uuid(body.request_id))throw Error()}catch{return respond({error:'A valid review request ID is required.'},400)}
+      const {data:rows,error}=await admin.from('account_documents').select('kind,value').eq('user_id',owner).in('kind',['setup','finance']);if(error)throw error
+      const setup=JSON.parse(rows?.find(row=>row.kind==='setup')?.value??'null'),finance=JSON.parse(rows?.find(row=>row.kind==='finance')?.value??'null')
+      if(!setup?.preferences)return respond({error:'Save your timezone and preferences first.'},409)
+      const connections=Array.isArray(finance?.connections)?finance.connections:[]
+      const ids=new Set(connections.flatMap((c:any)=>Array.isArray(c.accountIds)?c.accountIds.filter((id:unknown)=>accounts.some(a=>a.id===id&&a.institutionId===c.institutionId)):[]))
+      const selected=accounts.filter(a=>ids.has(a.id));if(!selected.length)return respond({error:'Connect an account before reviewing.'},409)
+      const snapshot=weeklySummary({accounts:selected,transactions:transactions.filter(t=>ids.has(t.accountId)),connections},setup.preferences.timezone,setup.preferences.weeklyBudgetMinor)
+      const {data:review,error:reviewError}=await admin.rpc('create_web_financial_review',{owner_id:owner,request_id:body.request_id,financial_snapshot:snapshot});if(reviewError)throw reviewError
+      return respond(review)
+    }
     if(req.method==='POST'&&path.endsWith('/v1/devices')) {
       const secret=newToken()
       const {data:id,error}=await admin.rpc('register_owned_device',{owner_id:owner,secret_hash:await hashToken(secret)})

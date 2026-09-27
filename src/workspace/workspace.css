@@ -14,4 +14,11 @@
 .site-shell>footer{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
 @media(max-width:800px){.physical-letter-page .mail-layout{gap:22px}.physical-letter-page .letter-review,.physical-letter-page .mail-stage-card{padding:20px}.dashboard-grid section,.physical-letter-page .letter-review,.physical-letter-page .mail-stage-card{border-radius:12px}}
 
-.dashboard-grid .dashboard-pet-card{gap:8px;align-self:start;font-weight:900}.dashboard-pet-card h2{margin:0;font-size:clamp(26px,3vw,34px);line-height:1.15;font-weight:900}.dashboard-grid .dashboard-pet-card .small-button{margin-top:0;padding:14px 22px;font-size:18px;font-weight:900}
+.dashboard-grid .dashboard-pet-card{gap:8px;font-weight:900}.dashboard-pet-card h2{margin:0;font-size:clamp(26px,3vw,34px);line-height:1.15;font-weight:900}.dashboard-grid .dashboard-pet-card .small-button{margin-top:0;padding:10px 14px;font-size:12px;font-weight:400}
+
+/* Keep the three dashboard overview cards equal in size at every breakpoint. */
+.dashboard-grid{grid-auto-rows:1fr;align-items:stretch}.dashboard-grid>section{min-height:190px;box-sizing:border-box}
+
+.permanent-nav>button{flex:1 1 0;min-width:max-content;text-align:center}
+
+.physical-letter-page .mail-layout{align-items:stretch;grid-auto-rows:1fr}.physical-letter-page .mail-layout>section{height:100%;box-sizing:border-box}

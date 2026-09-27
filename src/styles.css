@@ -138,3 +138,5 @@ footer { min-height: 80px; border-top: 2px solid var(--ink); font-size: 11px; fo
 .device-connection p { margin:12px 0; line-height:1.5; }
 .device-connection label { display:block; margin:12px 0; }
 .device-connection input { display:block; width:100%; padding:8px; }
+
+.home-gator { object-fit:contain; image-rendering:pixelated; }

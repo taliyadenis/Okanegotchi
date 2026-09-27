@@ -7,17 +7,6 @@ import { Workspace } from './workspace/Workspace'
 import { supabase } from './auth'
 import type { Session } from '@supabase/supabase-js'
 
-function PixelPet({ small = false }: { small?: boolean }) {
-  return <svg className={small ? 'pixel-pet small' : 'pixel-pet'} viewBox="0 0 32 32" aria-hidden="true" shapeRendering="crispEdges">
-    <path fill="#191919" d="M7 7h6v4h6V7h6v6h3v12h-4v3H8v-3H4V13h3z" />
-    <path fill="#00875A" d="M8 9h3v5h10V9h3v6h2v9h-4v2H10v-2H6v-9h2z" />
-    <path fill="#2448FF" d="M6 21h3v3h14v-3h3v3h-4v2H10v-2H6z" />
-    <path fill="#191919" d="M11 16h2v3h-2zm8 0h2v3h-2zm-5 5h4v2h-4z" />
-    <path fill="#FF90C2" d="M8 20h3v2H8zm13 0h3v2h-3z" />
-    <path fill="#FFD600" d="M15 12h2v2h-2z" />
-  </svg>
-}
-
 function DeviceIllustration() {
   return <div className="illustration" role="img" aria-label="A bright green handheld device with a friendly pixel pet on its screen">
     <span className="spark spark-one">✦</span><span className="spark spark-two">+</span>
@@ -25,7 +14,7 @@ function DeviceIllustration() {
       <div className="device-top"><span>OKANEGOTCHI</span><span className="indicator" /></div>
       <div className="screen-frame"><div className="screen">
         <div className="screen-header"><span>HELLO, FRIEND</span><span>♥</span></div>
-        <PixelPet />
+        <img className="pixel-pet home-gator" src="/gator-icon.webp" alt="" />
         <div className="ground" />
         <span className="screen-caption">little steps, together.</span>
       </div></div>

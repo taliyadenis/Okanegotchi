@@ -20,8 +20,8 @@
 .goal-companion h2 { font-size:25px; font-weight:900; margin:28px 0 12px; }
 .goal-companion p { font-size:14px; line-height:1.7; }
 .goal-companion .finance-badge { font-size:10px; }
-.goal-egg { width:210px; height:250px; margin:35px auto 20px; background:var(--green); border:3px solid var(--ink); border-radius:48% 48% 42% 42%; padding:65px 22px 20px; box-shadow:7px 7px var(--ink); position:relative; }
-.egg-screen { background:var(--paper); border:6px solid var(--ink); border-radius:12px; padding:12px 3px; font:bold 7px monospace; }
+.goal-egg { width:210px; height:250px; margin:35px auto 20px; background:var(--green); border:3px solid var(--ink); border-radius:30px 30px 45px 45px; padding:32px 18px 20px; box-shadow:7px 7px var(--ink); position:relative; }
+.egg-screen { background:var(--paper); border:8px solid var(--ink); border-radius:10px; padding:12px 3px; font:bold 7px monospace; }
 .egg-face { font:bold 27px monospace; margin:18px 0; color:var(--green); }
 .egg-buttons { margin-top:16px; color:var(--yellow); letter-spacing:10px; padding-left:10px; }
 .egg-spark { position:absolute; color:var(--blue); font-size:40px; opacity:0; }
