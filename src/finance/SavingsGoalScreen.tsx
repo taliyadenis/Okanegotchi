@@ -35,7 +35,7 @@ export function SavingsGoalScreen({ identity, data, onBack, onContinue }: { iden
   }
   return <main className="finance-page goal-page">
     <button className="text-button" onClick={onBack}>← Financial accounts</button>
-    <div className="finance-heading"><div><span className="section-number">04 / SOMETHING TO LOOK FORWARD TO</span><h1 ref={heading} tabIndex={-1}>Small steps.<br /><em>Your next chapter.</em></h1></div><span className="finance-badge">✦ DEMO DATA</span></div>
+    <div className="finance-heading"><div><span className="section-number">04 / SOMETHING TO LOOK FORWARD TO</span><h1 ref={heading} tabIndex={-1}>Small steps.<br /><em>Your next chapter.</em></h1></div></div>
     <p className="finance-intro">Give your savings a purpose.</p>
     <p role="status" className="finance-message">{notice}</p>
     {!persistent && <p className="finance-warning">This goal is available for this visit only. Browser storage is unavailable.</p>}

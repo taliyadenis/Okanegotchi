@@ -175,7 +175,7 @@ function App() {
 
       </section>
     </main>}
-    <footer><span lang="ja">お金ごっち</span><small className="footer-japanese" lang="ja">「小さな一歩を、いっしょに。」</small></footer>
+    <footer><span lang="ja">お金ごっち</span><span>Okanegachi</span></footer>
   </div>
 }
 
