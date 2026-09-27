@@ -26,7 +26,8 @@ export function accountBackend(userId:string):CloudBackend {
       if(data.code==='40001')throw new SaveConflict('Another device has saved newer data.')
       if(data.code==='42703'||data.code==='PGRST202')throw new AccountSchemaError()
       if(body!==undefined && data.code==='22023')throw new AccountSaveError('The account setup was rejected by the hosted database. Check the pet name, budget, and timezone, then try again.')
-      throw Error('Cloud account request failed.')
+      const detail=typeof data?.message==='string'?data.message:typeof data?.error==='string'?data.error:''
+      throw Error(detail?`Cloud account request failed: ${detail}`:'Cloud account request failed.')
     }
     return data
   }

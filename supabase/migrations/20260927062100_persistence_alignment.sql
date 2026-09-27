@@ -53,7 +53,9 @@ begin
   end if;
   -- Serialize compare-and-swap even for the first write; a lost response can retry safely.
   perform pg_catalog.pg_advisory_xact_lock(pg_catalog.hashtextextended(owner_id::text || ':' || document_kind,0));
-  select revision into next_revision from public.account_documents where user_id=owner_id and kind=document_kind;
+  select ad.revision into next_revision
+    from public.account_documents as ad
+    where ad.user_id=owner_id and ad.kind=document_kind;
   if coalesce(next_revision,0)<>expected_revision then
     if exists(select 1 from public.account_documents where user_id=owner_id and kind=document_kind and value::jsonb=parsed) then
       return next_revision;
