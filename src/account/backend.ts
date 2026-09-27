@@ -5,6 +5,9 @@ import type { CloudBackend, CloudRow, DocumentKind } from './cloud-store'
 export class AccountSchemaError extends Error {
   constructor() { super('You’re signed in, but saved accounts are temporarily unavailable because the database update is pending. Please try again after the update.'); this.name='AccountSchemaError' }
 }
+export class AccountSaveError extends Error {
+  constructor(message:string) { super(message); this.name='AccountSaveError' }
+}
 
 export function accountBackend(userId:string):CloudBackend {
   if(!supabase)throw Error('Account service is not configured.')
@@ -19,7 +22,12 @@ export function accountBackend(userId:string):CloudBackend {
       signal:AbortSignal.timeout(15000),
     })
     const data=await response.json()
-    if(!response.ok){if(data.code==='40001')throw new SaveConflict('Another device has saved newer data.');if(data.code==='42703'||data.code==='PGRST202')throw new AccountSchemaError();throw Error('Cloud account request failed.')}
+    if(!response.ok){
+      if(data.code==='40001')throw new SaveConflict('Another device has saved newer data.')
+      if(data.code==='42703'||data.code==='PGRST202')throw new AccountSchemaError()
+      if(body!==undefined && data.code==='22023')throw new AccountSaveError('The account setup was rejected by the hosted database. Check the pet name, budget, and timezone, then try again.')
+      throw Error('Cloud account request failed.')
+    }
     return data
   }
   return {

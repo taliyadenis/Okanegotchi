@@ -20,6 +20,7 @@ export class CloudStore implements StorageLike {
   private listeners = new Set<() => void>()
   private closed = false
   status: SyncStatus = 'loading'
+  errorMessage = ''
   constructor(readonly identity: string, private backend: CloudBackend) {}
   private keys(): Record<DocumentKind, string> {
     const id=encodeURIComponent(this.identity)
@@ -72,7 +73,7 @@ export class CloudStore implements StorageLike {
         if(this.pending.get(kind)===value)this.pending.delete(kind)
       }
       this.notify('saved')
-    })().catch(error=>{this.notify(error instanceof SaveConflict?'conflict':'error');throw error})
+    })().catch(error=>{this.errorMessage=error instanceof Error?error.message:'Cloud save failed.';this.notify(error instanceof SaveConflict?'conflict':'error');throw error})
     try {await this.running} finally {this.running=null}
   }
   hasUnsaved() {return this.pending.size>0}
