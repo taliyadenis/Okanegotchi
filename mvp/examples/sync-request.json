@@ -1,0 +1,22 @@
+{
+  "api_version": 1,
+  "request_id": "ab58de40-d8be-4590-a549-0b182d675b5e",
+  "device_id": "cc159f6c-bdaf-4b78-8c93-e7a8e27620dc",
+  "epoch": "ef286bf8-928d-46f7-b697-bf2379ccac7b",
+  "ack_command_seq": 4,
+  "events": [
+    {
+      "event_id": "ebd57f92-e0d4-43f7-956c-0f4aa73eac85",
+      "type": "review_requested",
+      "payload": {
+        "source": "card"
+      }
+    }
+  ],
+  "telemetry": {
+    "firmware": "0.1.0",
+    "asset_version": 1,
+    "uptime_s": 1260,
+    "rssi_dbm": -55
+  }
+}

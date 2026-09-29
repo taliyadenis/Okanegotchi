@@ -1,0 +1,39 @@
+name: Firmware
+on:
+  pull_request:
+    paths: ['firmware/**', 'mvp/**', 'assets/**', '.github/workflows/firmware.yml']
+  push:
+    paths: ['firmware/**', 'mvp/**', 'assets/**', '.github/workflows/firmware.yml']
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r firmware/requirements-dev.txt
+      - run: git clone --depth 1 --branch v7.2.1 https://github.com/bblanchon/ArduinoJson.git firmware/build/ArduinoJson
+      - run: python firmware/tools/generate_schema.py
+      - run: python firmware/tools/import_shared_assets.py
+      - run: git diff --exit-code -- firmware/src/generated
+      - run: python firmware/tools/check_contract.py
+      - run: python firmware/tools/build_native.py --arduinojson firmware/build/ArduinoJson
+      - run: python firmware/tools/test_runtime.py
+      - run: python firmware/tools/test_render.py
+  esp32:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        mode: ['', '--demo']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: arduino/setup-arduino-cli@v2
+        with:
+          version: '1.5.1'
+      - run: arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+      - run: arduino-cli core install esp32:esp32@3.3.12 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+      - run: arduino-cli lib install --no-deps 'ArduinoJson@7.2.1' 'Adafruit BusIO@1.17.2' 'Adafruit GFX Library@1.12.6' 'Adafruit ST7735 and ST7789 Library@1.11.0'
+      - run: python firmware/tools/build_esp32.py ${{ matrix.mode }}

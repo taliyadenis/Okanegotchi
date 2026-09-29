@@ -1,0 +1,605 @@
+[
+  {
+    "id": "response-valid",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [],
+    "valid": true
+  },
+  {
+    "id": "request-valid",
+    "schema": "device-sync-request.schema.json",
+    "fixture": "mvp/examples/sync-request.json",
+    "changes": [],
+    "valid": true
+  },
+  {
+    "id": "bootstrap-valid",
+    "schema": "device-sync-request.schema.json",
+    "fixture": "mvp/examples/bootstrap-request.json",
+    "changes": [],
+    "valid": true
+  },
+  {
+    "id": "reset-error-valid",
+    "schema": "device-error.schema.json",
+    "fixture": "tests/fixtures/reset-error.json",
+    "changes": [],
+    "valid": true
+  },
+  {
+    "id": "unauthorized-valid",
+    "schema": "device-error.schema.json",
+    "fixture": "tests/fixtures/unauthorized-error.json",
+    "changes": [],
+    "valid": true
+  },
+  {
+    "id": "reject-version",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "api_version",
+        "value": 2
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-uuid",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "request_id",
+        "value": "bad"
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-epoch-null",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "epoch",
+        "value": null
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-missing-zone",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "server_time",
+        "value": "2026-09-25T18:30:00"
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-impossible-date",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "server_time",
+        "value": "2026-02-30T18:30:00Z"
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-fractional-cents",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "finance.spend_minor",
+        "value": 1.2
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-negative-cents",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "finance.spend_minor",
+        "value": -1
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-overflow-cents",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "finance.spend_minor",
+        "value": 2147483648
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-string-cents",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "finance.spend_minor",
+        "value": "3750"
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-bad-currency",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "finance.currency",
+        "value": "EUR"
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-unknown-field",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "unexpected",
+        "value": true
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-asset-version",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "pet.asset_version",
+        "value": 2
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-unknown-pet",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "pet.pet_id",
+        "value": "dog"
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-overlong-name",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "pet.name",
+        "value": "xxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-zero-goal",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "goal.target_minor",
+        "value": 0
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-zero-seq",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "commands.0.seq",
+        "value": 0
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-fractional-seq",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "commands.0.seq",
+        "value": 5.5
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-short-animation",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "commands.0.duration_ms",
+        "value": 1999
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-long-animation",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "commands.0.duration_ms",
+        "value": 10001
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-five-commands",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "commands",
+        "value": [
+          {
+            "seq": 5,
+            "command_id": "65bf2677-6917-4544-ab48-1b73d33697a3",
+            "animation": "eating",
+            "duration_ms": 8000,
+            "expires_at": "2026-09-25T18:32:00Z"
+          },
+          {
+            "seq": 5,
+            "command_id": "65bf2677-6917-4544-ab48-1b73d33697a3",
+            "animation": "eating",
+            "duration_ms": 8000,
+            "expires_at": "2026-09-25T18:32:00Z"
+          },
+          {
+            "seq": 5,
+            "command_id": "65bf2677-6917-4544-ab48-1b73d33697a3",
+            "animation": "eating",
+            "duration_ms": 8000,
+            "expires_at": "2026-09-25T18:32:00Z"
+          },
+          {
+            "seq": 5,
+            "command_id": "65bf2677-6917-4544-ab48-1b73d33697a3",
+            "animation": "eating",
+            "duration_ms": 8000,
+            "expires_at": "2026-09-25T18:32:00Z"
+          },
+          {
+            "seq": 5,
+            "command_id": "65bf2677-6917-4544-ab48-1b73d33697a3",
+            "animation": "eating",
+            "duration_ms": 8000,
+            "expires_at": "2026-09-25T18:32:00Z"
+          }
+        ]
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-unknown-animation",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "commands.0.animation",
+        "value": "dance"
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-bad-poll",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "next_sync_ms",
+        "value": 5000
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-demo-poll-mismatch",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "next_sync_ms",
+        "value": 30000
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-too-large-care",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "care.elapsed_connected_ms",
+        "value": 9007199254740992
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-bad-result",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "event_results.0.status",
+        "value": "pending"
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-rejected-no-reason",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "event_results.0.status",
+        "value": "rejected"
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-accepted-with-reason",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "event_results.0.reason",
+        "value": "INVALID_ACTION"
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-no-budget-with-value",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "finance.budget_status",
+        "value": "no_budget"
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-missing-finance",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "finance",
+        "delete": true
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "valid-large-care",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "care.elapsed_connected_ms",
+        "value": 9007199254740991
+      }
+    ],
+    "valid": true
+  },
+  {
+    "id": "valid-unicode-name",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "pet.name",
+        "value": "猫猫猫猫猫猫猫猫猫猫猫猫猫猫猫猫猫猫猫猫猫猫猫猫"
+      }
+    ],
+    "valid": true
+  },
+  {
+    "id": "valid-null-goal",
+    "schema": "device-sync-response.schema.json",
+    "fixture": "mvp/examples/sync-response.json",
+    "changes": [
+      {
+        "path": "goal",
+        "value": null
+      }
+    ],
+    "valid": true
+  },
+  {
+    "id": "reject-nine-events",
+    "schema": "device-sync-request.schema.json",
+    "fixture": "mvp/examples/sync-request.json",
+    "changes": [
+      {
+        "path": "events",
+        "value": [
+          {
+            "event_id": "ebd57f92-e0d4-43f7-956c-0f4aa73eac85",
+            "type": "review_requested",
+            "payload": {
+              "source": "card"
+            }
+          },
+          {
+            "event_id": "ebd57f92-e0d4-43f7-956c-0f4aa73eac85",
+            "type": "review_requested",
+            "payload": {
+              "source": "card"
+            }
+          },
+          {
+            "event_id": "ebd57f92-e0d4-43f7-956c-0f4aa73eac85",
+            "type": "review_requested",
+            "payload": {
+              "source": "card"
+            }
+          },
+          {
+            "event_id": "ebd57f92-e0d4-43f7-956c-0f4aa73eac85",
+            "type": "review_requested",
+            "payload": {
+              "source": "card"
+            }
+          },
+          {
+            "event_id": "ebd57f92-e0d4-43f7-956c-0f4aa73eac85",
+            "type": "review_requested",
+            "payload": {
+              "source": "card"
+            }
+          },
+          {
+            "event_id": "ebd57f92-e0d4-43f7-956c-0f4aa73eac85",
+            "type": "review_requested",
+            "payload": {
+              "source": "card"
+            }
+          },
+          {
+            "event_id": "ebd57f92-e0d4-43f7-956c-0f4aa73eac85",
+            "type": "review_requested",
+            "payload": {
+              "source": "card"
+            }
+          },
+          {
+            "event_id": "ebd57f92-e0d4-43f7-956c-0f4aa73eac85",
+            "type": "review_requested",
+            "payload": {
+              "source": "card"
+            }
+          },
+          {
+            "event_id": "ebd57f92-e0d4-43f7-956c-0f4aa73eac85",
+            "type": "review_requested",
+            "payload": {
+              "source": "card"
+            }
+          }
+        ]
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-unknown-event",
+    "schema": "device-sync-request.schema.json",
+    "fixture": "mvp/examples/sync-request.json",
+    "changes": [
+      {
+        "path": "events.0.type",
+        "value": "purchase"
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-leaked-uid",
+    "schema": "device-sync-request.schema.json",
+    "fixture": "mvp/examples/sync-request.json",
+    "changes": [
+      {
+        "path": "events.0.payload.uid",
+        "value": "1234"
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-bootstrap-events",
+    "schema": "device-sync-request.schema.json",
+    "fixture": "mvp/examples/sync-request.json",
+    "changes": [
+      {
+        "path": "epoch",
+        "value": null
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-negative-ack",
+    "schema": "device-sync-request.schema.json",
+    "fixture": "mvp/examples/sync-request.json",
+    "changes": [
+      {
+        "path": "ack_command_seq",
+        "value": -1
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-invalid-telemetry",
+    "schema": "device-sync-request.schema.json",
+    "fixture": "mvp/examples/sync-request.json",
+    "changes": [
+      {
+        "path": "telemetry.battery_percent",
+        "value": 90
+      }
+    ],
+    "valid": false
+  },
+  {
+    "id": "reject-reset-without-epoch",
+    "schema": "device-error.schema.json",
+    "fixture": "tests/fixtures/reset-error.json",
+    "changes": [
+      {
+        "path": "error.current_epoch",
+        "value": null
+      }
+    ],
+    "valid": false
+  }
+]

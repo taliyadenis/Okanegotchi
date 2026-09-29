@@ -1,0 +1,14 @@
+{
+  "api_version": 1,
+  "request_id": "dc594e3a-5951-4dbe-ac5f-fb28268bfca2",
+  "device_id": "cc159f6c-bdaf-4b78-8c93-e7a8e27620dc",
+  "epoch": null,
+  "ack_command_seq": 0,
+  "events": [],
+  "telemetry": {
+    "firmware": "0.1.0",
+    "asset_version": 1,
+    "uptime_s": 1260,
+    "rssi_dbm": -55
+  }
+}

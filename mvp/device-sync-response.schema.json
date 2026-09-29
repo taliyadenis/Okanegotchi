@@ -1,0 +1,517 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Okanegachi v1 device sync response",
+  "type": "object",
+  "properties": {
+    "api_version": {
+      "const": 1
+    },
+    "request_id": {
+      "$ref": "#/$defs/uuid"
+    },
+    "epoch": {
+      "$ref": "#/$defs/uuid"
+    },
+    "server_time": {
+      "$ref": "#/$defs/utc"
+    },
+    "state_version": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647
+    },
+    "next_sync_ms": {
+      "type": "integer",
+      "enum": [
+        2000,
+        30000
+      ]
+    },
+    "demo_mode": {
+      "type": "boolean"
+    },
+    "pet": {
+      "type": "object",
+      "properties": {
+        "pet_id": {
+          "type": "string",
+          "enum": [
+            "gator",
+            "robot",
+            "duck",
+            "piggy",
+            "cat",
+            "dragon"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 24
+        },
+        "palette": {
+          "type": "string",
+          "enum": [
+            "original",
+            "mint",
+            "coral",
+            "lavender"
+          ]
+        },
+        "accessory": {
+          "type": "string",
+          "enum": [
+            "none",
+            "cap",
+            "scarf"
+          ]
+        },
+        "asset_version": {
+          "const": 1
+        }
+      },
+      "required": [
+        "pet_id",
+        "name",
+        "palette",
+        "accessory",
+        "asset_version"
+      ],
+      "additionalProperties": false
+    },
+    "care": {
+      "type": "object",
+      "properties": {
+        "stage": {
+          "type": "string",
+          "enum": [
+            "content",
+            "needs_checkin",
+            "sleepy",
+            "ghost"
+          ]
+        },
+        "elapsed_connected_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "streak_days": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "timezone": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "local_date": {
+          "$ref": "#/$defs/date"
+        },
+        "current_window": {
+          "type": "string",
+          "enum": [
+            "AM",
+            "PM"
+          ]
+        },
+        "am_complete": {
+          "type": "boolean"
+        },
+        "pm_complete": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "stage",
+        "elapsed_connected_ms",
+        "streak_days",
+        "timezone",
+        "local_date",
+        "current_window",
+        "am_complete",
+        "pm_complete"
+      ],
+      "additionalProperties": false
+    },
+    "finance": {
+      "$ref": "#/$defs/finance"
+    },
+    "goal": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/goal"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "review": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "review_id": {
+              "$ref": "#/$defs/uuid"
+            },
+            "expires_at": {
+              "$ref": "#/$defs/utc"
+            },
+            "financial_snapshot_version": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "finance": {
+              "$ref": "#/$defs/finance"
+            },
+            "goal": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/goal"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "review_id",
+            "expires_at",
+            "financial_snapshot_version",
+            "finance",
+            "goal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "event_results": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "accepted",
+              "duplicate",
+              "rejected"
+            ]
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "EVENT_ID_REUSE",
+                  "REVIEW_EXPIRED",
+                  "REVIEW_USED",
+                  "REVIEW_NOT_FOUND",
+                  "DEMO_DISABLED",
+                  "GHOST_PLAY_BLOCKED",
+                  "INVALID_ACTION"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "event_id",
+          "status",
+          "reason"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "rejected"
+                }
+              },
+              "required": [
+                "status"
+              ]
+            },
+            "then": {
+              "properties": {
+                "reason": {
+                  "type": "string",
+                  "enum": [
+                    "EVENT_ID_REUSE",
+                    "REVIEW_EXPIRED",
+                    "REVIEW_USED",
+                    "REVIEW_NOT_FOUND",
+                    "DEMO_DISABLED",
+                    "GHOST_PLAY_BLOCKED",
+                    "INVALID_ACTION"
+                  ]
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "reason": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "commands": {
+      "type": "array",
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "command_id": {
+            "$ref": "#/$defs/uuid"
+          },
+          "animation": {
+            "type": "string",
+            "enum": [
+              "eating",
+              "traveling",
+              "celebrate",
+              "neutral",
+              "revive"
+            ]
+          },
+          "duration_ms": {
+            "type": "integer",
+            "minimum": 2000,
+            "maximum": 10000
+          },
+          "expires_at": {
+            "$ref": "#/$defs/utc"
+          }
+        },
+        "required": [
+          "seq",
+          "command_id",
+          "animation",
+          "duration_ms",
+          "expires_at"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "api_version",
+    "request_id",
+    "epoch",
+    "server_time",
+    "state_version",
+    "next_sync_ms",
+    "demo_mode",
+    "pet",
+    "care",
+    "finance",
+    "goal",
+    "review",
+    "event_results",
+    "commands"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,3})?Z$"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "finance": {
+      "type": "object",
+      "properties": {
+        "snapshot_version": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "data_source": {
+          "type": "string",
+          "enum": [
+            "demo",
+            "plaid_sandbox",
+            "plaid_trial"
+          ]
+        },
+        "as_of": {
+          "$ref": "#/$defs/utc"
+        },
+        "currency": {
+          "const": "USD"
+        },
+        "period_start": {
+          "$ref": "#/$defs/date"
+        },
+        "period_end": {
+          "$ref": "#/$defs/date"
+        },
+        "spend_minor": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "budget_minor": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "budget_status": {
+          "type": "string",
+          "enum": [
+            "no_budget",
+            "on_track",
+            "over_budget"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        }
+      },
+      "required": [
+        "snapshot_version",
+        "data_source",
+        "as_of",
+        "currency",
+        "period_start",
+        "period_end",
+        "spend_minor",
+        "budget_minor",
+        "budget_status",
+        "summary"
+      ],
+      "additionalProperties": false,
+      "description": "Spend is a nonnegative sum of normalized expenses for [period_start, period_end) in the care timezone; excludes goal transfers. Dates are local.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "budget_status": {
+                "const": "no_budget"
+              }
+            },
+            "required": [
+              "budget_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "budget_minor": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "budget_minor": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 2147483647
+              }
+            }
+          }
+        }
+      ]
+    },
+    "goal": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "target_minor": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "saved_minor": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "currency": {
+          "const": "USD"
+        }
+      },
+      "required": [
+        "name",
+        "target_minor",
+        "saved_minor",
+        "currency"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "demo_mode": {
+            "const": true
+          }
+        },
+        "required": [
+          "demo_mode"
+        ]
+      },
+      "then": {
+        "properties": {
+          "next_sync_ms": {
+            "const": 2000
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "next_sync_ms": {
+            "const": 30000
+          }
+        }
+      }
+    }
+  ]
+}

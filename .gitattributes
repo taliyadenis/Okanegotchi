@@ -1,0 +1,10 @@
+firmware/**/*.cpp text eol=lf
+firmware/**/*.hpp text eol=lf
+firmware/**/*.h text eol=lf
+firmware/**/*.inc text eol=lf
+firmware/**/*.py text eol=lf
+firmware/**/*.json text eol=lf
+firmware/**/*.md text eol=lf
+mvp/*.json text eol=lf
+mvp/examples/*.json text eol=lf
+docs/firmware/*.md text eol=lf
